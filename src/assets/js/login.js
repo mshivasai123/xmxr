@@ -33,7 +33,8 @@ LoginGoogle.prototype.loginGoogle = function (options) {
        clientId: CLIENT_ID,
        discoveryDocs: DISCOVERY_DOCS,
        scope: SCOPES
-     }).then(function () {
+     }).then(function (data) {
+         console.log(data)
        // Listen for sign-in state changes.
        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
 
@@ -55,6 +56,9 @@ LoginGoogle.prototype.loginGoogle = function (options) {
        authorizeButton.style.display = 'none';
        signoutButton.style.display = 'block';
        console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(),"authres")
+       console.log(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile(),"authres")
+       localStorage.setItem('getBasicProfile',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile()))
+       localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthResponse().currentUser.get().getBasicProfile()))
     //    document.getElementById()
        listFiles();
      } else {

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import {MatCardModule} from '@angular/material/card';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
@@ -14,6 +16,7 @@ import {MatInputModule} from '@angular/material/input';
   ],
   exports :[
       MatCardModule,
+      MatButtonModule,
       MatInputModule
   ]
 })

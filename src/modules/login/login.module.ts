@@ -6,11 +6,16 @@ import { MaterialModule } from '../shared/material.module';
 import { DemoModalsComponent } from './components/demo-modals/demo-modals.component';
 import { TestModalComponent } from './components/test-modal/test-modal.component';
 import { AccessTokenComponent } from './components/access-token/access-token.component';
+import { LoginPageComponent } from './components/login-page/login-page.component';
 
 const routes: Routes = [
   {
     path: '',
     component: LoginComponent
+  },
+  {
+    path: 'login',
+    component: LoginPageComponent
   },
   {
     path: 'access-token',
@@ -31,7 +36,8 @@ const routes: Routes = [
     LoginComponent,
     DemoModalsComponent,
     TestModalComponent,
-    AccessTokenComponent
+    AccessTokenComponent,
+    LoginPageComponent
   ],
   imports: [
     CommonModule,

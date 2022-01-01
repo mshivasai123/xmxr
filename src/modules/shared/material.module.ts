@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
-
-const routes: Routes = [
- 
-];
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -13,10 +10,11 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatCardModule,
-    RouterModule.forChild(routes)
+    MatDialogModule
   ],
   exports :[
-      MatCardModule
+      MatCardModule,
+      MatInputModule
   ]
 })
 export class MaterialModule { }

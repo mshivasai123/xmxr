@@ -1,4 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+// @use '@angular/material' as mat;
+@import '~@angular/material/theming';
+
+@font-face {
+    font-family: 'segoe-ui';
+    src: url(./assets/fonts/segoe-ui/Segoe-UI.ttf);
+}
+
+@font-face {
+    font-family: 'segoe-ui-bold';
+    src: url(./assets/fonts/segoe-ui/Segoe-UI-Bold.ttf);
+}
+ 
+/*--  Font Styles  --*/
+@for $i from 1 through 40 {
+    .f-#{$i} {
+        font-size: ($i * .1rem) !important;
+    }
+}
+
+$my-custom-level: mat-typography-config(
+  $font-family: 'segoe-ui'
+);
+@include angular-material-typography($my-custom-level);
+
+html, body { height: 100%;  }
+body { 
+    margin: 0; 
+    font-family: 'segoe-ui',Roboto, "Helvetica Neue", sans-serif !important; 
+}

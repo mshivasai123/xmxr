@@ -5,6 +5,7 @@ import { CategoriesListComponent } from './categories-list/categories-list.compo
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { AddItemComponent } from './add-item/add-item.component';
+import { MaterialModule } from '../shared/material.module';
 
 const routes: Routes = [
     {
@@ -27,9 +28,14 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
+      AddItemComponent,
+      ItemsListComponent,
+      AddCategoryComponent,
+      CategoriesListComponent
   ],
   imports: [
     CommonModule,
+    MaterialModule,
     RouterModule.forChild(routes)
   ],
 })

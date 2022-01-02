@@ -5,26 +5,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './shared/header/header.component';
-import { CategoriesListComponent } from './components/categories-list/categories-list.component';
-import { AddCategoryComponent } from './components/add-category/add-category.component';
-import { ItemsListComponent } from './components/items-list/items-list.component';
-import { AddItemComponent } from './components/add-item/add-item.component';
 import { MaterialModule } from 'src/modules/shared/material.module';
+import { SharedModule } from 'src/modules/shared/shared.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HeaderComponent,
-    CategoriesListComponent,
-    AddCategoryComponent,
-    ItemsListComponent,
-    AddItemComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
     AppRoutingModule,
+    SharedModule,
     BrowserAnimationsModule,
     HttpClientModule
   ],

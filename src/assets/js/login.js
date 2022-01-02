@@ -11,7 +11,7 @@ LoginGoogle.prototype.loginGoogle = function (options) {
 
    // Authorization scopes required by the API; multiple scopes can be
    // included, separated by spaces.
-   var SCOPES = 'https://www.googleapis.com/auth/drive.metadata.readonly';
+   var SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata';
 
    var authorizeButton = document.getElementById('authorize_button');
    var signoutButton = document.getElementById('signout_button');
@@ -58,7 +58,7 @@ LoginGoogle.prototype.loginGoogle = function (options) {
        console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(),"authres")
        console.log(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile(),"authres")
        localStorage.setItem('getBasicProfile',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile()))
-       localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthResponse().currentUser.get().getBasicProfile()))
+       localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse()))
     //    document.getElementById()
        listFiles();
      } else {
@@ -79,7 +79,9 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     */
    function handleSignoutClick(event) {
      gapi.auth2.getAuthInstance().signOut();
-     console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(),"authres")
+      localStorage.clear()
+    sessionStorage.clear()
+    //  console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(),"authres")
    }
 
    /**
@@ -89,9 +91,9 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     * @param {string} message Text to be placed in pre element.
     */
    function appendPre(message) {
-     var pre = document.getElementById('content');
-     var textContent = document.createTextNode(message + '\n');
-     pre.appendChild(textContent);
+    //  var pre = document.getElementById('content');
+    //  var textContent = document.createTextNode(message + '\n');
+    //  pre.appendChild(textContent);
    }
 
    /**

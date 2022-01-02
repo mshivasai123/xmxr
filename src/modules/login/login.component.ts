@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppDriveService } from 'src/services/app-drive.service';
 import  * as loginApi  from '../../assets/js/login';
 @Component({
   selector: 'app-login',
@@ -7,7 +8,7 @@ import  * as loginApi  from '../../assets/js/login';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  constructor(public appDriveService: AppDriveService) { }
 
   ngOnInit(): void {
     loginApi.LoginGoogleModule.loginGoogle('xyz')
@@ -15,5 +16,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(){
+  }
+  createUserFolder(){
+    this.appDriveService.createUserFolderInSharedFolder().subscribe((response)=>{
+      console.log(response,"res")
+    },(err)=>{
+      console.log(err)
+    })
   }
 }

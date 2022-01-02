@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import  * as logoutApi  from '../../../../assets/js/logout';
+import { Router } from '@angular/router';
+import * as logoutApi from '../../../../assets/js/logout';
 
 @Component({
   selector: 'app-header',
@@ -8,12 +9,15 @@ import  * as logoutApi  from '../../../../assets/js/logout';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngOnInit(): void {
   }
 
-  signOut(){
+  signOut() {
     logoutApi.LogoutGoogleModule.logoutGoogle('xyz')
+  }
+  loggedOut() {
+    this.router.navigate([''])
   }
 }

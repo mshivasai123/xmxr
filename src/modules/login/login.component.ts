@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
-import { AppDriveService } from 'src/services/app-drive.service';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import  * as loginApi  from '../../assets/js/login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
 
-  constructor(public appDriveService: AppDriveService) { }
+  constructor(public router:Router) { }
 
   ngOnInit(): void {
-    loginApi.LoginGoogleModule.loginGoogle('xyz')
     // loginApi.LoginGoogleModule.intialInit('test')
+  }
+
+  ngAfterViewInit(): void {
+    loginApi.LoginGoogleModule.loginGoogle('xyz')
   }
 
   login(){
   }
-  createUserFolder(){
-    this.appDriveService.createUserFolderInSharedFolder().subscribe((response)=>{
-      console.log(response,"res")
-    },(err)=>{
-      console.log(err)
-    })
+
+  logCategories(){
+    this.router.navigate(['/categories'])
   }
 }

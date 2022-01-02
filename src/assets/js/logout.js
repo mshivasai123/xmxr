@@ -18,8 +18,9 @@ LogoutGoogle.prototype.logoutGoogle = function (options) {
   (function handleSignoutClick(event) {
     gapi.auth2.getAuthInstance().signOut();
     // gapi.auth2.getAuthInstance().currentUser.get().reloadAuthResponse()
-    // localStorage.clear()
-    // sessionStorage.clear()
+    localStorage.clear()
+    sessionStorage.clear()
+    document.getElementById('logged_out').click()
   })()
   
 

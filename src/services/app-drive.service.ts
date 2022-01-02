@@ -27,4 +27,14 @@ export class AppDriveService {
         }
     return this.http.post(apiUrl, data, httpOptions);
   };
+
+  deletePermission(field:string,permissionId:string): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json','Authorization': 'Bearer '+ this.authResponse.access_token})
+    };
+    // console.log(data, "data")
+    var apiUrl = 'https://www.googleapis.com/drive/v3/files/' +field+'/permissions/'+permissionId+'?key='+API_KEY ;
+  
+    return this.http.delete(apiUrl,httpOptions);
+  };
 }

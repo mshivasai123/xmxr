@@ -3,9 +3,9 @@
         <div class="col-md-3 mb-4" id="authorize_button">
             <mat-card class="d-flex align-items-center justify-content-center" >Login</mat-card>
         </div>
-        <div class="col-md-3 mb-4" id="signout_button">
+        <!-- <div class="col-md-3 mb-4" id="signout_button">
             <mat-card class="d-flex align-items-center justify-content-center" >Logout</mat-card>
-        </div>
+        </div> -->
         <div class="col-md-3 mb-4">
             <a routerLink="/access-token" class="text-decoration-none">
                 <mat-card class="d-flex align-items-center justify-content-center" >Enter Token</mat-card>
@@ -21,7 +21,7 @@
                 <mat-card class="d-flex align-items-center justify-content-center">Test Your Model</mat-card>
             </a>
         </div>
-        <button (click)="createUserFolder()">create</button>
+        <button id="loggedin" style="display: none;" (click)="logCategories()">create</button>
     </div>
 
 </div>

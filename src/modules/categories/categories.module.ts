@@ -9,7 +9,7 @@ import { MaterialModule } from '../shared/material.module';
 
 const routes: Routes = [
     {
-        path :'list',
+        path :'',
         component: CategoriesListComponent
     },
     {

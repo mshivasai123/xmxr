@@ -1,17 +1,18 @@
 <div class="container-fluid">
-    <h5 class="mb-3">Add Category</h5>
+    <h5 class="mb-4">{{data?.title ? data.title : 'Category'}}</h5>
     <form>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Name">
+            <input matInput>
           </mat-form-field>
-          <!-- <mat-form-field class="example-full-width" appearance="fill">
-            <mat-label>Favorite food</mat-label>
-            <input matInput placeholder="Ex. Pizza">
-          </mat-form-field> -->
+            <input type="file" class="d-none" id="uploadFile">
+          <p>
+            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
+          </p>
           <div class="text-center">
-
-              <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4">Create</button>
+              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button">
+                {{data?.isEdit ? 'Save' : 'Create'}}
+              </button>
           </div>
     </form>
 </div>

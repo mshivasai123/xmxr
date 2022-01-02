@@ -5,7 +5,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
-
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -14,11 +14,13 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
+    MatMenuModule,
     MatDialogModule
   ],
   exports :[
       MatCardModule,
       MatButtonModule,
+      MatMenuModule,
       MatFormFieldModule,
       MatInputModule
   ]

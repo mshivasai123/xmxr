@@ -1,8 +1,26 @@
 <nav class="navbar mb-4 navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand"  routerLink="/">Logo</a>
-      <a routerLink="/" class="text-decoration-none text-dark">Login</a>
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">Logo</a>
+
+    <div>
+      <ul class="list-unstyled list-inline mb-0">
+        <li *ngIf="!!sharedService.isUserLoggedIn()">
+          <a routerLink="/" class="text-decoration-none text-dark">Login</a>
+        </li>
+        <li class="list-inline-item" *ngIf="!sharedService.isUserLoggedIn()">
+          <button mat-button [matMenuTriggerFor]="menu">
+            {{sharedService.getUserName()}}
+            <img [attr.src]=sharedService.getUserImage() width="40"
+              height="40" class="rounded-circle ms-2">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="signOut()">Logout</button>
+          </mat-menu>
+        </li>
+      </ul>
     </div>
-    <button  (click)="signOut()">SignOut</button>
-    <button id="logged_out" style="display:none" (click)="loggedOut()"></button>
-  </nav>
+  </div>
+
+  <button (click)="signOut()">SignOut</button>
+  <button id="logged_out" class="d-none" (click)="loggedOut()"></button>
+</nav>

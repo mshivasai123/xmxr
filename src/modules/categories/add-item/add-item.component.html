@@ -1,1 +1,22 @@
-<p>add-item works!</p>
+<div class="container-fluid">
+    <h5 class="mb-4">{{data?.title ? data.title : 'Item'}}</h5>
+    <form>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput name="categoryName">
+          </mat-form-field>
+            <input type="file" class="d-none" id="uploadFile">
+          <p>
+            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
+          </p>
+          <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Upload / Enter Model URL</mat-label>
+            <input matInput name="modalUrl">
+          </mat-form-field>
+          <div class="text-center">
+              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button">
+                {{data?.isEdit ? 'Save' : 'Upload'}}
+              </button>
+          </div>
+    </form>
+</div>

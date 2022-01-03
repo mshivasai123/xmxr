@@ -1,15 +1,23 @@
-<nav class="navbar mb-4 navbar-light bg-light">
-  <div class="container-fluid">
+<nav class="navbar navbar-expand-md mb-4 navbar-light bg-light">
+  <div class="container-fluid position-relative">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+
     <a class="navbar-brand" routerLink="/">Logo</a>
 
-    <div>
+    <div class="user-profile">
       <ul class="list-unstyled list-inline mb-0">
         <li *ngIf="!!sharedService.isUserLoggedIn()">
           <a routerLink="/" class="text-decoration-none text-dark">Login</a>
         </li>
         <li class="list-inline-item" *ngIf="!sharedService.isUserLoggedIn()">
           <button mat-button [matMenuTriggerFor]="menu">
-            {{sharedService.getUserName()}}
+            <span class="d-none d-md-inline-block">
+              {{sharedService.getUserName()}}
+            </span>
             <img [attr.src]=sharedService.getUserImage() width="40"
               height="40" class="rounded-circle ms-2">
           </button>
@@ -19,8 +27,22 @@
         </li>
       </ul>
     </div>
+
+    <div class="collapse navbar-collapse position-dabsolute w-100 left-0" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="javscript:viod(0);">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javscript:viod(0);">About</a>
+        </li>
+      </ul>
+    </div>
   </div>
 
-  <button (click)="signOut()">SignOut</button>
+  <!-- <button (click)="signOut()">SignOut</button> -->
   <button id="logged_out" class="d-none" (click)="loggedOut()"></button>
+
+
 </nav>
+

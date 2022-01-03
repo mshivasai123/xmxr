@@ -4,7 +4,6 @@ import { AppDriveService } from 'src/services/app-drive.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
 
-
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
@@ -14,7 +13,6 @@ import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
     <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
     <button class="btn btn-primary">Delete</button>
   </div>
-
   `,
 })
 export class DeleteConfirmationDialog {

@@ -6,10 +6,28 @@
             img {
                 max-width: 100px;
                 position: absolute;
+                object-fit: cover;
+                // display: block;
+                // margin:  0 auto;
                 top: 0;
                 left: 0;
                 bottom: 0;
                 height: 100%;
+            }
+        }
+    }
+}
+
+@media (max-width: 767px) {
+    .list-wrapper {
+        .list-item {
+            .list-item-info {
+                img {
+                    max-width: 100%;
+                    position: unset;
+                    display: block;
+                    margin:  0 auto;
+                }
             }
         }
     }

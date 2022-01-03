@@ -5,7 +5,7 @@
             <mat-label>Name</mat-label>
             <input matInput name="categoryName" [(ngModel)]="categoryName" placeholder="Name">
           </mat-form-field>
-            <input type="file" class="d-none" id="uploadFile">
+            <input type="file" class="d-none" (change)="profileUpload($event)" id="uploadFile">
           <p>
             <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
           </p>

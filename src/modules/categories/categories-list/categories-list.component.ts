@@ -34,7 +34,7 @@ export class DeleteConfirmationDialog {
   selector: 'app-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss'],
-  // providers: [AppDriveService]
+  providers: [AppDriveService]
 })
 export class CategoriesListComponent implements OnInit {
   userFolderData: any;
@@ -101,4 +101,6 @@ export class CategoriesListComponent implements OnInit {
     })
 
   }
+
+  
 }

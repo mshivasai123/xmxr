@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
-
-const routes: Routes = [
-  
-];
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +10,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
+    MaterialModule
   ],
   exports: [
     HeaderComponent

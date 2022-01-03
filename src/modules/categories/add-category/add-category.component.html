@@ -3,7 +3,7 @@
     <form>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput placeholder="Name">
+            <input matInput name="categoryName" [(ngModel)]="categoryName" placeholder="Name">
           </mat-form-field>
           <!-- <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Favorite food</mat-label>
@@ -11,7 +11,7 @@
           </mat-form-field> -->
           <div class="text-center">
 
-              <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4">Create</button>
+              <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" (click)="createCategory()">Create</button>
           </div>
     </form>
 </div>

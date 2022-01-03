@@ -6,6 +6,7 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { MaterialModule } from '../shared/material.module';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
     {
@@ -35,8 +36,10 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     MaterialModule,
     RouterModule.forChild(routes)
   ],
+ 
 })
 export class CategoriesModule { }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md mb-4 navbar-light bg-light">
   <div class="container-fluid position-relative">
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler shadow-none" type="button" (click)="opened = !opened" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -28,16 +28,6 @@
       </ul>
     </div>
 
-    <div class="collapse navbar-collapse position-dabsolute w-100 left-0" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="javscript:viod(0);">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="javscript:viod(0);">About</a>
-        </li>
-      </ul>
-    </div>
   </div>
 
   <!-- <button (click)="signOut()">SignOut</button> -->
@@ -46,3 +36,8 @@
 
 </nav>
 
+
+
+<div [class.show-sidebar]="opened" class="sidebar-wrapper">
+  <app-sidebar></app-sidebar>
+</div>

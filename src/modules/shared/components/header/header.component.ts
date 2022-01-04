@@ -10,7 +10,7 @@ import * as logoutApi from '../../../../assets/js/logout';
 })
 export class HeaderComponent implements OnInit {
   isLoggedIn = false;
-
+  opened = false;
   constructor(
     public router: Router,
     public sharedService: SharedService

@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { AppDriveService } from 'src/services/app-drive.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'delete-confirmation-dialog',
@@ -11,7 +12,7 @@ import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
 
   <div class="text-end mt-4">
     <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
-    <button class="btn btn-primary">Delete</button>
+    <button class="btn btn-primary" (click)="closeModel()">Delete</button>
   </div>
   `,
 })
@@ -36,9 +37,11 @@ export class DeleteConfirmationDialog {
 })
 export class CategoriesListComponent implements OnInit {
   userFolderData: any;
+  categoriesList:any = [];
   constructor(
     public dialog: MatDialog,
     public appDriveService: AppDriveService,
+    public router: Router
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +52,7 @@ export class CategoriesListComponent implements OnInit {
       } else {
         if (response.files[0].parents.includes(D2f_User_Data) && !response.files[0].trashed) {
           this.userFolderData = response.files[0]
+          this.getCategoriesList()
         } else {
           this.createUserFolder();
         }
@@ -74,6 +78,19 @@ export class CategoriesListComponent implements OnInit {
     })
   }
 
+  getCategoriesList(){
+    this.appDriveService.getListOfCategoriesByParentId(this.userFolderData.id).subscribe((categories:any)=>{
+       console.log(categories,"categories")
+       this.categoriesList = categories.files
+       this.categoriesList.forEach((category: any) => {
+        this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
+         console.log(profile,"profile")
+         category['profilePhoto'] = profile?.files[0]?.thumbnailLink;
+        })
+       });
+    })
+  }
+
   addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
       // width: '250px'
@@ -82,8 +99,10 @@ export class CategoriesListComponent implements OnInit {
         parentId: this.userFolderData.id
       },
     });
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-
+    dialogRef.afterClosed().subscribe((newCategory) => {
+       if(newCategory){
+        this.categoriesList.push(newCategory)
+      }
     });
   }
 
@@ -93,11 +112,18 @@ export class CategoriesListComponent implements OnInit {
     });
   }
 
-  deleteCategory() {
-    this.dialog.open(DeleteConfirmationDialog, {
+  deleteCategory(category: any,index:number) {
+    // this.dialog.open(DeleteConfirmationDialog, {
 
-    })
+    // })
+    
+    this.appDriveService.deleteCategory(category.id).subscribe((categoryDel:any)=>{
+      this.categoriesList.splice(index,1)
+     })
+  }
 
+  listItems(category: any){
+    this.router.navigateByUrl('/categories/items', { state: category })
   }
 
   

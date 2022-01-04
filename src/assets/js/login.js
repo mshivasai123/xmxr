@@ -61,7 +61,7 @@ LoginGoogle.prototype.loginGoogle = function (options) {
        localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse()))
        document.getElementById('loggedin').click();
     //    document.getElementById()
-       listFiles();
+    //    listFiles();
      } else {
     //    authorizeButton.style.display = 'block';
     //    signoutButton.style.display = 'none';

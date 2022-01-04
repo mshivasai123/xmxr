@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AddItemComponent } from '../add-item/add-item.component';
-
+import { Location } from '@angular/common';
+import { AppDriveService } from 'src/services/app-drive.service';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
@@ -32,24 +34,49 @@ export class DeleteConfirmationDialog {
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnInit {
-
+  parentCategoryData:any 
+  itemsList:any =[]
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public router: Router,
+    private location:Location,
+    public appDriveService: AppDriveService,
   ) { }
 
   ngOnInit(): void {
+    console.log(this.location.getState())
+    let state: any = this.location.getState()
+    if(state?.id){
+      this.parentCategoryData = state
+      this.getItemsList(state)
+    }else{
+      this.router.navigate(['/categories'])
+    }
   }
 
+  getItemsList(state:any){
+    this.appDriveService.getListOfItemsByCatgryId(state).subscribe((itemsList:any)=>{
+      console.log(itemsList,"itemsList")
+      this.itemsList = itemsList.files
+      if(this.itemsList.length){
+        const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
+        this.itemsList.splice(index,1)
+      }
+   })
+  }
 
   addItem(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
       // width: '250px'
       data: {
-        title: 'Add Item', isEdit: false
+        title: 'Add Item', isEdit: false,
+        parentId:  this.parentCategoryData.id
       },
     });
-    dialogRef.afterClosed().subscribe((dialogResult) => {
-
+    dialogRef.afterClosed().subscribe((newItem) => {
+      if(newItem){
+        this.itemsList.push(newItem)
+      }
     });
   }
 
@@ -59,11 +86,19 @@ export class ItemsListComponent implements OnInit {
     });
   }
 
-  deleteItem() {
-    this.dialog.open(DeleteConfirmationDialog, {
+  deleteItem(item:any,index:number) {
+    // this.dialog.open(DeleteConfirmationDialog, {
 
-    })
+    // })
 
+    this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
+      this.itemsList.splice(index,1)
+     })
+
+  }
+
+  bactToCategories(){
+    this.router.navigate(['/categories'])
   }
 
 }

@@ -10,6 +10,7 @@ import { AppDriveService } from 'src/services/app-drive.service';
 export class AddCategoryComponent implements OnInit {
   // dialogData: DialogData;
   public categoryName:string = ''
+  newCategory:any
   file:any
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
@@ -23,8 +24,11 @@ export class AddCategoryComponent implements OnInit {
    if(this.data.parentId){
     this.appDriveService.createCategory(this.data.parentId,this.categoryName).subscribe((res:any)=>{
       console.log(res,"added catregory")
-      this.appDriveService.uploadCategoryProfile(this.file,res.id,res.name).subscribe((profile)=>{
+      this.newCategory = res;
+      this.appDriveService.uploadCategoryProfile(this.file,res.id,res.name).subscribe((profile:any)=>{
         console.log(profile,"profiledata")
+        this.newCategory['profilePhoto'] = profile.thumbnailLink
+        this.dialogRef.close(this.newCategory);
       })
 
     })

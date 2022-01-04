@@ -3,9 +3,9 @@
     <form>
         <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Name</mat-label>
-            <input matInput name="categoryName">
+            <input matInput [(ngModel)]="itemName" name="itemName">
           </mat-form-field>
-            <input type="file" class="d-none" id="uploadFile">
+            <input type="file" (change)="profileUpload($event)" class="d-none" id="uploadFile">
           <p>
             <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
           </p>
@@ -14,7 +14,7 @@
             <input matInput name="modalUrl">
           </mat-form-field>
           <div class="text-center">
-              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button">
+              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button" (click)="createItem()">
                 {{data?.isEdit ? 'Save' : 'Upload'}}
               </button>
           </div>

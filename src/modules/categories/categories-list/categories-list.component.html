@@ -5,12 +5,12 @@
     </div>
 
     <div class="list-wrapper mt-4">
-
-        <div class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
-            <div class="list-item-info d-md-flex py-3 flex-grow-1">
-                <img src="https://picsum.photos/536/355" class="position-md-absolute" alt="category" />
+       <ng-container *ngIf="categoriesList.length" >
+        <div *ngFor="let categories of categoriesList;let i=index" class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
+            <div class="list-item-info d-md-flex py-3 flex-grow-1" (click)="listItems(categories)">
+                <img [src]="categories.profilePhoto" class="position-md-absolute" alt="category" />
                 <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
-                    <h5 class="m-0 f-11">Category Name</h5>
+                    <h5 class="m-0 f-11">{{categories.name.split('_')[1]}}</h5>
                     <span class="f-7">30 items</span>
                 </div>
             </div>
@@ -23,14 +23,14 @@
                         <a href="javascript:void(0);" class="text-decoration-none mx-5">Share</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory()">Delete</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory(categories,i)">Delete</a>
                     </li>
                 </ul>
             </div>
         </div>
+       </ng-container> 
 
-
-        <div class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
+        <!-- <div class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
             <div class="list-item-info d-md-flex py-3 flex-grow-1">
                 <img src="https://picsum.photos/536/345" class="position-md-absolute" alt="category" />
                 <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
@@ -98,7 +98,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
 
 
     </div>

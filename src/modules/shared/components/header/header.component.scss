@@ -3,6 +3,21 @@
 //     background-color: red;
 // }
 
+.sidebar-wrapper {
+    position: fixed;
+    left: 0;
+    width: 250px;
+    bottom: 0;
+    top: 55px;
+    background: #fff;
+    box-shadow: 10px 8px 12px 0px rgb(0 0 0 / 40%);
+    transform: translateX(-300px);
+    transition: all 0.3s ease-in-out;
+    &.show-sidebar {
+        transition: all 0.3s ease-in-out;
+        transform: none;
+    }
+}
 
 @media (min-width: 768px) {
     .user-profile {

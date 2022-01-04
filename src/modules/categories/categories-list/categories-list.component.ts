@@ -86,6 +86,8 @@ export class CategoriesListComponent implements OnInit {
         this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
          console.log(profile,"profile")
          category['profilePhoto'] = profile?.files[0]?.thumbnailLink;
+         category['photoName'] = profile?.files[0]?.name;
+         category['photoId'] = profile?.files[0]?.id;
         })
        });
     })
@@ -106,10 +108,15 @@ export class CategoriesListComponent implements OnInit {
     });
   }
 
-  editCategory(): void {
-    this.dialog.open(AddCategoryComponent, {
-      data: { title: 'Edit Category', category: {}, isEdit: true }
+  editCategory(category: any): void {
+    const dialogRef = this.dialog.open(AddCategoryComponent, {
+      data: { title: 'Edit Category', category: category, isEdit: true }
     });
+    dialogRef.afterClosed().subscribe((load) => {
+      if(load){
+        this.getCategoriesList()
+     }
+   });
   }
 
   deleteCategory(category: any,index:number) {

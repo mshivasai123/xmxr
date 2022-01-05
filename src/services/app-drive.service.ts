@@ -179,6 +179,36 @@ export class AppDriveService {
     return this.http.post(apiUrl, form, httpOptions);
   }
 
+  upDateItem(name:any,item:any,file?:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.authResponse.access_token
+      })
+    };
+    let uuid = item.name.split('_')[0];
+    let metadata
+    if(file){
+      let extension = file.name.split('.')
+       metadata = {
+        'name': `${uuid}_${name}_.${extension[extension.length - 1 ?? '']}`,
+        'mimeType': file.type
+      };
+    } else {
+      let extension = item.name.split('.')
+       metadata = {
+        'name': `${uuid}_${name}_.${extension[extension.length - 1 ?? '']}`,
+      };
+    }
+    
+    let form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    if(file){
+      form.append('file', file);
+    }
+    var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + item.id + '?uploadType=multipart'
+    return this.http.patch(apiUrl, form, httpOptions);
+  }
+
   getListOfItemsByCatgryId(state: any) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),

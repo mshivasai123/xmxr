@@ -9,6 +9,7 @@ import { AppDriveService } from 'src/services/app-drive.service';
 })
 export class AddItemComponent implements OnInit {
   public itemName:string = ''
+  intialName = ''
   newItem:any
   file:any
   constructor(
@@ -18,6 +19,10 @@ export class AddItemComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(this.data?.isEdit){
+      this.intialName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
+      this.itemName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
+    }
   }
 
   profileUpload(event:any){
@@ -25,6 +30,13 @@ export class AddItemComponent implements OnInit {
     this.file = event.target.files[0]
   }
 
+  save(){
+    if(this.data?.isEdit){
+      this.editCategory()
+    }else{
+      this.createItem()
+    }
+  }
   createItem(){
     if(this.data.parentId){
         this.appDriveService.createitem(this.file,this.data.parentId,this.itemName).subscribe((item:any)=>{
@@ -33,6 +45,14 @@ export class AddItemComponent implements OnInit {
           this.dialogRef.close(this.newItem);
         })
      }
+  }
+
+  editCategory(){
+    if((this.intialName != this.itemName) || this.file){
+      this.appDriveService.upDateItem(this.itemName,this.data.item,this.file).subscribe((item:any)=>{
+        this.dialogRef.close(true);
+      })
+    }
   }
 
 }

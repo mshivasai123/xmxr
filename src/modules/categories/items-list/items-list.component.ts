@@ -80,10 +80,16 @@ export class ItemsListComponent implements OnInit {
     });
   }
 
-  editItem(): void {
-    this.dialog.open(AddItemComponent, {
-      data: { title: 'Edit Item', item: {}, isEdit: true }
+  editItem(item: any): void {
+    const dialogRef = this.dialog.open(AddItemComponent, {
+      data: { title: 'Edit Item', item: item, isEdit: true }
     });
+    dialogRef.afterClosed().subscribe((load) => {
+      if(load){
+       let state: any = this.location.getState()
+        this.getItemsList(state)
+     }
+   });
   }
 
   deleteItem(item:any,index:number) {

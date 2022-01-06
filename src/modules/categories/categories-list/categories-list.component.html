@@ -30,7 +30,7 @@
         </div>
        </ng-container> 
 
-        <!-- <div class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
+        <div class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
             <div class="list-item-info d-md-flex py-3 flex-grow-1">
                 <img src="https://picsum.photos/536/345" class="position-md-absolute" alt="category" />
                 <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
@@ -41,13 +41,13 @@
             <div class="action-buttons text-center pb-3 pb-md-0">
                 <ul class="list-unstyled m-0 list-inline d-flex">
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory()'>Edit</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory("d")'>Edit</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none mx-5">Share</a>
+                        <a href="javascript:void(0);" class="text-decoration-none mx-5" (click)="shareCategory()">Share</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory()">Delete</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory('d',8)">Delete</a>
                     </li>
                 </ul>
             </div>
@@ -65,13 +65,13 @@
             <div class="action-buttons text-center pb-3 pb-md-0">
                 <ul class="list-unstyled m-0 list-inline d-flex">
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory()'>Edit</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory("d")'>Edit</a>
                     </li>
                     <li class="list-inline-item">
                         <a href="javascript:void(0);" class="text-decoration-none mx-5">Share</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory()">Delete</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory('d',8)">Delete</a>
                     </li>
                 </ul>
             </div>
@@ -88,17 +88,17 @@
             <div class="action-buttons text-center pb-3 pb-md-0">
                 <ul class="list-unstyled m-0 list-inline d-flex">
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory()'>Edit</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory("d")'>Edit</a>
                     </li>
                     <li class="list-inline-item">
                         <a href="javascript:void(0);" class="text-decoration-none mx-5">Share</a>
                     </li>
                     <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory()">Delete</a>
+                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory('d',8)">Delete</a>
                     </li>
                 </ul>
             </div>
-        </div> -->
+        </div>
 
 
     </div>

@@ -8,8 +8,12 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
-  <h4>Are you sure you want to delete?</h4>
-
+  <div class="d-flex mb-4 justify-content-between align-items-center">
+    <h5 class="mb-0 me-4">Are you sure you want to delete?</h5>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span>
+  </div>
   <div class="text-end mt-4">
     <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
     <button class="btn btn-primary" (click)="closeModel()">Delete</button>
@@ -17,6 +21,38 @@ import { Router } from '@angular/router';
   `,
 })
 export class DeleteConfirmationDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DeleteConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { }
+
+  closeModel() {
+    this.dialogRef.close();
+  }
+}
+
+
+@Component({
+  selector: 'share-dialog',
+  template: `
+  <div class="d-flex mb-4 justify-content-between align-items-center">
+    <h5 class="mb-0">Share</h5>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span>
+  </div>
+
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" value="sdfuoiewnfsdfsfdsf" disabled aria-describedby="basic-addon2">
+    <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
+      <span class="material-icons">
+        content_copy
+      </span> 
+    </span>
+  </div>
+  `,
+})
+export class ShareDialog {
   constructor(
     public dialogRef: MatDialogRef<DeleteConfirmationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -95,7 +131,7 @@ export class CategoriesListComponent implements OnInit {
 
   addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
-      // width: '250px'
+      width: '500px',
       data: {
         title: 'Add Category', isEdit: false,
         parentId: this.userFolderData.id
@@ -110,6 +146,7 @@ export class CategoriesListComponent implements OnInit {
 
   editCategory(category: any): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
+      width: '500px',
       data: { title: 'Edit Category', category: category, isEdit: true }
     });
     dialogRef.afterClosed().subscribe((load) => {
@@ -121,6 +158,7 @@ export class CategoriesListComponent implements OnInit {
 
   deleteCategory(category: any,index:number) {
     // this.dialog.open(DeleteConfirmationDialog, {
+    //   width: '500px'
 
     // })
     
@@ -131,6 +169,12 @@ export class CategoriesListComponent implements OnInit {
 
   listItems(category: any){
     this.router.navigateByUrl('/categories/items', { state: category })
+  }
+
+  shareCategory() {
+    this.dialog.open(ShareDialog, {
+      width: '500px'
+    })
   }
 
   

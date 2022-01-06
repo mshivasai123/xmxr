@@ -7,6 +7,7 @@ import { ItemsListComponent } from './items-list/items-list.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule } from '@angular/forms';
+import { ViewItemMediaComponent } from './view-item-media/view-item-media.component';
 
 const routes: Routes = [
     {
@@ -32,7 +33,8 @@ const routes: Routes = [
       AddItemComponent,
       ItemsListComponent,
       AddCategoryComponent,
-      CategoriesListComponent
+      CategoriesListComponent,
+      ViewItemMediaComponent
   ],
   imports: [
     CommonModule,

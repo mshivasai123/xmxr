@@ -57,11 +57,20 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     //    signoutButton.style.display = 'block';
        console.log(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse(),"authres")
        console.log(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile(),"authres")
-       localStorage.setItem('getBasicProfile',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile()))
+       let profile =gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile()
+       let basicProfile = {
+        'ID': profile.getId(),
+        'FullName': profile.getName(),
+        'GivenName': profile.getGivenName(),
+        'FamilyName': profile.getFamilyName(),
+        'ImageURL': profile.getImageUrl(),
+        'Email': profile.getEmail()
+       }
+       localStorage.setItem('getBasicProfile',JSON.stringify(basicProfile))
        localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse()))
        document.getElementById('loggedin').click();
     //    document.getElementById()
-    //    listFiles();
+       listFiles();
      } else {
     //    authorizeButton.style.display = 'block';
     //    signoutButton.style.display = 'none';

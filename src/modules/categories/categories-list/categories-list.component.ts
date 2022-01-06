@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
@@ -41,7 +41,8 @@ export class CategoriesListComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public appDriveService: AppDriveService,
-    public router: Router
+    public router: Router,
+    public changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +89,8 @@ export class CategoriesListComponent implements OnInit {
          category['profilePhoto'] = profile?.files[0]?.thumbnailLink;
          category['photoName'] = profile?.files[0]?.name;
          category['photoId'] = profile?.files[0]?.id;
+         category['photoOrginalName']=profile?.files[0]?.originalFilename
+         this.changeDetector.detectChanges();
         })
        });
     })

@@ -10,7 +10,7 @@
     </div>
 
     <div class="list-wrapper mt-4">
-        <ng-container *ngIf="itemsList.length">
+        <ng-container *ngIf="itemsList?.length">
             <div *ngFor="let items of itemsList;let i=index"
                 class="list-item position-relative mb-4 py-2 px-4 d-md-flex align-items-center justify-content-center">
                 <div class="list-item-info d-md-flex py-3 flex-grow-1">

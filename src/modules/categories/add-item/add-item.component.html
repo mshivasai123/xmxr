@@ -7,12 +7,16 @@
           </mat-form-field>
             <input type="file" (change)="profileUpload($event)" class="d-none" id="uploadFile">
           <p>
-            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
+            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
           </p>
-          <mat-form-field class="example-full-width" appearance="fill">
+          <!-- <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Upload / Enter Model URL</mat-label>
-            <input matInput name="modalUrl">
-          </mat-form-field>
+            <input disabled matInput name="modalUrl">
+          </mat-form-field> -->
+          <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadmedia">
+          <p>
+            <label for="uploadmedia" class="upload-picture-label w-100 cursor-pointer">{{mediaFileName ? mediaFileName : 'Upload / Enter Model URL'}}</label>
+          </p>
           <div class="text-center">
               <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button" (click)="save()">
                 {{data?.isEdit ? 'Save' : 'Upload'}}

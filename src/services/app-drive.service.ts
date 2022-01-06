@@ -24,8 +24,8 @@ export class AppDriveService {
       "mimeType": "application/vnd.google-apps.folder",
       // id:  'user',
       parents: [D2f_User_Data],
-      originalFilename: this.getBasicProfile.nv,
-      name: this.getBasicProfile.nv,
+      originalFilename: this.getBasicProfile.Email,
+      name: this.getBasicProfile.Email,
       // copyRequiresWriterPermission: true
     }
     return this.http.post(apiUrl, data, httpOptions);
@@ -44,10 +44,9 @@ export class AppDriveService {
   fetchUserFolder() {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
-      // params: {q:`name=${this.getBasicProfile.nv}`}
     };
     // console.log(data, "data")
-    var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=name='" + this.getBasicProfile.nv + "'" + "&fields=*";
+    var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=name='" + this.getBasicProfile.Email + "'&parents='"+D2f_User_Data + "' and trashed=false&fields=*";
     return this.http.get(apiUrl, httpOptions);
   }
 
@@ -97,13 +96,13 @@ export class AppDriveService {
     if (file) {
       let extension = file.name.split('.')
       metadata = {
-        'name': name?`${name}.${extension[extension.length - 1 ?? '']}`:category.photoName,
+        'name': name?`${category.name.split('_')[0]}_${name}.${extension[extension.length - 1 ?? '']}`:category.photoName,
         'mimeType': file.type
       };
     } else {
       let extension = category.photoName.split('.')
       metadata = {
-        'name': `${name}.${extension[extension.length - 1 ?? '']}`
+        'name': `${category.name.split('_')[0]}_${name}.${extension[extension.length - 1 ?? '']}`
       };
     }
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
@@ -130,7 +129,7 @@ export class AppDriveService {
   getListOfCategoriesByParentId(parentId: string) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
-      // params: {q:`name=${this.getBasicProfile.nv}`}
+      // params: {q:`name=${this.getBasicProfile.Email}`}
     };
     // console.log(data, "data")
     var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=parents='" + parentId + "' and trashed=false";//+ "&fields=*"
@@ -141,7 +140,7 @@ export class AppDriveService {
   getCategoryProfile(catName: string, parentId: string) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
-      // params: {q:`name=${this.getBasicProfile.nv}`}
+      // params: {q:`name=${this.getBasicProfile.Email}`}
     };
     // console.log(data, "data")
     var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=parents='" + parentId + "' and name contains '" + catName + "' and trashed=false" + "&fields=*";//+ "&fields=*"
@@ -179,6 +178,41 @@ export class AppDriveService {
     return this.http.post(apiUrl, form, httpOptions);
   }
 
+  createMediaFile(file: any, parentId: any,name:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.authResponse.access_token
+      })
+    };
+    var metadata = {
+      'name': name,
+      'parents': [parentId], // Folder ID at Google Drive
+      'mimeType': file.type
+    };
+    var form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    form.append('file', file);
+    var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=*'
+    return this.http.post(apiUrl, form, httpOptions);
+  }
+
+  updateMedia(file:any,item:any){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + this.authResponse.access_token
+      })
+    };
+    let metadata
+       metadata = {
+        'mimeType': file.type
+      };
+    let form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+      form.append('file', file);
+    var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + item.mediaId + '?uploadType=multipart'
+    return this.http.patch(apiUrl, form, httpOptions);
+  }
+
   upDateItem(name:any,item:any,file?:any){
     const httpOptions = {
       headers: new HttpHeaders({
@@ -212,7 +246,7 @@ export class AppDriveService {
   getListOfItemsByCatgryId(state: any) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
-      // params: {q:`name=${this.getBasicProfile.nv}`}
+      // params: {q:`name=${this.getBasicProfile.Email}`}
     };
     // console.log(data, "data")
     var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=parents='" + state.id + "' and trashed=false&fields=*";//+ "&fields=*"

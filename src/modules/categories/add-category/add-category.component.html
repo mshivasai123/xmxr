@@ -7,7 +7,7 @@
           </mat-form-field>
             <input type="file" class="d-none" (change)="profileUpload($event)" id="uploadFile">
           <p>
-            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">Upload Picture</label>
+            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
           </p>
           <div class="text-center">
 

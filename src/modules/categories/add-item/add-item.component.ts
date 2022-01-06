@@ -12,6 +12,10 @@ export class AddItemComponent implements OnInit {
   intialName = ''
   newItem:any
   file:any
+  fileName= ""
+  mediaFile:any
+  mediaFileName = ""
+
   constructor(
     public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
@@ -22,12 +26,15 @@ export class AddItemComponent implements OnInit {
     if(this.data?.isEdit){
       this.intialName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
       this.itemName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
+      this.fileName = this.data.item.originalFilename
+      this.mediaFileName = this.data.item.mediaFileName
     }
   }
 
   profileUpload(event:any){
     console.log(event.target.files[0])
     this.file = event.target.files[0]
+    this.fileName = this.file.name
   }
 
   save(){
@@ -42,6 +49,13 @@ export class AddItemComponent implements OnInit {
         this.appDriveService.createitem(this.file,this.data.parentId,this.itemName).subscribe((item:any)=>{
           console.log(item,"item")
           this.newItem = item
+          if(this.mediaFile){
+            this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,item.id).subscribe((media: any)=>{
+             console.log(media,"mediaData")
+             this.newItem["mediaFileName"] = media.originalFilename
+             this.newItem["mediaId"] = media.id
+            })
+          }
           this.dialogRef.close(this.newItem);
         })
      }
@@ -53,6 +67,17 @@ export class AddItemComponent implements OnInit {
         this.dialogRef.close(true);
       })
     }
+    if(this.mediaFile){
+      this.appDriveService.updateMedia(this.mediaFile,this.data.item).subscribe((item:any)=>{
+        this.dialogRef.close(true);
+      })
+    }
+  }
+
+  uploadmediaData(event:any){
+    console.log(event.target.files[0])
+    this.mediaFile = event.target.files[0]
+    this.mediaFileName = this.mediaFile.name
   }
 
 }

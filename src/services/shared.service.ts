@@ -18,12 +18,12 @@ export class SharedService {
   }
 
   getUserImage() {
-    let userImage = this.userData?.mN ? this.userData?.mN : '';
+    let userImage = this.userData?.ImageURL ? this.userData?.ImageURL : '';
     return userImage;
   }
 
   getUserName() {
-    let userName = this.userData?.qf ? this.userData?.qf : 'User';
+    let userName = this.userData?.FullName ? this.userData?.FullName : 'User';
     return userName;
   }
 

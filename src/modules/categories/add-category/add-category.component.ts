@@ -13,6 +13,7 @@ export class AddCategoryComponent implements OnInit {
   newCategory:any
   file:any
   fileName= ""
+  intialCategoryName = ""
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
       // this.dialogRef.close(true);
@@ -20,10 +21,15 @@ export class AddCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.data,"data to modal")
+    if(this.data?.isEdit){
+      this.categoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
+      this.intialCategoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
+      this.fileName = this.data.category.photoOrginalName
+    }
   }
   save(){
     if(this.data?.isEdit){
-      this.fileName = this.data.category.photoName
+      // this.fileName = this.data.category.photoName
       // this.categoryName = this.data.category.name
       this.editCategory()
     }else{
@@ -41,6 +47,7 @@ export class AddCategoryComponent implements OnInit {
           this.newCategory['profilePhoto'] = profile.thumbnailLink
           this.newCategory['photoName'] = profile.name;
           this.newCategory['photoId'] = profile.id;
+          this.newCategory['photoOrginalName']=profile.originalFilename
           this.dialogRef.close(this.newCategory);
         })
       }
@@ -49,17 +56,15 @@ export class AddCategoryComponent implements OnInit {
   }
 
   editCategory(){
-    if(this.categoryName && (this.categoryName != this.data.category.name)){
+    if(this.categoryName && (this.categoryName != this.intialCategoryName)){
       this.appDriveService.updateCategory(this.categoryName,this.data.category).subscribe((res:any)=>{
         console.log(res,"added catregory")
         this.newCategory = res;
         if(this.file){
-            this.updateProfile(res.name,this.file)
+            this.updateProfile(this.categoryName,this.file)
         }else{
-          this.updateProfile(res.name)
+          this.updateProfile(this.categoryName)
         }
-       
-  
       })
      }else if(this.file){
       this.updateProfile(this.categoryName,this.file)

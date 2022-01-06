@@ -36,6 +36,7 @@ export class DeleteConfirmationDialog {
 export class ItemsListComponent implements OnInit {
   parentCategoryData:any 
   itemsList:any =[]
+  totalListItems:any 
   constructor(
     public dialog: MatDialog,
     public router: Router,
@@ -58,9 +59,19 @@ export class ItemsListComponent implements OnInit {
     this.appDriveService.getListOfItemsByCatgryId(state).subscribe((itemsList:any)=>{
       console.log(itemsList,"itemsList")
       this.itemsList = itemsList.files
+      this.totalListItems = JSON.parse(JSON.stringify(this.itemsList))
       if(this.itemsList.length){
         const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
         this.itemsList.splice(index,1)
+        let dummy = JSON.parse(JSON.stringify(this.itemsList))
+        let looper = dummy.filter((item:any)=> item.name.split('_')[1])
+         looper.forEach((val:any) => {
+         let mediaItem =  this.totalListItems.find((media:any)=> val.id == media.name)
+             val["mediaFileName"] = mediaItem?.originalFilename ?? ''
+             val["mediaId"] = mediaItem?.id ?? ''
+        });
+        this.itemsList = JSON.parse(JSON.stringify(looper))
+        console.log(this.itemsList,"this.itemsList")
       }
    })
   }

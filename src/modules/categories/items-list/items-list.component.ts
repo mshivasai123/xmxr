@@ -7,7 +7,12 @@ import { AppDriveService } from 'src/services/app-drive.service';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
-  <h4>Are you sure you want to delete?</h4>
+  <div class="d-flex mb-4 justify-content-between align-items-center">
+    <h5 class="mb-0 me-4">Are you sure you want to delete?</h5>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span>
+  </div>
 
   <div class="text-end mt-4">
     <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
@@ -78,7 +83,7 @@ export class ItemsListComponent implements OnInit {
 
   addItem(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      // width: '250px'
+      width: '500px',
       data: {
         title: 'Add Item', isEdit: false,
         parentId:  this.parentCategoryData.id
@@ -93,7 +98,8 @@ export class ItemsListComponent implements OnInit {
 
   editItem(item: any): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      data: { title: 'Edit Item', item: item, isEdit: true }
+      data: { title: 'Edit Item', item: item, isEdit: true },
+       width: '500px',
     });
     dialogRef.afterClosed().subscribe((load) => {
       if(load){
@@ -104,9 +110,9 @@ export class ItemsListComponent implements OnInit {
   }
 
   deleteItem(item:any,index:number) {
-    // this.dialog.open(DeleteConfirmationDialog, {
-
-    // })
+    this.dialog.open(DeleteConfirmationDialog, {
+      width: '500px',
+    })
 
     this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
       this.itemsList.splice(index,1)

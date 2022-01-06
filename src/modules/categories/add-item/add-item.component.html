@@ -1,7 +1,13 @@
 <div class="container-fluid">
-    <h5 class="mb-4">{{data?.title ? data.title : 'Item'}}</h5>
+    <!-- <h5 class="mb-4">{{data?.title ? data.title : 'Item'}}</h5> -->
+    <div class="d-flex mb-4 justify-content-between align-items-center">
+      <h5 class="mb-0">{{data?.title ? data.title : 'Category'}}</h5>
+      <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+        close
+      </span>
+    </div>
     <form>
-        <mat-form-field class="example-full-width" appearance="fill">
+        <mat-form-field class="example-full-width w-100" appearance="fill">
             <mat-label>Name</mat-label>
             <input matInput [(ngModel)]="itemName" name="itemName">
           </mat-form-field>

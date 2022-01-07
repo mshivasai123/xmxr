@@ -66,6 +66,19 @@ export class AppDriveService {
     return this.http.post(apiUrl, data, httpOptions);
   }
 
+  createPermission(fieldId:any){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token })
+    };
+    
+    var apiUrl = "https://www.googleapis.com/drive/v3/files/"+fieldId+"/permissions"
+    const data = {
+      role: "writer",
+      type: "anyone"
+    }
+    return this.http.post(apiUrl, data, httpOptions);
+  }
+
   uploadCategoryProfile(file: any, parentId: string, parentName: string) {
     const httpOptions = {
       headers: new HttpHeaders({

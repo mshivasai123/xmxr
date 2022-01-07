@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/services/login.service';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit  {
   title = 'xmxr';
-  constructor(public router:Router) { }
+  constructor(public router:Router,public loginService: LoginService) { }
   ngOnInit(): void {
+    this.loginService.handleClientLoad()
   }
 }

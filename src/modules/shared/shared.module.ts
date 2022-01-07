@@ -14,6 +14,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
   imports: [
     CommonModule,
     MaterialModule,
+    RouterModule,
     MatSidenavModule
   ],
   exports: [

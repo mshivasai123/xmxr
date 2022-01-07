@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/services/login.service';
 import { SharedService } from 'src/services/shared.service';
 import * as logoutApi from '../../../../assets/js/logout';
 
@@ -13,17 +14,21 @@ export class HeaderComponent implements OnInit {
   opened = false;
   constructor(
     public router: Router,
-    public sharedService: SharedService
+    public sharedService: SharedService,public loginService: LoginService
     ) { }
 
   ngOnInit(): void {
   }
 
   signOut() {
-    logoutApi.LogoutGoogleModule.logoutGoogle('xyz');
+    // logoutApi.LogoutGoogleModule.logoutGoogle('xyz');
+    this.loginService.handleSignoutClick()
+    this.router.navigate([''])
     this.isLoggedIn = false;
   }
+  navigateCat(){
+    this.router.navigate(['/categories'])
+  }
   loggedOut() {
-    this.router.navigate([''])
   }
 }

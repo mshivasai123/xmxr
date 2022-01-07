@@ -9,7 +9,7 @@ import { MaterialModule } from '../shared/material.module';
 import { FormsModule } from '@angular/forms';
 import { ViewItemMediaComponent } from './view-item-media/view-item-media.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
-
+import {ClipboardModule} from '@angular/cdk/clipboard';
 const routes: Routes = [
     {
         path :'',
@@ -46,6 +46,7 @@ const routes: Routes = [
     FormsModule,
     MaterialModule,
     NgxDocViewerModule,
+    ClipboardModule,
     RouterModule.forChild(routes)
   ],
  

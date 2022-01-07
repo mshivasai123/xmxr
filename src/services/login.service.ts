@@ -1,50 +1,62 @@
-// import * as $ from 'jquery';
-import * as apiKeys from '../../environments/googleConsole'
-function LoginGoogle() { }
-export const googleApis = gapi
-LoginGoogle.prototype.loginGoogle = function (options) {
-  // Client ID and API key from the Developer Console
-  var CLIENT_ID = apiKeys.CLIENT_ID;
-  var API_KEY = apiKeys.API_KEY;
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { googleApis } from 'src/assets/js/login';
+import * as apiKeys from '../environments/googleConsole'
+declare var gapi:any;
+let that:any
+@Injectable({
+  providedIn: 'root'
+})
+export class LoginService {
+// Client ID and API key from the Developer Console
+CLIENT_ID = apiKeys.CLIENT_ID;
+API_KEY = apiKeys.API_KEY;//API_KEY
 
-   // Array of API discovery doc URLs for APIs used by the quickstart
-   var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
+// gapi = googleApis
+// Array of API discovery doc URLs for APIs used by the quickstart
+ DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"];
 
-   // Authorization scopes required by the API; multiple scopes can be
-   // included, separated by spaces.
-   var SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata';
+// Authorization scopes required by the API; multiple scopes can be
+// included, separated by spaces.
+ SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata';
+  constructor(public router: Router) { }
+  
 
-   var authorizeButton = document.getElementById('authorize_button');
+    // authorizeButton = document.getElementById('authorize_button');
 //    var signoutButton = document.getElementById('signout_button');
-   handleClientLoad()
+  //  handleClientLoad()
    /**
     *  On load, called to load the auth2 library and API client library.
     */
-   function handleClientLoad() {
-     gapi.load('client:auth2', initClient);
+    handleClientLoad() {
+      console.log(this,"this")
+      that=this
+     gapi.load('client:auth2', this.initClient);
    }
 
    /**
     *  Initializes the API client library and sets up sign-in state
     *  listeners.
     */
-   function initClient() {
+    initClient() {
+      console.log( apiKeys.API_KEY," apiKeys.API_KEY")
      gapi.client.init({
-       apiKey: API_KEY,
-       clientId: CLIENT_ID,
-       discoveryDocs: DISCOVERY_DOCS,
-       scope: SCOPES
-     }).then(function (data) {
+       apiKey: apiKeys.API_KEY,
+       clientId: apiKeys.CLIENT_ID,
+       discoveryDocs: apiKeys.DISCOVERY_DOCS,
+       scope: apiKeys.SCOPES
+     }).then( (data:any)=> {
          console.log(data)
        // Listen for sign-in state changes.
-       gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+      //  console.log(that,"that",this,"this")
+       gapi.auth2.getAuthInstance().isSignedIn.listen(that.updateSigninStatus);
 
        // Handle the initial sign-in state.
-       updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-       authorizeButton.onclick = handleAuthClick;
+       that.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+      //  this.authorizeButton.onclick = handleAuthClick;
     //    signoutButton.onclick = handleSignoutClick;
-     }, function(error) {
-       appendPre(JSON.stringify(error, null, 2));
+     }, (error:any)=> {
+      //  appendPre(JSON.stringify(error, null, 2));
      });
    }
 
@@ -52,7 +64,7 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     *  Called when the signed in status changes, to update the UI
     *  appropriately. After a sign-in, the API is called.
     */
-   function updateSigninStatus(isSignedIn) {
+    updateSigninStatus(isSignedIn:any) {
      if (isSignedIn) {
     //    authorizeButton.style.display = 'none';
     //    signoutButton.style.display = 'block';
@@ -69,9 +81,10 @@ LoginGoogle.prototype.loginGoogle = function (options) {
        }
        localStorage.setItem('getBasicProfile',JSON.stringify(basicProfile))
        localStorage.setItem('getAuthResponse',JSON.stringify(gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse()))
-       document.getElementById('loggedin').click();
+      //  that.router.navigate(['/categories'])
+       document.getElementById('navCat')?.click();
     //    document.getElementById()
-       listFiles();
+    that.listFiles();
      } else {
     //    authorizeButton.style.display = 'block';
     //    signoutButton.style.display = 'none';
@@ -81,14 +94,14 @@ LoginGoogle.prototype.loginGoogle = function (options) {
    /**
     *  Sign in the user upon button click.
     */
-   function handleAuthClick(event) {
+    handleAuthClick() {
      gapi.auth2.getAuthInstance().signIn();
    }
 
    /**
     *  Sign out the user upon button click.
     */
-   function handleSignoutClick(event) {
+    handleSignoutClick() {
      gapi.auth2.getAuthInstance().signOut();
       localStorage.clear()
     sessionStorage.clear()
@@ -101,7 +114,7 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     *
     * @param {string} message Text to be placed in pre element.
     */
-   function appendPre(message) {
+    appendPre(message:any) {
     //  var pre = document.getElementById('content');
     //  var textContent = document.createTextNode(message + '\n');
     //  pre.appendChild(textContent);
@@ -110,12 +123,12 @@ LoginGoogle.prototype.loginGoogle = function (options) {
    /**
     * Print files.
     */
-   function listFiles() {
+    listFiles() {
      gapi.client.drive.files.list({
        'pageSize': 10,
        'fields': "nextPageToken, files(id, name)"
-     }).then(function(response) {
-       appendPre('Files:');
+     }).then((response:any)=> {
+      //  appendPre('Files:');
        var files = response.result.files;
     //    if (files && files.length > 0) {
     //      for (var i = 0; i < files.length; i++) {
@@ -127,10 +140,4 @@ LoginGoogle.prototype.loginGoogle = function (options) {
     //    }
      });
    }
-
 }
-
-var LoginGoogleModule = new LoginGoogle();
-export {
-    LoginGoogleModule
-};

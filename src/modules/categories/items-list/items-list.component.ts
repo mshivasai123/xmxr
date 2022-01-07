@@ -31,7 +31,47 @@ export class DeleteConfirmationDialog {
   }
 
 }
+@Component({
+  selector: 'share-dialog',
+  template: `
+  <div class="d-flex mb-4 justify-content-between align-items-center">
+    <h5 class="mb-0">Share</h5>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span>
+  </div>
 
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" [value]="data?.id" #userInput  aria-describedby="basic-addon2">
+    <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
+      <span class="material-icons"  (click)="copyInputMessage(userInput)">
+        content_copy
+      </span> 
+    </span>
+  </div>
+  `,
+})
+export class ShareDialog implements OnInit{
+  constructor(
+    public dialogRef: MatDialogRef<DeleteConfirmationDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { }
+
+  ngOnInit(): void {
+      console.log(this.data.id)
+  }
+  closeModel() {
+    this.dialogRef.close();
+  }
+  /* To copy Text from Textbox */
+  copyInputMessage(inputElement: any){
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+  }
+  
+
+}
 
 @Component({
   selector: 'app-items-list',
@@ -126,6 +166,15 @@ export class ItemsListComponent implements OnInit {
 
   openViewMedia(item:any){
     this.router.navigateByUrl('/categories/mediaview', { state: {id: item.id + 'item' + item.mediaId} })
+  }
+
+  shareCategory(item:any) {
+    this.dialog.open(ShareDialog, {
+      width: '500px',
+      data: {
+        id:  item.id + 'item' + item.mediaId
+      }
+    })
   }
 
 }

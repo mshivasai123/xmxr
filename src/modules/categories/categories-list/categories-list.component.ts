@@ -4,6 +4,7 @@ import { AppDriveService } from 'src/services/app-drive.service';
 import { AddCategoryComponent } from '../add-category/add-category.component';
 import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/services/shared.service';
 
 @Component({
   selector: 'delete-confirmation-dialog',
@@ -78,10 +79,12 @@ export class CategoriesListComponent implements OnInit {
     public dialog: MatDialog,
     public appDriveService: AppDriveService,
     public router: Router,
-    public changeDetector: ChangeDetectorRef
+    public changeDetector: ChangeDetectorRef,
+    public sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
+    this.sharedService.isUserLoggedIn()
     this.appDriveService.fetchUserFolder().subscribe((response: any) => {
       console.log(response, "data from user folder")
       if (!response.files.length) {
@@ -95,6 +98,7 @@ export class CategoriesListComponent implements OnInit {
         }
       }
     })
+    this.changeDetector.detectChanges()
   }
 
   createUserFolder() {

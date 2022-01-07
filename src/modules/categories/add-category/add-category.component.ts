@@ -40,6 +40,9 @@ export class AddCategoryComponent implements OnInit {
    if(this.data.parentId){
     this.appDriveService.createCategory(this.data.parentId,this.categoryName).subscribe((res:any)=>{
       console.log(res,"added catregory")
+      this.appDriveService.createPermission(res.id).subscribe((permision)=>{
+        console.log(permision,"permision");
+      })
       this.newCategory = res;
       if(this.file){
         this.appDriveService.uploadCategoryProfile(this.file,res.id,res.name).subscribe((profile:any)=>{

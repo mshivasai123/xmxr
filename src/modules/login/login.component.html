@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 mb-4" id="authorize_button">
-            <mat-card class="d-flex align-items-center justify-content-center" >Login</mat-card>
+            <mat-card class="d-flex align-items-center justify-content-center" (click)="loginGoogle()" >Login</mat-card>
         </div>
         <!-- <div class="col-md-3 mb-4" id="signout_button">
             <mat-card class="d-flex align-items-center justify-content-center" >Logout</mat-card>
@@ -21,7 +21,7 @@
                 <mat-card class="d-flex align-items-center justify-content-center">Test Your Model</mat-card>
             </a>
         </div>
-        <button id="loggedin" style="display: none;" (click)="logCategories()">create</button>
+        <!-- <button id="loggedin" style="display: none;" (click)="logCategories()">create</button> -->
     </div>
 
 </div>

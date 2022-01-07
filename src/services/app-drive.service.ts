@@ -185,7 +185,7 @@ export class AppDriveService {
       })
     };
     var metadata = {
-      'name': name,
+      'name': name+'medi@',
       'parents': [parentId], // Folder ID at Google Drive
       'mimeType': file.type
     };
@@ -262,6 +262,14 @@ export class AppDriveService {
     var apiUrl = 'https://www.googleapis.com/drive/v3/files/' + catId + '?key=' + API_KEY;
 
     return this.http.delete(apiUrl, httpOptions);
+  }
+
+  getFileById(id:string){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
+    };
+    var apiUrl = "https://www.googleapis.com/drive/v3/files/" + id + "?q=trashed=false&fields=*";//+ "&fields=*"
+    return this.http.get(apiUrl, httpOptions);
   }
 
 }

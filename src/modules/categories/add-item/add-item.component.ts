@@ -64,13 +64,18 @@ export class AddItemComponent implements OnInit {
   editCategory(){
     if((this.intialName != this.itemName) || this.file){
       this.appDriveService.upDateItem(this.itemName,this.data.item,this.file).subscribe((item:any)=>{
-        this.dialogRef.close(true);
+        // this.dialogRef.close(true);
       })
     }
-    if(this.mediaFile){
+    if(this.mediaFile && this.data.item.mediaId){
       this.appDriveService.updateMedia(this.mediaFile,this.data.item).subscribe((item:any)=>{
         this.dialogRef.close(true);
       })
+    }else if(this.mediaFile){
+      this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,this.data.item.id).subscribe((media: any)=>{
+        console.log(media,"mediaData")
+        this.dialogRef.close(true);
+       })
     }
   }
 

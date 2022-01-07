@@ -122,7 +122,7 @@ export class CategoriesListComponent implements OnInit {
        this.categoriesList.forEach((category: any) => {
         this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
          console.log(profile,"profile")
-         category['profilePhoto'] = profile?.files[0]?.thumbnailLink;
+         category['profilePhoto'] = profile?.files[0]?.webContentLink;
          category['photoName'] = profile?.files[0]?.name;
          category['photoId'] = profile?.files[0]?.id;
          category['photoOrginalName']=profile?.files[0]?.originalFilename

@@ -8,6 +8,7 @@ import { AddItemComponent } from './add-item/add-item.component';
 import { MaterialModule } from '../shared/material.module';
 import { FormsModule } from '@angular/forms';
 import { ViewItemMediaComponent } from './view-item-media/view-item-media.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 const routes: Routes = [
     {
@@ -25,6 +26,10 @@ const routes: Routes = [
     {
         path :'add-item',
         component: AddItemComponent
+    },
+    {
+        path :'mediaview',
+        component: ViewItemMediaComponent
     }
 ];
 
@@ -40,6 +45,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     MaterialModule,
+    NgxDocViewerModule,
     RouterModule.forChild(routes)
   ],
  

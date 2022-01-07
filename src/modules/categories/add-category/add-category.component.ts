@@ -44,7 +44,7 @@ export class AddCategoryComponent implements OnInit {
       if(this.file){
         this.appDriveService.uploadCategoryProfile(this.file,res.id,res.name).subscribe((profile:any)=>{
           console.log(profile,"profiledata")
-          this.newCategory['profilePhoto'] = profile.thumbnailLink
+          this.newCategory['profilePhoto'] = profile.webContentLink
           this.newCategory['photoName'] = profile.name;
           this.newCategory['photoId'] = profile.id;
           this.newCategory['photoOrginalName']=profile.originalFilename

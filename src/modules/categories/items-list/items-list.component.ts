@@ -69,9 +69,9 @@ export class ItemsListComponent implements OnInit {
         const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
         this.itemsList.splice(index,1)
         let dummy = JSON.parse(JSON.stringify(this.itemsList))
-        let looper = dummy.filter((item:any)=> item.name.split('_')[1])
+        let looper = dummy.filter((item:any)=> !item?.name?.includes('medi@'))
          looper.forEach((val:any) => {
-         let mediaItem =  this.totalListItems.find((media:any)=> val.id == media.name)
+         let mediaItem =  this.totalListItems.find((media:any)=> val.id == media?.name?.split('medi@')[0])
              val["mediaFileName"] = mediaItem?.originalFilename ?? ''
              val["mediaId"] = mediaItem?.id ?? ''
         });
@@ -98,7 +98,7 @@ export class ItemsListComponent implements OnInit {
 
   editItem(item: any): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      data: { title: 'Edit Item', item: item, isEdit: true },
+      data: { title: 'Edit Item', item: item,parentId:  this.parentCategoryData.id, isEdit: true },
        width: '500px',
     });
     dialogRef.afterClosed().subscribe((load) => {
@@ -110,9 +110,9 @@ export class ItemsListComponent implements OnInit {
   }
 
   deleteItem(item:any,index:number) {
-    this.dialog.open(DeleteConfirmationDialog, {
-      width: '500px',
-    })
+    // this.dialog.open(DeleteConfirmationDialog, {
+    //   width: '500px',
+    // })
 
     this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
       this.itemsList.splice(index,1)
@@ -122,6 +122,10 @@ export class ItemsListComponent implements OnInit {
 
   bactToCategories(){
     this.router.navigate(['/categories'])
+  }
+
+  openViewMedia(item:any){
+    this.router.navigateByUrl('/categories/mediaview', { state: {id: item.id + 'item' + item.mediaId} })
   }
 
 }

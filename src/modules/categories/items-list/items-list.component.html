@@ -13,8 +13,8 @@
         <ng-container *ngIf="itemsList?.length">
             <div *ngFor="let items of itemsList;let i=index"
                 class="list-item position-relative mb-4 py-2 px-4 d-md-flex align-items-center justify-content-center">
-                <div class="list-item-info d-md-flex py-3 flex-grow-1">
-                    <img [src]="items.thumbnailLink" class="position-md-absolute" alt="category" />
+                <div class="list-item-info d-md-flex py-3 flex-grow-1" (click)="openViewMedia(items)">
+                    <img [src]="items.webContentLink" class="position-md-absolute" alt="category" />
                     <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
                         <h5 class="m-0 f-11">{{items?.name?.split('_')[1]}}</h5>
                     </div>

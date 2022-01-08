@@ -10,6 +10,7 @@ import { FormsModule } from '@angular/forms';
 import { ViewItemMediaComponent } from './view-item-media/view-item-media.component';
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import {ClipboardModule} from '@angular/cdk/clipboard';
+import { SharedModule } from '../shared/shared.module';
 const routes: Routes = [
     {
         path :'',
@@ -45,6 +46,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     MaterialModule,
+    SharedModule,
     NgxDocViewerModule,
     ClipboardModule,
     RouterModule.forChild(routes)

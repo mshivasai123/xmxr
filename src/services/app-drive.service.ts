@@ -285,4 +285,27 @@ export class AppDriveService {
     return this.http.get(apiUrl, httpOptions);
   }
 
+  getItemsListByToken(id:string){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
+    };
+    var apiUrl = "https://www.googleapis.com/drive/v2/files/" + id + "/children?q=trashed=false&fields=*";
+    return this.http.get(apiUrl, httpOptions);
+  }
+
+  getItemByItemId(id:any){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
+    };
+    var apiUrl = "https://www.googleapis.com/drive/v3/files/" + id + "?q=trashed=false&fields=*";
+    return this.http.get(apiUrl, httpOptions);
+  }
+
+  getAuthResponse(){
+    this.authResponse= JSON.parse(localStorage.getItem('getAuthResponse') as any)
+    this.getBasicProfile= JSON.parse(localStorage.getItem('getBasicProfile') as any)
+  }
+
+  
+
 }

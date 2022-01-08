@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AddItemComponent } from '../add-item/add-item.component';
 import { Location } from '@angular/common';
 import { AppDriveService } from 'src/services/app-drive.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
@@ -92,8 +93,23 @@ export class ItemsListComponent implements OnInit {
   ngOnInit(): void {
     console.log(this.location.getState())
     let state: any = this.location.getState()
+    this.parentCategoryData = state
     if(state?.id){
-      this.parentCategoryData = state
+      if(sessionStorage.getItem("isAccessToken") == "true"){
+        this.appDriveService.getItemsListByToken(state.id).subscribe((res:any)=>{
+          console.log(res,"res")
+          if(res.items.length){
+            const requestArray = res.items.map((val:any)=> this.appDriveService.getItemByItemId(val.id))
+            forkJoin(requestArray).subscribe(results => {
+              console.log(results,"forkJoin");
+              this.itemsList = results
+              this.totalListItems = JSON.parse(JSON.stringify(this.itemsList))
+              this.renderListItems(state)
+            });
+          }
+          
+        })
+      }
       this.getItemsList(state)
     }else{
       this.router.navigate(['/categories'])
@@ -105,20 +121,24 @@ export class ItemsListComponent implements OnInit {
       console.log(itemsList,"itemsList")
       this.itemsList = itemsList.files
       this.totalListItems = JSON.parse(JSON.stringify(this.itemsList))
-      if(this.itemsList.length){
-        const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
-        this.itemsList.splice(index,1)
-        let dummy = JSON.parse(JSON.stringify(this.itemsList))
-        let looper = dummy.filter((item:any)=> !item?.name?.includes('medi@'))
-         looper.forEach((val:any) => {
-         let mediaItem =  this.totalListItems.find((media:any)=> val.id == media?.name?.split('medi@')[0])
-             val["mediaFileName"] = mediaItem?.originalFilename ?? ''
-             val["mediaId"] = mediaItem?.id ?? ''
-        });
-        this.itemsList = JSON.parse(JSON.stringify(looper))
-        console.log(this.itemsList,"this.itemsList")
-      }
+      this.renderListItems(state)
    })
+  }
+
+  renderListItems(state:any){
+    if(this.itemsList.length){
+      const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
+      this.itemsList.splice(index,1)
+      let dummy = JSON.parse(JSON.stringify(this.itemsList))
+      let looper = dummy.filter((item:any)=> !item?.name?.includes('medi@'))
+       looper.forEach((val:any) => {
+       let mediaItem =  this.totalListItems.find((media:any)=> val.id == media?.name?.split('medi@')[0])
+           val["mediaFileName"] = mediaItem?.originalFilename ?? ''
+           val["mediaId"] = mediaItem?.id ?? ''
+      });
+      this.itemsList = JSON.parse(JSON.stringify(looper))
+      console.log(this.itemsList,"this.itemsList")
+    }
   }
 
   addItem(): void {
@@ -165,14 +185,14 @@ export class ItemsListComponent implements OnInit {
   }
 
   openViewMedia(item:any){
-    this.router.navigateByUrl('/categories/mediaview', { state: {id: item.id + 'item' + item.mediaId} })
+    this.router.navigateByUrl('/categories/mediaview', { state: {id: item.id + 'it@m' + item.mediaId} })
   }
 
   shareCategory(item:any) {
     this.dialog.open(ShareDialog, {
       width: '500px',
       data: {
-        id:  item.id + 'item' + item.mediaId
+        id:  item.id + 'it@m' + item.mediaId
       }
     })
   }

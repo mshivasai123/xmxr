@@ -44,9 +44,9 @@ export class DeleteConfirmationDialog {
   </div>
 
   <div class="input-group mb-3">
-    <input type="text" class="form-control" value="sdfuoiewnfsdfsfdsf" disabled aria-describedby="basic-addon2">
+    <input type="text" class="form-control" [value]="data?.id" #userInput aria-describedby="basic-addon2">
     <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
-      <span class="material-icons">
+      <span class="material-icons" (click)="copyInputMessage(userInput)">
         content_copy
       </span> 
     </span>
@@ -63,6 +63,12 @@ export class ShareDialog {
     this.dialogRef.close();
   }
 
+  /* To copy Text from Textbox */
+  copyInputMessage(inputElement: any){
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
+  }
 }
 
 
@@ -70,7 +76,7 @@ export class ShareDialog {
   selector: 'app-categories-list',
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss'],
-  providers: [AppDriveService]
+  // providers: [AppDriveService]
 })
 export class CategoriesListComponent implements OnInit {
   userFolderData: any;
@@ -84,7 +90,6 @@ export class CategoriesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.sharedService.isUserLoggedIn()
     this.appDriveService.fetchUserFolder().subscribe((response: any) => {
       console.log(response, "data from user folder")
       if (!response.files.length) {
@@ -178,9 +183,12 @@ export class CategoriesListComponent implements OnInit {
     this.router.navigateByUrl('/categories/items', { state: category })
   }
 
-  shareCategory() {
+  shareCategory(categorie:any) {
     this.dialog.open(ShareDialog, {
-      width: '500px'
+      width: '500px',
+      data: {
+        id:  categorie.id + 'c@TG' + categorie.name
+      }
     })
   }
 

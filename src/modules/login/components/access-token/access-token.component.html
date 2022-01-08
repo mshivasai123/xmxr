@@ -2,8 +2,8 @@
     <h5 class="mb-3">Enter Access Token</h5>
     <!-- <div> -->
         <div class="input-group mb-3">
-            <input type="text" class="form-control shadow-none py-3 rounded-0" aria-describedby="basic-addon2">
-            <button class="input-group-text btn btn-dark rounded-0 shadow-none" id="basic-addon2">Go</button>
+            <input type="text" name="accessToken" [(ngModel)]="accessToken" class="form-control shadow-none py-3 rounded-0" aria-describedby="basic-addon2">
+            <button class="input-group-text btn btn-dark rounded-0 shadow-none" id="basic-addon2" (click)="goToAccess()">Go</button>
           </div>
     <!-- </div> -->
 </div>

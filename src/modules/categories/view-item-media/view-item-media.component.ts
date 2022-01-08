@@ -21,7 +21,7 @@ export class ViewItemMediaComponent implements OnInit {
 
   ngOnInit(): void {
     let state: any = this.location.getState()
-    this.mediaId = state?.id?.split('item')[1]
+    this.mediaId = state?.id?.split('it@m')[1]
     if (state?.id && this.mediaId) {
       console.log(state, "state")
       this.appDriveService.getFileById(this.mediaId).subscribe((media: any) => {

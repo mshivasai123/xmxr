@@ -7,6 +7,7 @@ import { DemoModalsComponent } from './components/demo-modals/demo-modals.compon
 import { TestModalComponent } from './components/test-modal/test-modal.component';
 import { AccessTokenComponent } from './components/access-token/access-token.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
+    FormsModule,
     RouterModule.forChild(routes)
   ]
 })

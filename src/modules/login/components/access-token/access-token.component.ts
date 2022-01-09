@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppDriveService } from 'src/services/app-drive.service';
+import { LoginService } from 'src/services/login.service';
 
 @Component({
   selector: 'app-access-token',
@@ -9,12 +10,16 @@ import { AppDriveService } from 'src/services/app-drive.service';
 })
 export class AccessTokenComponent implements OnInit {
   accessToken = ""
-  constructor(public router: Router,public appDriveService:AppDriveService) { }
+  constructor(public router: Router,public appDriveService:AppDriveService,public loginService:LoginService) { }
 
   ngOnInit(): void {
   }
 
   goToAccess(){
+    this.loginService.handleAuthClick(true)
+  }
+
+  navigateAccess(){
     this.appDriveService.getAuthResponse()
     if(this.accessToken){
       if(this.accessToken.includes('it@m')){

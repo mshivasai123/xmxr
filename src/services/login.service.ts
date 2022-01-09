@@ -88,7 +88,7 @@ export class LoginService {
         document.getElementById('navCat')?.click();
       }
       //    document.getElementById()
-      that.listFiles();
+      // that.listFiles();
     } else {
       //    authorizeButton.style.display = 'block';
       //    signoutButton.style.display = 'none';
@@ -134,10 +134,10 @@ export class LoginService {
    */
   listFiles() {
     gapi.client.drive.files.list({
-      'pageSize': 10,
-      'fields': "nextPageToken, files(id, name)"
+      'fields': "*"
     }).then((response: any) => {
       //  appendPre('Files:');
+      console.log(response,"response admin files")
       var files = response.result.files;
       //    if (files && files.length > 0) {
       //      for (var i = 0; i < files.length; i++) {

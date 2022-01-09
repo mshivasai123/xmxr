@@ -35,8 +35,5 @@ export class HeaderComponent implements OnInit {
   loggedOut() {
   }
 
-  navigateAccess(){
-    this.appDriveService.getAuthResponse()
-    this.router.navigate(['/access-token'])
-  }
+ 
 }

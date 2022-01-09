@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   loginWithAccessToken(){
-    this.loginService.handleAuthClick(true)
   }
 
   // logCategories(){

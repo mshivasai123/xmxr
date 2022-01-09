@@ -5,6 +5,7 @@ import { AddItemComponent } from '../add-item/add-item.component';
 import { Location } from '@angular/common';
 import { AppDriveService } from 'src/services/app-drive.service';
 import { forkJoin } from 'rxjs';
+import { SharedService } from 'src/services/shared.service';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
@@ -16,8 +17,8 @@ import { forkJoin } from 'rxjs';
   </div>
 
   <div class="text-end mt-4">
-    <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
-    <button class="btn btn-primary">Delete</button>
+    <button class="btn me-3 btn-outline-primary" (click)="closeModel(false)">Cancel</button>
+    <button class="btn btn-primary" (click)="closeModel(true)">Delete</button>
   </div>
   `,
 })
@@ -27,8 +28,8 @@ export class DeleteConfirmationDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
-  closeModel() {
-    this.dialogRef.close();
+  closeModel(del:boolean) {
+    this.dialogRef.close(del);
   }
 
 }
@@ -88,6 +89,7 @@ export class ItemsListComponent implements OnInit {
     public router: Router,
     private location:Location,
     public appDriveService: AppDriveService,
+    public sharedService:SharedService
   ) { }
 
   ngOnInit(): void {
@@ -170,13 +172,19 @@ export class ItemsListComponent implements OnInit {
   }
 
   deleteItem(item:any,index:number) {
-    // this.dialog.open(DeleteConfirmationDialog, {
-    //   width: '500px',
-    // })
+    const dialogRef =this.dialog.open(DeleteConfirmationDialog, {
+      width: '500px',
+    })
 
-    this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
-      this.itemsList.splice(index,1)
-     })
+    dialogRef.afterClosed().subscribe((load) => {
+      if(load){
+        this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
+          this.itemsList.splice(index,1)
+         })
+     }
+   });
+
+   
 
   }
 

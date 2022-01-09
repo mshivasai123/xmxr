@@ -1,7 +1,7 @@
 <div class="container">
     <div class="category-header d-flex justify-content-between">
         <h4>All Categories</h4>
-        <button class="btn btn-primary rounded-0" (click)="addCategory()">Add Category</button>
+        <button class="btn btn-primary rounded-0" (click)="addCategory()" *ngIf="sharedService.checkAccessTokenUser()">Add Category</button>
     </div>
 
     <div class="list-wrapper mt-4">

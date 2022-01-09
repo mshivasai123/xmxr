@@ -27,4 +27,9 @@ export class SharedService {
     return userName;
   }
 
+  checkAccessTokenUser() {
+    let permission = sessionStorage.getItem("isAccessToken");
+    return !permission;
+  }
+
 }

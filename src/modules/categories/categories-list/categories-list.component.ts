@@ -16,8 +16,8 @@ import { SharedService } from 'src/services/shared.service';
     </span>
   </div>
   <div class="text-end mt-4">
-    <button class="btn me-3 btn-outline-primary" (click)="closeModel()">Cancel</button>
-    <button class="btn btn-primary" (click)="closeModel()">Delete</button>
+    <button class="btn me-3 btn-outline-primary" (click)="closeModel(false)">Cancel</button>
+    <button class="btn btn-primary" (click)="closeModel(true)">Delete</button>
   </div>
   `,
 })
@@ -27,8 +27,8 @@ export class DeleteConfirmationDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
-  closeModel() {
-    this.dialogRef.close();
+  closeModel(del:boolean) {
+    this.dialogRef.close(del);
   }
 }
 
@@ -107,21 +107,23 @@ export class CategoriesListComponent implements OnInit {
   }
 
   createUserFolder() {
-    this.appDriveService.createUserFolderInSharedFolder().subscribe((response: any) => {
-      console.log(response, "res")
-      this.userFolderData = response
-      response.permissions.forEach((permission: any) => {
-        if (permission.emailAddress != ClientMail && permission.role != "owner") {
-          this.appDriveService.deletePermission(response.id, permission.id).subscribe((res) => {
-            console.log("deleted")
-          }, (err) => {
-            console.log(err)
-          })
-        }
-      });
-    }, (err) => {
-      console.log(err)
-    })
+    if(!sessionStorage.getItem("isAccessToken")){
+      this.appDriveService.createUserFolderInSharedFolder().subscribe((response: any) => {
+        console.log(response, "res")
+        this.userFolderData = response
+        response.permissions.forEach((permission: any) => {
+          if (permission.emailAddress != ClientMail && permission.role != "owner") {
+            this.appDriveService.deletePermission(response.id, permission.id).subscribe((res) => {
+              console.log("deleted")
+            }, (err) => {
+              console.log(err)
+            })
+          }
+        });
+      }, (err) => {
+        console.log(err)
+      })
+    }
   }
 
   getCategoriesList(){
@@ -169,14 +171,18 @@ export class CategoriesListComponent implements OnInit {
   }
 
   deleteCategory(category: any,index:number) {
-    // this.dialog.open(DeleteConfirmationDialog, {
-    //   width: '500px'
+    const dialogRef = this.dialog.open(DeleteConfirmationDialog, {
+      width: '500px'
 
-    // })
+    })
+    dialogRef.afterClosed().subscribe((load) => {
+      if(load){
+        this.appDriveService.deleteCategory(category.id).subscribe((categoryDel:any)=>{
+          this.categoriesList.splice(index,1)
+         })
+     }
+   });
     
-    this.appDriveService.deleteCategory(category.id).subscribe((categoryDel:any)=>{
-      this.categoriesList.splice(index,1)
-     })
   }
 
   listItems(category: any){

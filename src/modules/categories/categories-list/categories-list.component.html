@@ -11,7 +11,7 @@
                 <img [src]="categories.profilePhoto" class="position-md-absolute" alt="category" />
                 <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
                     <h5 class="m-0 f-11">{{categories.name.split('_')[1]}}</h5>
-                    <span class="f-7">30 items</span>
+                    <span class="f-7">{{categories?.items ?? 0}} items</span>
                 </div>
             </div>
             <div class="action-buttons text-center pb-3 pb-md-0">

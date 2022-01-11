@@ -5,6 +5,7 @@ import { AddCategoryComponent } from '../add-category/add-category.component';
 import { ClientMail, D2f_User_Data } from 'src/environments/googleConsole';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/services/shared.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'delete-confirmation-dialog',
@@ -90,6 +91,25 @@ export class CategoriesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+   let getBasicProfile: any = JSON.parse(localStorage.getItem('getBasicProfile') as any)
+   if(ClientMail == getBasicProfile.Email){
+    this.appDriveService.fetchAllUserFolder().subscribe((response: any) => {
+      console.log(response,"eachusers for admin")
+      if(response.files.length){
+        let listOfCatgoriesAllUsers:any = []
+        const requestArray = response.files.map((val:any)=> this.appDriveService.getListOfCategoriesByParentId(val.id))
+        forkJoin(requestArray).subscribe((results:any) => {
+          console.log(results,"forkJoin");
+          results.forEach((categories:any) => {
+            listOfCatgoriesAllUsers.push(...categories.files)
+          });
+          console.log(listOfCatgoriesAllUsers,"listOfCatgoriesAllUsers")
+          this.categoriesList = listOfCatgoriesAllUsers
+          this.finalDataRendering()
+        });
+      }
+    })
+   }else{
     this.appDriveService.fetchUserFolder().subscribe((response: any) => {
       console.log(response, "data from user folder")
       if (!response.files.length) {
@@ -104,6 +124,8 @@ export class CategoriesListComponent implements OnInit {
       }
     })
     this.changeDetector.detectChanges()
+   }
+  
   }
 
   createUserFolder() {
@@ -130,17 +152,30 @@ export class CategoriesListComponent implements OnInit {
     this.appDriveService.getListOfCategoriesByParentId(this.userFolderData.id).subscribe((categories:any)=>{
        console.log(categories,"categories")
        this.categoriesList = categories.files
-       this.categoriesList.forEach((category: any) => {
-        this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
-         console.log(profile,"profile")
-         category['profilePhoto'] = profile?.files[0]?.webContentLink;
-         category['photoName'] = profile?.files[0]?.name;
-         category['photoId'] = profile?.files[0]?.id;
-         category['photoOrginalName']=profile?.files[0]?.originalFilename
-         this.changeDetector.detectChanges();
-        })
-       });
+       this.finalDataRendering()
     })
+  }
+
+  finalDataRendering(){
+    this.categoriesList.forEach((category: any) => {
+      this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
+       console.log(profile,"profile")
+       category['profilePhoto'] = profile?.files[0]?.webContentLink;
+       category['photoName'] = profile?.files[0]?.name;
+       category['photoId'] = profile?.files[0]?.id;
+       category['photoOrginalName']=profile?.files[0]?.originalFilename
+       this.changeDetector.detectChanges();
+      })
+      this.appDriveService.getListOfItemsByCatgryId(category).subscribe((itemsList:any)=>{
+        console.log(itemsList,"itemsList")
+        if(itemsList.files.length){
+          const index = itemsList.files.findIndex((item:any)=> item.name.split('_')[0] == category.name.split('_')[0] )
+          itemsList.files.splice(index,1)
+          let dummy = JSON.parse(JSON.stringify(itemsList.files))
+          category["items"] = dummy.filter((item:any)=> !item?.name?.includes('model')).length
+        }
+     })
+     });
   }
 
   addCategory(): void {

@@ -8,6 +8,8 @@ import { TestModalComponent } from './components/test-modal/test-modal.component
 import { AccessTokenComponent } from './components/access-token/access-token.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
 import { FormsModule } from '@angular/forms';
+import { ViewModalComponent } from './components/view-modal/view-modal.component';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 const routes: Routes = [
   {
@@ -29,6 +31,10 @@ const routes: Routes = [
   {
     path: 'test-model',
     component: TestModalComponent
+  },
+  {
+    path: 'view-modal',
+    component: ViewModalComponent
   }
 ];
 
@@ -38,12 +44,14 @@ const routes: Routes = [
     DemoModalsComponent,
     TestModalComponent,
     AccessTokenComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    ViewModalComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
+    NgxDocViewerModule,
     RouterModule.forChild(routes)
   ]
 })

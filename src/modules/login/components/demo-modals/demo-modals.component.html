@@ -2,9 +2,9 @@
     <h5 class="mb-3">Demo Models</h5>
     <ng-container *ngIf="itemsList?.length">
         <div class="row" >
-            <div class="col-md-4 mb-4" *ngFor="let item of itemsList">
+            <div class="col-md-4 mb-4" *ngFor="let item of itemsList" (click)="naviagteToPreview(item)">
                 <div class="card">
-                    <img [src]="item.webContentLink" class="card-img-top" alt="test">
+                    <img [src]="item.url" class="card-img-top" alt="test">
                     <div class="card-body">
                         <p class="card-text">{{item.name}}</p>
                     </div>

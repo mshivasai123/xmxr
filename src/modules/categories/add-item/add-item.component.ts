@@ -24,17 +24,17 @@ export class AddItemComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.data?.isEdit){
-      this.intialName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
-      this.itemName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1]))
-      this.fileName = this.data.item.originalFilename
-      this.mediaFileName = this.data.item.mediaFileName
+      this.intialName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1].split('.')[0]))
+      this.itemName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1].split('.')[0]))
+      this.fileName = this.itemName + "." +this.data.item.originalFilename.split('.')[1]
+      this.mediaFileName = this.itemName + "." +this.data.item.mediaFileName.split('.')[1]
     }
   }
 
   profileUpload(event:any){
     console.log(event.target.files[0])
     this.file = event.target.files[0]
-    this.fileName = this.file.name
+    this.fileName =  this.itemName + "." +this.file.name.split('.')[1]
   }
 
   save(){
@@ -50,7 +50,7 @@ export class AddItemComponent implements OnInit {
           console.log(item,"item")
           this.newItem = item
           if(this.mediaFile){
-            this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,item.id).subscribe((media: any)=>{
+            this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,item.name).subscribe((media: any)=>{
              console.log(media,"mediaData")
              this.newItem["mediaFileName"] = media.originalFilename
              this.newItem["mediaId"] = media.id
@@ -65,24 +65,32 @@ export class AddItemComponent implements OnInit {
     if((this.intialName != this.itemName) || this.file){
       this.appDriveService.upDateItem(this.itemName,this.data.item,this.file).subscribe((item:any)=>{
         // this.dialogRef.close(true);
+        this.updateMediaData(item)
       })
+    }else if(this.mediaFile) {
+      this.updateMediaData(this.data.item)
     }
-    if(this.mediaFile && this.data.item.mediaId){
-      this.appDriveService.updateMedia(this.mediaFile,this.data.item).subscribe((item:any)=>{
+   
+  }
+  updateMediaData(newItem:any){
+    if(this.data.item.mediaId){
+      this.appDriveService.updateMedia(this.data.item,this.mediaFile,newItem).subscribe((item:any)=>{
         this.dialogRef.close(true);
       })
     }else if(this.mediaFile){
-      this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,this.data.item.id).subscribe((media: any)=>{
+      this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,newItem.name).subscribe((media: any)=>{
         console.log(media,"mediaData")
         this.dialogRef.close(true);
        })
+    }else {
+      this.dialogRef.close(true);
     }
   }
 
   uploadmediaData(event:any){
     console.log(event.target.files[0])
     this.mediaFile = event.target.files[0]
-    this.mediaFileName = this.mediaFile.name
+    this.mediaFileName = this.itemName + "." + this.mediaFile.name.split('.')[1]
   }
 
 }

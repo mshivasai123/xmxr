@@ -132,9 +132,9 @@ export class ItemsListComponent implements OnInit {
       const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
       this.itemsList.splice(index,1)
       let dummy = JSON.parse(JSON.stringify(this.itemsList))
-      let looper = dummy.filter((item:any)=> !item?.name?.includes('medi@'))
+      let looper = dummy.filter((item:any)=> !item?.name?.includes('model'))
        looper.forEach((val:any) => {
-       let mediaItem =  this.totalListItems.find((media:any)=> val.id == media?.name?.split('medi@')[0])
+       let mediaItem =  this.totalListItems.find((media:any)=> media.name.includes(val.name.split('.')[0]+'model'))
            val["mediaFileName"] = mediaItem?.originalFilename ?? ''
            val["mediaId"] = mediaItem?.id ?? ''
       });
@@ -153,7 +153,9 @@ export class ItemsListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((newItem) => {
       if(newItem){
-        this.itemsList.push(newItem)
+        // this.itemsList.push(newItem)
+       let state: any = this.location.getState()
+        this.getItemsList(state)
       }
     });
   }

@@ -24,7 +24,7 @@ export class AddCategoryComponent implements OnInit {
     if(this.data?.isEdit){
       this.categoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
       this.intialCategoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
-      this.fileName = this.data.category.photoOrginalName
+      this.fileName = this.categoryName + '.' + this.data.category.photoOrginalName.split('.')[1]
     }
   }
   save(){
@@ -88,7 +88,7 @@ export class AddCategoryComponent implements OnInit {
   profileUpload(event:any){
      console.log(event)
      this.file = event.target.files[0]
-     this.fileName = this.file.name
+     this.fileName = this.categoryName + '.'+ this.file.name.split('.')[1]
   }
 
 }

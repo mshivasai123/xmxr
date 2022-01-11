@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { API_KEY, categoryUnqueCode, D2f_User_Data } from 'src/environments/googleConsole';
-import { UUID } from 'angular2-uuid';
+import { API_KEY, D2f_User_Data } from 'src/environments/googleConsole';
 
 @Injectable({
   providedIn: 'root'
@@ -46,7 +44,16 @@ export class AppDriveService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
     };
     // console.log(data, "data")
-    var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=name='" + this.getBasicProfile.Email + "'&parents='"+D2f_User_Data + "' and trashed=false&fields=*";
+    var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=name='" + this.getBasicProfile.Email + "'&parents='" + D2f_User_Data + "' and trashed=false&fields=*";
+    return this.http.get(apiUrl, httpOptions);
+  }
+
+  fetchAllUserFolder(){
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
+    };
+    // console.log(data, "data")
+    var apiUrl = "https://www.googleapis.com/drive/v3/files" + "?key=" + API_KEY + "&q=parents='" + D2f_User_Data + "' and trashed=false&fields=*";
     return this.http.get(apiUrl, httpOptions);
   }
 
@@ -54,7 +61,7 @@ export class AppDriveService {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token })
     };
-    let uuid = UUID.UUID();
+    let uuid = 'CAT'+Date.now()//this.generateID()//UUID.UUID();
     // console.log(data, "data")
     var apiUrl = 'https://www.googleapis.com/drive/v3/files?key=' + API_KEY + '&fields=*';
     const data = {
@@ -66,12 +73,12 @@ export class AppDriveService {
     return this.http.post(apiUrl, data, httpOptions);
   }
 
-  createPermission(fieldId:any){
+  createPermission(fieldId: any) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token })
     };
-    
-    var apiUrl = "https://www.googleapis.com/drive/v3/files/"+fieldId+"/permissions"
+
+    var apiUrl = "https://www.googleapis.com/drive/v3/files/" + fieldId + "/permissions"
     const data = {
       role: "writer",
       type: "anyone"
@@ -109,17 +116,17 @@ export class AppDriveService {
     if (file) {
       let extension = file.name.split('.')
       metadata = {
-        'name': name?`${category.name.split('_')[0]}_${name}.${extension[extension.length - 1 ?? '']}`:category.photoName,
+        'name':`${category.name.split('_')[0]}_${name}.${extension[extension.length - 1]}`,
         'mimeType': file.type
       };
     } else {
       let extension = category.photoName.split('.')
       metadata = {
-        'name': `${category.name.split('_')[0]}_${name}.${extension[extension.length - 1 ?? '']}`
+        'name': `${category.name.split('_')[0]}_${name}.${extension[extension.length - 1]}`
       };
     }
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-    if(file){
+    if (file) {
       form.append('file', file);
     }
     var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + category.photoId + '?uploadType=multipart'
@@ -178,9 +185,9 @@ export class AppDriveService {
       })
     };
     let extension = file.name.split('.')
-    let uuid = UUID.UUID();
+    let uuid = 'ITM'+Date.now()//this.generateID();
     var metadata = {
-      'name': `${uuid}_${itemName}_.${extension[extension.length - 1 ?? '']}`,
+      'name': `${uuid}_${itemName}.${extension[extension.length - 1]}`,
       'parents': [parentId], // Folder ID at Google Drive
       'mimeType': file.type
     };
@@ -191,14 +198,16 @@ export class AppDriveService {
     return this.http.post(apiUrl, form, httpOptions);
   }
 
-  createMediaFile(file: any, parentId: any,name:any){
+  createMediaFile(file: any, parentId: any, name: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.authResponse.access_token
       })
     };
+    let extension = file.name.split('.')
+    let itemName = name.split('.')[0]
     var metadata = {
-      'name': name+'medi@',
+      'name': `${itemName}model.${extension[extension.length - 1]}` ,
       'parents': [parentId], // Folder ID at Google Drive
       'mimeType': file.type
     };
@@ -209,24 +218,36 @@ export class AppDriveService {
     return this.http.post(apiUrl, form, httpOptions);
   }
 
-  updateMedia(file:any,item:any){
+  updateMedia( item: any,file: any,newItem:any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.authResponse.access_token
       })
     };
     let metadata
-       metadata = {
+    let itemName = newItem.name.split('.')[0]
+    if (file) {
+      let extension = file.name.split('.')
+      metadata = {
+        'name':`${itemName}model.${extension[extension.length - 1]}`,
         'mimeType': file.type
       };
+    } else {
+      let extension = item.mediaFileName.split('.')
+      metadata = {
+        'name': `${itemName}model.${extension[extension.length - 1]}`
+      };
+    }
     let form = new FormData();
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    if(file){
       form.append('file', file);
+    }
     var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + item.mediaId + '?uploadType=multipart'
     return this.http.patch(apiUrl, form, httpOptions);
   }
 
-  upDateItem(name:any,item:any,file?:any){
+  upDateItem(name: any, item: any, file?: any) {
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + this.authResponse.access_token
@@ -234,22 +255,22 @@ export class AppDriveService {
     };
     let uuid = item.name.split('_')[0];
     let metadata
-    if(file){
+    if (file) {
       let extension = file.name.split('.')
-       metadata = {
-        'name': `${uuid}_${name}_.${extension[extension.length - 1 ?? '']}`,
+      metadata = {
+        'name': `${uuid}_${name}.${extension[extension.length - 1 ?? '']}`,
         'mimeType': file.type
       };
     } else {
       let extension = item.name.split('.')
-       metadata = {
-        'name': `${uuid}_${name}_.${extension[extension.length - 1 ?? '']}`,
+      metadata = {
+        'name': `${uuid}_${name}.${extension[extension.length - 1 ?? '']}`,
       };
     }
-    
+
     let form = new FormData();
     form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
-    if(file){
+    if (file) {
       form.append('file', file);
     }
     var apiUrl = 'https://www.googleapis.com/upload/drive/v3/files/' + item.id + '?uploadType=multipart'
@@ -277,7 +298,7 @@ export class AppDriveService {
     return this.http.delete(apiUrl, httpOptions);
   }
 
-  getFileById(id:string){
+  getFileById(id: string) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
     };
@@ -285,7 +306,7 @@ export class AppDriveService {
     return this.http.get(apiUrl, httpOptions);
   }
 
-  getItemsListByToken(id:string){
+  getItemsListByToken(id: string) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
     };
@@ -293,7 +314,7 @@ export class AppDriveService {
     return this.http.get(apiUrl, httpOptions);
   }
 
-  getItemByItemId(id:any){
+  getItemByItemId(id: any) {
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.authResponse.access_token }),
     };
@@ -301,11 +322,24 @@ export class AppDriveService {
     return this.http.get(apiUrl, httpOptions);
   }
 
-  getAuthResponse(){
-    this.authResponse= JSON.parse(localStorage.getItem('getAuthResponse') as any)
-    this.getBasicProfile= JSON.parse(localStorage.getItem('getBasicProfile') as any)
+  getAuthResponse() {
+    this.authResponse = JSON.parse(localStorage.getItem('getAuthResponse') as any)
+    this.getBasicProfile = JSON.parse(localStorage.getItem('getBasicProfile') as any)
   }
 
-  
+
+
+  generateID() {
+    var ALPHABET = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var ID_LENGTH = 8;
+    var rtn = '';
+    for (var i = 0; i < ID_LENGTH; i++) {
+      rtn += ALPHABET.charAt(Math.floor(Math.random() * ALPHABET.length));
+    }
+    return rtn;
+  }
+
+
+
 
 }

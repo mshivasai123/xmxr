@@ -13,6 +13,7 @@ export class ViewItemMediaComponent implements OnInit {
   mediaId = ""
   imageDetails = {height:800,width:800}
   loadMediaContent = ""
+  loader = true
   constructor(private location: Location,
     public appDriveService: AppDriveService,
     public changeDetectorRef: ChangeDetectorRef,
@@ -39,6 +40,10 @@ export class ViewItemMediaComponent implements OnInit {
     } else {
       this.router.navigate([''])
     }
+  }
+
+  contentLoaded(){
+    this.loader = false
   }
 
 }

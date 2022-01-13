@@ -1,7 +1,9 @@
+<mat-spinner class="spinner" *ngIf="loader"></mat-spinner>
 <ng-container *ngIf="mediaType == 'doc'">
     <ngx-doc-viewer *ngIf="loadMediaContent" 
     [url]="loadMediaContent" 
     viewer="google" 
+    (loaded)="contentLoaded()"
     style="width:100%;height:100vh;">
     </ngx-doc-viewer>
 </ng-container>

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class ViewModalComponent implements OnInit {
   loadUrl = ""
   typeUrl:any =""
+  loader = true
   constructor(private location: Location,
     public router: Router) { }
 
@@ -21,6 +22,9 @@ export class ViewModalComponent implements OnInit {
     }else {
       this.router.navigate([''])
     }
+  }
+  contentLoaded(){
+    this.loader = false
   }
 
 }

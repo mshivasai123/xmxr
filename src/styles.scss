@@ -3,15 +3,20 @@
 // @use '@angular/material' as mat;
 @import '~@angular/material/theming';
 
+$appBackground : #1e1e1e;
+$appColor : #ffb118;
+$lighterColor : #ffffff;
+$darkerColor : #000000;
+$navbarColor : rgb(36,36,36);
 @font-face {
-    font-family: 'segoe-ui';
-    src: url(./assets/fonts/segoe-ui/Segoe-UI.ttf);
+    font-family: 'able-regular';
+    src: url(./assets/fonts/abel/Abel-Regular.ttf);
 }
 
-@font-face {
-    font-family: 'segoe-ui-bold';
-    src: url(./assets/fonts/segoe-ui/Segoe-UI-Bold.ttf);
-}
+// @font-face {
+//     font-family: 'segoe-ui-bold';
+//     src: url(./assets/fonts/segoe-ui/Segoe-UI-Bold.ttf);
+// }
  
 /*--  Font Styles  --*/
 @for $i from 1 through 40 {
@@ -20,15 +25,64 @@
     }
 }
 
-$my-custom-level: mat-typography-config(
-  $font-family: 'segoe-ui'
-);
-@include angular-material-typography($my-custom-level);
+.app-color-bg {
+    background-color: $appColor;
+}
+
+nav {
+    background-color: $navbarColor;
+}
+
+.app-bg-color {
+    background-color: $appBackground;
+}
+
+.text-white-color {
+    color: $lighterColor;
+}
+
+.app-color {
+    color: $appColor;
+}
+
+.mat-card {
+    color: $darkerColor;
+    font-family: 'able-regular',Roboto, "Helvetica Neue", sans-serif !important; 
+}
+
+.roboto-font {
+    font-family: Roboto, "Helvetica Neue", sans-serif !important; 
+}
+
+.search-form-field {
+    color: rgba(255,255,255,0.5);
+    .mat-form-field-label,
+    .mat-form-field-prefix {
+        color: rgba(255,255,255,0.5);
+    }
+    .mat-form-field-underline {
+        // background-color: rgba(255,255,255,0.5);
+        display: none;
+    }
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: $appColor;
+    stroke-width : 6% !important;
+}
+
+
+// $my-custom-level: mat-typography-config(
+//   $font-family: 'able-regular'
+// );
+// @include angular-material-typography($my-custom-level);
 
 html, body { height: 100%;  }
 body { 
     margin: 0; 
-    font-family: 'segoe-ui',Roboto, "Helvetica Neue", sans-serif !important; 
+    font-family: 'able-regular',Roboto, "Helvetica Neue", sans-serif !important; 
+    color: $darkerColor;
+    background-color: $appBackground;
 }
 .cursor-pointer {
     cursor: pointer;

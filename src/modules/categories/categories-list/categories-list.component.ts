@@ -82,6 +82,7 @@ export class ShareDialog {
 export class CategoriesListComponent implements OnInit {
   userFolderData: any;
   categoriesList:any = [];
+  
   constructor(
     public dialog: MatDialog,
     public appDriveService: AppDriveService,
@@ -154,6 +155,14 @@ export class CategoriesListComponent implements OnInit {
        this.categoriesList = categories.files
        this.finalDataRendering()
     })
+  }
+
+  showOptions(event: any) {
+    console.log(event);
+    let parentElement = event.target.offsetParent;
+    if(parentElement) {
+      parentElement.classList.toggle('show-options');
+    }
   }
 
   finalDataRendering(){

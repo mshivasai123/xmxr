@@ -1,27 +1,125 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-3 mb-4" id="authorize_button">
-            <mat-card class="d-flex align-items-center justify-content-center" (click)="loginGoogle()" >Login</mat-card>
+<div class="container pt-md-5 mt-md-5">
+    <div class="login-wrpaper pt-md-5 mt-md-3">
+        <!-- <div class="col-md-2 mb-4"></div> -->
+        <div class="login-option mb-4" id="authorize_button">
+            <mat-card class="text-center py-4 app-color-bg" (click)="loginGoogle()">
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490 490"
+                    style="enable-background:new 0 0 490 490;" xml:space="preserve">
+                    <g>
+                        <g>
+                            <path style="fill:#2C2F33;" d="M423,321.7c-43.9-36-91.1-61.1-106.7-69v-64.6c9.7-8.4,15.3-20.5,15.3-33.5V78.5
+c0-43.3-35.2-78.5-78.5-78.5h-16.4c-43.3,0-78.5,35.2-78.5,78.5v76.2c0,13,5.6,25.1,15.3,33.5v64.6c-15.6,7.9-62.9,33-106.7,69
+c-10.8,8.9-17,22.1-17,36.2v52.2c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9V358c0-8.1,3.6-15.8,9.8-20.9
+c46.5-38.2,96.9-63.6,106.5-68.3c4.5-2.2,7.5-6.9,7.5-11.9v-73.5c0-3.3-1.7-6.4-4.4-8.2c-6.8-4.6-10.9-12.2-10.9-20.3V78.5
+c0-32.4,26.3-58.7,58.7-58.7h16.4c32.4,0,58.7,26.3,58.7,58.7v76.2c0,8.2-4.1,15.8-10.9,20.3c-2.8,1.8-4.4,4.9-4.4,8.2v73.5
+c0,5,2.9,9.7,7.5,11.9c9.6,4.7,60,30.2,106.5,68.3c6.2,5.1,9.8,12.7,9.8,20.9V410c0,5.5,4.4,9.9,9.9,9.9s9.9-4.4,9.9-9.9v-52.2
+C440.1,343.8,433.8,330.6,423,321.7z" />
+
+                            <path style="fill:#3C92CA;" d="M302.8,395.6h-11.3v-18.9c0-25.7-20.9-46.5-46.5-46.5s-46.5,20.9-46.5,46.5v18.9h-11.3
+c-5.5,0-9.9,4.4-9.9,9.9v74.6c0,5.5,4.4,9.9,9.9,9.9h115.7c5.5,0,9.9-4.4,9.9-9.9v-74.6C312.7,400,308.2,395.6,302.8,395.6z
+M218.2,376.7c0-14.7,12-26.7,26.7-26.7c14.7,0,26.7,12,26.7,26.7v18.9h-53.4L218.2,376.7L218.2,376.7z M292.9,470.2h-96v-54.8h96
+V470.2z" />
+                        </g>
+                    </g>
+                </svg>
+                <p class="mt-3 fw-bold f-12 able-font">
+                  Customer Login
+                </p>
+            </mat-card>
         </div>
         <!-- <div class="col-md-3 mb-4" id="signout_button">
             <mat-card class="d-flex align-items-center justify-content-center" >Logout</mat-card>
         </div> -->
-        <div class="col-md-3 mb-4">
+        <div class="login-option mb-4">
             <a routerLink="/access-token" class="text-decoration-none">
-                <mat-card class="d-flex align-items-center justify-content-center" (click)="loginWithAccessToken()">Enter Token</mat-card>
+                <mat-card class="text-center py-4 app-color-bg" (click)="loginWithAccessToken()">
+                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 485.7 485.7"
+                        style="enable-background:new 0 0 485.7 485.7;" xml:space="preserve">
+                        <g>
+                            <g>
+                                <path d="M298.45,370.9l-82.1,82.1l-29.3-29.2c-5.3-5.3-13.8-5.3-19.1,0s-5.3,13.8,0,19.1l38.8,38.8c2.6,2.6,6.1,4,9.5,4
+s6.9-1.3,9.5-4l91.6-91.6c5.3-5.3,5.3-13.8,0-19.1C312.25,365.7,303.65,365.7,298.45,370.9z" />
+                                <path d="M456.95,365.3c-7.2-22.4-22.2-37.1-43.2-42.5c-93.2-23.4-110.9-53.4-114.2-62.7c7.1-4.6,13.6-10.2,19.5-16.7
+c40.9-46.1,34-125.1,33.3-132.5c-2.6-54.9-28-81.8-48.9-94.7C279.75,1.6,254.75,0,245.05,0c-1,0-1.8,0-2.3,0c-0.6,0-1.4,0-2.3,0
+c-9.6,0-34.6,1.6-58.3,16.2c-20.9,12.9-46.3,39.8-48.9,94.7c-0.7,7.4-7.6,86.5,33.3,132.5c5.9,6.6,12.4,12.2,19.5,16.8
+c-1.1,2.9-3.8,8.4-10.3,15c-12.8,13-41.3,31.9-104,47.6c-21,5.3-36,20-43.2,42.4c-5.6,17.3-5.6,35.6-5.6,46.5v31.6
+c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-31.5c0-28.9,3.4-56.4,28.4-62.8c55.2-13.9,94.5-32.3,116.6-54.9
+c8.5-8.6,13.1-16.5,15.7-22.9c9.4,2.7,19.5,4.2,30.4,4.4c0.6,0,1.1,0,1.7,0c0.2,0,0.4,0,0.7,0c0.4,0,0.7,0,1.1,0
+c10.9-0.2,21-1.6,30.4-4.4c2.6,6.3,7.2,14.3,15.7,22.9c22.2,22.6,61.4,41,116.6,54.9c25,6.4,28.5,33.9,28.5,62.8v31.6
+c0,7.5,6,13.5,13.5,13.5s13.5-6,13.5-13.5v-31.6C462.55,400.9,462.55,382.7,456.95,365.3z M243.25,248.7c-0.2,0-0.3,0-0.5,0l0,0
+l0,0c-0.2,0-0.3,0-0.5,0c-23.7-0.3-41.9-7.8-55.5-23.1c-34.1-38.3-26.7-111.5-26.6-112.2c0-0.3,0.1-0.6,0.1-0.8
+c3.6-79.4,62.3-85.6,80.2-85.6c0.8,0,1.4,0,1.8,0c0.4,0,0.7,0,1.1,0s1,0,1.8,0c17.9,0,76.6,6.2,80.2,85.6c0,0.3,0,0.6,0.1,0.8
+c0.1,0.7,7.6,73.6-26.6,112.1C285.25,240.9,267.05,248.4,243.25,248.7z" />
+                            </g>
+                        </g>
+                    </svg>
+                    <p class="mt-3 fw-bold f-12 able-font">
+                        Token Access
+                    </p>
+                </mat-card>
             </a>
         </div>
-        <div class="col-md-3 mb-4">
+        <div class="login-option mb-4">
             <a routerLink="/demo-model" class="text-decoration-none">
-                <mat-card class="d-flex align-items-center justify-content-center">Demo Models</mat-card>
+                <mat-card class="text-center py-4 app-color-bg">
+                    <svg width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .cls-1 {
+                                    fill: none;
+                                }
+                            </style>
+                        </defs>
+                        <title>augmented-reality</title>
+                        <path
+                            d="M27.4473,9.1055l-6-3a1.0008,1.0008,0,0,0-.8946,0l-6,3A1,1,0,0,0,14,10v7a1,1,0,0,0,.5527.8945l6,3a1.001,1.001,0,0,0,.8946,0l6-3A1,1,0,0,0,28,17V10A1,1,0,0,0,27.4473,9.1055ZM21,8.1182,24.7637,10,21,11.8818,17.2363,10Zm-5,3.5,4,2v4.7636l-4-2Zm6,6.7636V13.6182l4-2v4.7636Z" />
+                        <circle cx="13.5" cy="24.5" r="1.5" />
+                        <path
+                            d="M20,30H7a2.0023,2.0023,0,0,1-2-2V4A2.0023,2.0023,0,0,1,7,2H20V4H7V28H20V24h2v4A2.0023,2.0023,0,0,1,20,30Z" />
+                        <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1"
+                            width="32" height="32" />
+                    </svg>
+                    <p class="mt-3 fw-bold f-12 able-font">
+                        Demo Models
+                    </p>
+                </mat-card>
             </a>
         </div>
-        <div class="col-md-3 mb-4">
+        <div class="login-option mb-4">
             <a routerLink="/test-model" class="text-decoration-none">
-                <mat-card class="d-flex align-items-center justify-content-center">Test Your Model</mat-card>
+                <mat-card class="text-center py-4 app-color-bg">
+                    <svg width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <style>
+                                .cls-1 {
+                                    fill: none;
+                                }
+                            </style>
+                        </defs>
+                        <title>augmented-reality</title>
+                        <path
+                            d="M27.4473,9.1055l-6-3a1.0008,1.0008,0,0,0-.8946,0l-6,3A1,1,0,0,0,14,10v7a1,1,0,0,0,.5527.8945l6,3a1.001,1.001,0,0,0,.8946,0l6-3A1,1,0,0,0,28,17V10A1,1,0,0,0,27.4473,9.1055ZM21,8.1182,24.7637,10,21,11.8818,17.2363,10Zm-5,3.5,4,2v4.7636l-4-2Zm6,6.7636V13.6182l4-2v4.7636Z" />
+                        <circle cx="13.5" cy="24.5" r="1.5" />
+                        <path
+                            d="M20,30H7a2.0023,2.0023,0,0,1-2-2V4A2.0023,2.0023,0,0,1,7,2H20V4H7V28H20V24h2v4A2.0023,2.0023,0,0,1,20,30Z" />
+                        <rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1"
+                            width="32" height="32" />
+                    </svg>
+                    <p class="mt-3 fw-bold f-12 able-font">
+                        Test Your Model
+                    </p>
+                </mat-card>
             </a>
         </div>
+        <!-- <div class="col-md-2 mb-4"></div> -->
         <!-- <button id="loggedin" style="display: none;" (click)="logCategories()">create</button> -->
     </div>
+
+    <p class="text-center text-white-color mt-3 mt-md-4">
+        How it works ?
+        <button class="bg-transparent border-0 app-color">Play Video</button>
+    </p>
 
 </div>

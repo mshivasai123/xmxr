@@ -1,34 +1,73 @@
 <div class="container">
     <div class="category-header d-flex justify-content-between">
-        <h4>All Categories</h4>
-        <button class="btn btn-primary rounded-0" (click)="addCategory()" *ngIf="sharedService.checkAccessTokenUser()">Add Category</button>
+        <h4 class="app-color">All Categories</h4>
+        <div>
+            <mat-form-field class="example-full-width search-form-field">
+                <mat-label class="ms-2">Search...</mat-label>
+                <span class="material-icons align-middle f-11" matPrefix>search</span>
+                <input type="text" class="ms-2" matInput>
+            </mat-form-field>
+            <button class="bg-transparent rounded-0 border-0 app-color roboto-font" mat-button
+                [matMenuTriggerFor]="menu" *ngIf="sharedService.checkAccessTokenUser()">
+                <span class="material-icons align-middle f-11">add</span>Add
+            </button>
+        </div>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="addCategory()"> <span class="material-icons align-middle f-11">add</span>
+                Category</button>
+            <button mat-menu-item> <span class="material-icons align-middle f-11">add</span> Model</button>
+        </mat-menu>
     </div>
 
     <div class="list-wrapper mt-4">
-       <ng-container *ngIf="categoriesList.length" >
-        <div *ngFor="let categories of categoriesList;let i=index" class="list-item position-relative mb-4 px-4 d-md-flex align-items-center justify-content-center">
-            <div class="list-item-info d-md-flex py-3 flex-grow-1" (click)="listItems(categories)">
-                <img [src]="categories.profilePhoto" class="position-md-absolute" alt="category" />
-                <div class="ms-md-5 ps-md-5 text-md-start mt-2 mt-md-0 text-center">
-                    <h5 class="m-0 f-11">{{categories.name.split('_')[1]}}</h5>
-                    <span class="f-7">{{categories?.items ?? 0}} items</span>
-                </div>
+        <ng-container *ngIf="categoriesList.length">
+            <div class="row">
+                <ng-container *ngFor="let categories of categoriesList;let i=index">
+                    <div class="col-md-4">
+                        <div class="list-item position-relative rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
+                            [ngStyle]="{ 'background-image': 'url(' + categories.profilePhoto + ')'}"
+                            (click)="listItems(categories)">
+
+                            <div class="list-item-info w-100 align-items-center px-3 py-2 d-flex justify-content-between"
+                                (click)="$event.stopPropagation()">
+                                <!-- <img [src]="categories.profilePhoto" class="" alt="category" /> -->
+                                <!-- <div class="d-flex"> -->
+                                <div class="text-center">
+                                    <h5 class="m-0 f-11 text-white-color able-font">{{categories.name.split('_')[1]}}
+                                    </h5>
+
+                                </div>
+                                <button class="app-color bg-transparent rounded dropdown-icon border-0"
+                                    (click)='showOptions($event)'>
+                                    <mat-icon class="align-middle">more_vert</mat-icon>
+                                </button>
+
+                                <!-- </div> -->
+                            </div>
+                            <span
+                                class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories?.items
+                                ?? 0}}</span>
+                            <div class="action-buttons text-center app-bg-color pb-3 pb-md-0">
+                                <ul class="list-unstyled m-0 list-inline d-flex">
+                                    <li class="list-inline-item">
+                                        <a href="javascript:void(0);" class="text-decoration-none"
+                                            (click)='editCategory(categories)'>Edit</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="javascript:void(0);" class="text-decoration-none mx-5"
+                                            (click)="shareCategory(categories)">Share</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="javascript:void(0);" class="text-decoration-none"
+                                            (click)="deleteCategory(categories,i)">Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
             </div>
-            <div class="action-buttons text-center pb-3 pb-md-0">
-                <ul class="list-unstyled m-0 list-inline d-flex">
-                    <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)='editCategory(categories)'>Edit</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none mx-5" (click)="shareCategory(categories)">Share</a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="javascript:void(0);" class="text-decoration-none" (click)="deleteCategory(categories,i)">Delete</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-       </ng-container> 
+        </ng-container>
     </div>
 
 </div>

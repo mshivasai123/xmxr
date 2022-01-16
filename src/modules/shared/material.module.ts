@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatIconModule} from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,13 @@ import {MatRadioModule} from '@angular/material/radio';
     MatFormFieldModule,
     MatMenuModule,
     MatRadioModule,
+    MatIconModule,
     MatDialogModule
   ],
   exports :[
       MatCardModule,
       MatRadioModule,
-   
+      MatIconModule,
       MatButtonModule,
       MatProgressSpinnerModule,
       MatMenuModule,

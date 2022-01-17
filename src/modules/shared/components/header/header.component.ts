@@ -25,8 +25,10 @@ export class HeaderComponent implements OnInit {
   signOut() {
     // logoutApi.LogoutGoogleModule.logoutGoogle('xyz');
     this.loginService.handleSignoutClick()
-    this.router.navigate([''])
-    this.isLoggedIn = false;
+    setTimeout(() => {
+      this.router.navigate([''])
+      this.isLoggedIn = false;
+    }, 1000);
   }
   navigateCat(){
     this.appDriveService.getAuthResponse()

@@ -88,7 +88,7 @@ export class LoginService {
         document.getElementById('navCat')?.click();
       }
       //    document.getElementById()
-      // that.listFiles();
+      that.listFiles();
     } else {
       //    authorizeButton.style.display = 'block';
       //    signoutButton.style.display = 'none';

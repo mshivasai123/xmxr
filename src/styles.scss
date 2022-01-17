@@ -102,7 +102,7 @@ nav {
             background-color: $model-header-bg ;
         }
         .model-body {
-            padding: 30px 30px 50px 50px;
+            padding: 30px 30px 35px 50px;
             .mat-form-field-label {
                 color: rgba(0,0,0,.54) !important;
             }
@@ -111,6 +111,28 @@ nav {
             }
         }
     }
+}
+
+.mat-yellow-radios {
+    // .mat-radio-label {
+        .mat-radio-inner-circle {
+            background-color: rgba(0, 0, 0, 0.54) !important;
+            opacity: 1;
+            transform: none;
+        }
+        .mat-radio-outer-circle {
+            border: 0;
+        }
+        &.mat-radio-checked {
+            .mat-radio-outer-circle {
+                border-color: $appColor !important;
+            }
+            .mat-radio-inner-circle {
+                background-color: $appColor !important;  
+                transform: scale(1);
+            }
+        }
+    // }
 }
 
 .mat-progress-spinner circle, .mat-spinner circle {

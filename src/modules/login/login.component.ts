@@ -2,6 +2,10 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/services/login.service';
 import  * as loginApi  from '../../assets/js/login';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AccessTokenComponent } from './components/access-token/access-token.component';
+import { TestModalComponent } from './components/test-modal/test-modal.component';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -9,7 +13,10 @@ import  * as loginApi  from '../../assets/js/login';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
 
-  constructor(public router:Router,public loginService: LoginService) { }
+  constructor(
+    public router:Router,
+    public loginService: LoginService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
     if(this.loginService.isAuthorized()){
@@ -31,6 +38,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   loginWithAccessToken(){
+    const dialogRef = this.dialog.open(AccessTokenComponent, {
+      width: '350px',
+      panelClass : 'xmxr-model'
+    });
+  }
+
+  testModel() {
+    const dialogRef = this.dialog.open(TestModalComponent, {
+      width: '500px',
+      panelClass : 'xmxr-model'
+    });
   }
 
   // logCategories(){

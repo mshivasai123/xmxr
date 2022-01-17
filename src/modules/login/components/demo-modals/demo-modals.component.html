@@ -1,7 +1,7 @@
 <div class="container">
-    <h5 class="mb-3">Demo Models</h5>
+    <h5 class="mb-3 text-white-color">Demo Models</h5>
     <ng-container *ngIf="itemsList?.length">
-        <div class="row" >
+        <!-- <div class="row" >
             <div class="col-md-4 mb-4" *ngFor="let item of itemsList" (click)="naviagteToPreview(item)">
                 <div class="card">
                     <img [src]="item.url" class="card-img-top" alt="test">
@@ -11,6 +11,27 @@
                 </div>
             </div>
         
-        </div>
-    </ng-container>
+        </div> -->
+
+
+    <div class="row">
+        <ng-container *ngFor="let item of itemsList;let i=index">
+            <div class="col-md-4">
+                <div class="list-item position-relative darker-bg rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
+                    [ngStyle]="{ 'background-image': 'url(' + item.url + ')'}">
+                    <mat-progress-spinner class="spinner small-spinner" *ngIf="!item.url" mode="indeterminate" value="50">
+                    </mat-progress-spinner>
+                    <div class="list-item-info w-100 align-items-center px-3 py-2 d-flex justify-content-between">
+                        <div class="text-center">
+                            <h5 class="m-0 f-11 text-white-color able-font">{{item.name}}
+                            </h5>
+                        </div>
+                    </div>
+                    <span
+                        class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">0</span>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
 </div>

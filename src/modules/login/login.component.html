@@ -2,7 +2,7 @@
     <div class="login-wrpaper pt-md-5 mt-md-3">
         <!-- <div class="col-md-2 mb-4"></div> -->
         <div class="login-option mb-4" id="authorize_button">
-            <mat-card class="text-center py-4 app-color-bg" (click)="loginGoogle()">
+            <mat-card class="text-center cursor-pointer py-4 app-color-bg" (click)="loginGoogle()">
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 490 490"
                     style="enable-background:new 0 0 490 490;" xml:space="preserve">
@@ -32,8 +32,8 @@ V470.2z" />
             <mat-card class="d-flex align-items-center justify-content-center" >Logout</mat-card>
         </div> -->
         <div class="login-option mb-4">
-            <a routerLink="/access-token" class="text-decoration-none">
-                <mat-card class="text-center py-4 app-color-bg" (click)="loginWithAccessToken()">
+            <!-- <a class="text-decoration-none"> -->
+                <mat-card class="text-center py-4 cursor-pointer app-color-bg" (click)="loginWithAccessToken()">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 485.7 485.7"
                         style="enable-background:new 0 0 485.7 485.7;" xml:space="preserve">
@@ -59,7 +59,7 @@ c0.1,0.7,7.6,73.6-26.6,112.1C285.25,240.9,267.05,248.4,243.25,248.7z" />
                         Token Access
                     </p>
                 </mat-card>
-            </a>
+            <!-- </a> -->
         </div>
         <div class="login-option mb-4">
             <a routerLink="/demo-model" class="text-decoration-none">
@@ -88,8 +88,8 @@ c0.1,0.7,7.6,73.6-26.6,112.1C285.25,240.9,267.05,248.4,243.25,248.7z" />
             </a>
         </div>
         <div class="login-option mb-4">
-            <a routerLink="/test-model" class="text-decoration-none">
-                <mat-card class="text-center py-4 app-color-bg">
+            <!-- <a class="text-decoration-none"> -->
+                <mat-card class="text-center cursor-pointer py-4 app-color-bg" (click)="testModel()">
                     <svg width="32px" height="32px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <style>
@@ -111,7 +111,7 @@ c0.1,0.7,7.6,73.6-26.6,112.1C285.25,240.9,267.05,248.4,243.25,248.7z" />
                         Test Your Model
                     </p>
                 </mat-card>
-            </a>
+            <!-- </a> -->
         </div>
         <!-- <div class="col-md-2 mb-4"></div> -->
         <!-- <button id="loggedin" style="display: none;" (click)="logCategories()">create</button> -->

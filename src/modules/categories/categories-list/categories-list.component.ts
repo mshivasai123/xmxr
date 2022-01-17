@@ -12,13 +12,10 @@ import { forkJoin } from 'rxjs';
   template: `
   <div class="d-flex mb-4 justify-content-between align-items-center">
     <h5 class="mb-0 me-4">Are you sure you want to delete?</h5>
-    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
-      close
-    </span>
   </div>
   <div class="text-end mt-4">
-    <button class="btn me-3 btn-outline-primary" (click)="closeModel(false)">Cancel</button>
-    <button class="btn btn-primary" (click)="closeModel(true)">Delete</button>
+    <button class="bg-transparent border-0 me-md-3 me-1 roboto-font xmxr-secondary-btn" (click)="closeModel(false)">Cancel</button>
+    <button class="roboto-font border-0 xmxr-primary-btn" (click)="closeModel(true)">Delete</button>
   </div>
   `,
 })
@@ -45,7 +42,7 @@ export class DeleteConfirmationDialog {
   </div>
 
   <div class="input-group mb-3">
-    <input type="text" class="form-control" [value]="data?.id" #userInput aria-describedby="basic-addon2">
+    <input type="text" class="form-control" disabled [value]="data?.id" #userInput aria-describedby="basic-addon2">
     <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
       <span class="material-icons" (click)="copyInputMessage(userInput)">
         content_copy
@@ -206,6 +203,7 @@ export class CategoriesListComponent implements OnInit {
   editCategory(category: any): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
       width: '350px',
+      panelClass : 'xmxr-model',
       data: { title: 'Edit Category', category: category, isEdit: true }
     });
     dialogRef.afterClosed().subscribe((load) => {

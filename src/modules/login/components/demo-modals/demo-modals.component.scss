@@ -1,0 +1,16 @@
+.list-item {
+    height: 300px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    box-shadow: 1px 0px 4px 0px rgba(0,0,0,0.4);
+    .list-item-info {
+        background-color: rgba(0,0,0,0.89);
+        img {
+            max-width: 100%;
+            position: unset;
+            display: block;
+            margin:  0 auto;
+        }
+    }
+}

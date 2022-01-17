@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppDriveService } from 'src/services/app-drive.service';
 import { LoginService } from 'src/services/login.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-access-token',
@@ -10,7 +11,11 @@ import { LoginService } from 'src/services/login.service';
 })
 export class AccessTokenComponent implements OnInit {
   accessToken = ""
-  constructor(public router: Router,public appDriveService:AppDriveService,public loginService:LoginService) { }
+  constructor(
+    public router: Router,
+    public appDriveService:AppDriveService,
+    public loginService:LoginService,
+    public dialogRef: MatDialogRef<AccessTokenComponent>) { }
 
   ngOnInit(): void {
   }

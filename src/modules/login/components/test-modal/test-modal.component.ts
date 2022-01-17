@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-test-modal',
@@ -7,12 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./test-modal.component.scss']
 })
 export class TestModalComponent implements OnInit {
-  modelType =""
+  modelType ="url";
   urlLink = ""
   mediaFileName=""
   mediaFile:any
   objectURL =""
-  constructor(public router: Router) { }
+  constructor(
+    public router: Router,
+    public dialogRef: MatDialogRef<TestModalComponent>
+    ) { }
 
   ngOnInit(): void {
   }

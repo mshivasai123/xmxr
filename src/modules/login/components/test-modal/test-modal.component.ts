@@ -20,9 +20,17 @@ export class TestModalComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  uploadTest(){
+    if(this.modelType == 'url'){
+      this.showModelView()
+    }else if(this.modelType == 'loadModel'){
+      this.showUloadModelUrl()
+    }
+  }
 
   showModelView(){
     if(this.urlLink){
+      this.dialogRef.close()
       this.router.navigateByUrl('/view-modal', { state: {url: this.urlLink } })
     }
   }
@@ -44,6 +52,7 @@ export class TestModalComponent implements OnInit {
 
   showUloadModelUrl(){
     if(this.objectURL){
+      this.dialogRef.close()
       this.router.navigateByUrl('/view-modal', { state: {url: this.objectURL,type: "url" } })
     }
   }

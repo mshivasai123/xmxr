@@ -91,13 +91,14 @@ export class AddCategoryComponent implements OnInit {
      console.log(event)
      this.file = event.target.files[0]
      this.fileName = this.categoryName + '.'+ this.file.name.split('.')[1]
-    //  if (this.objectURL) {
-    //   // revoke the old object url to avoid using more memory than needed
-    //   URL.revokeObjectURL(this.objectURL);  
-    // }
+     if (this.objectURL) {
+      // revoke the old object url to avoid using more memory than needed
+      URL.revokeObjectURL(this.objectURL);  
+    }
   
     const fileD = this.file;
     this.objectURL = URL.createObjectURL(fileD);
+    console.log(this.objectURL,"this.objectURL")
   }
 
 }

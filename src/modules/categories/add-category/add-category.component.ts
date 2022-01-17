@@ -14,6 +14,7 @@ export class AddCategoryComponent implements OnInit {
   file:any
   imageUrl = 'assets/images/placeholder.png';
   fileName= ""
+  objectURL= ""
   intialCategoryName = ""
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
@@ -90,6 +91,13 @@ export class AddCategoryComponent implements OnInit {
      console.log(event)
      this.file = event.target.files[0]
      this.fileName = this.categoryName + '.'+ this.file.name.split('.')[1]
+    //  if (this.objectURL) {
+    //   // revoke the old object url to avoid using more memory than needed
+    //   URL.revokeObjectURL(this.objectURL);  
+    // }
+  
+    const fileD = this.file;
+    this.objectURL = URL.createObjectURL(fileD);
   }
 
 }

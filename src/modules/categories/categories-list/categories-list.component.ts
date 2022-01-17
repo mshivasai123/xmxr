@@ -93,7 +93,7 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit(): void {
    let getBasicProfile: any = JSON.parse(localStorage.getItem('getBasicProfile') as any)
-   if(ClientMail == getBasicProfile.Email){
+   if(ClientMail == getBasicProfile?.Email){
     this.appDriveService.fetchAllUserFolder().subscribe((response: any) => {
       console.log(response,"eachusers for admin")
       if(response.files.length){

@@ -12,6 +12,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(public router:Router,public loginService: LoginService) { }
 
   ngOnInit(): void {
+    if(this.loginService.isAuthorized()){
+      this.router.navigate(['/categories'])
+    }
     // this.loginService.handleClientLoad()
     // loginApi.LoginGoogleModule.intialInit('test')
   }

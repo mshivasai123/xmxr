@@ -36,7 +36,7 @@
             <input type="file" (change)="uploadmediaData($event)" #uploadFile class="d-none" id="uploadmedia">
             <mat-form-field class="example-full-width w-100">
                 <mat-label>Select and Load model from device</mat-label>
-                <input matInput name="model" type="text" (click)='uploadFile.click()'>
+                <input matInput name="model" type="text" [(ngModel)]="mediaFileName" (click)='uploadFile.click()'>
             </mat-form-field>
         </div>
 
@@ -46,7 +46,7 @@
                 Cancel
             </button>
             <!-- <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" >Create</button> -->
-            <button class="roboto-font border-0 px-4 xmxr-primary-btn" type="button">
+            <button class="roboto-font border-0 px-4 xmxr-primary-btn" type="button" (click)="uploadTest()">
                 Test
             </button>
         </div>

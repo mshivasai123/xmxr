@@ -7,6 +7,33 @@ import { AccessTokenComponent } from './components/access-token/access-token.com
 import { TestModalComponent } from './components/test-modal/test-modal.component';
 
 @Component({
+  selector: 'video-dialog',
+  template: `
+  <div class="p-3">
+  <div class="d-flex mb-4 justify-content-between align-items-center">
+    <h5 class="mb-0 me-4">How D2F Works</h5>
+    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span>
+    </div>
+    <video class="w-100" autoplay controls>
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      Your browser does not support video.
+    </video>
+  </div>
+  `,
+})
+export class VideoDialog {
+  constructor(
+    public dialogRef: MatDialogRef<VideoDialog>
+  ) { }
+
+  closeModel(del:boolean) {
+    this.dialogRef.close(del);
+  }
+}
+
+@Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
@@ -40,6 +67,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginWithAccessToken(){
     const dialogRef = this.dialog.open(AccessTokenComponent, {
       width: '350px',
+      panelClass : 'xmxr-model'
+    });
+  }
+
+  playVideo() {
+    this.dialog.open(VideoDialog, {
+      width: '700px',
       panelClass : 'xmxr-model'
     });
   }

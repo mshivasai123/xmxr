@@ -1,11 +1,41 @@
-<div class="container">
-    <h5 class="mb-3">Enter Access Token</h5>
-    <!-- <div> -->
-        <div class="input-group mb-3">
-            <input type="text" name="accessToken" [(ngModel)]="accessToken" class="form-control shadow-none py-3 rounded-0" aria-describedby="basic-addon2">
-            <button class="input-group-text btn btn-dark rounded-0 shadow-none" id="basic-addon2" (click)="goToAccess()">Go</button>
-          </div>
-  <button id="navtoken" class="d-none" (click)="navigateAccess()"></button>
+<div class="">
 
-    <!-- </div> -->
+  <div class="d-flex model-header justify-content-between align-items-center">
+    <h5 class="mb-0">Enter Token</h5>
+    <!-- <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+      close
+    </span> -->
+  </div>
+
+  <div class="model-body">
+
+
+    <mat-form-field class="example-full-width w-100">
+      <mat-label>Enter Token</mat-label>
+      <input type="text" matInput name="accessToken" [(ngModel)]="accessToken" class="form-control shadow-none rounded-0"
+        aria-describedby="basic-addon2">
+    </mat-form-field>
+
+ 
+    <!-- <div class="input-group mb-3">
+      <input type="text" name="accessToken" [(ngModel)]="accessToken" class="form-control shadow-none py-3 rounded-0"
+        aria-describedby="basic-addon2">
+      <button class="input-group-text btn btn-dark rounded-0 shadow-none" id="basic-addon2"
+        (click)="goToAccess()">Go</button>
+    </div> -->
+
+    <div class="text-end mt-md-4 mt-2">
+      <button class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1" type="button" (click)="dialogRef.close()">
+        Cancel
+      </button>
+        <!-- <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" >Create</button> -->
+        <button class="roboto-font border-0 xmxr-primary-btn" type="button" (click)="goToAccess()">
+          Access
+        </button>
+    </div>
+
+    <button id="navtoken" class="d-none" (click)="navigateAccess()"></button>
+
+  </div>
+
 </div>

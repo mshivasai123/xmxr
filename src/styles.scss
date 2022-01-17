@@ -103,6 +103,9 @@ nav {
         }
         .model-body {
             padding: 30px 30px 35px 50px;
+            @media (max-width: 767.99px) {
+                padding: 20px 10px 25px 10px;
+            }
             .mat-form-field-label {
                 color: rgba(0,0,0,.54) !important;
             }
@@ -155,4 +158,9 @@ body {
 }
 .cursor-pointer {
     cursor: pointer;
+}
+@media (max-width: 767.99px) {
+ .container {
+     padding: 10px;
+ }
 }

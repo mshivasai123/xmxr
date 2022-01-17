@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md mb-4 navbar-light">
   <div class="container-fluid position-relative">
 
-    <button class="navbar-toggler shadow-none" type="button" (click)="opened = !opened"
+    <button class="navbar-toggler shadow-none d-none" type="button" (click)="opened = !opened"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -63,7 +63,7 @@ C33.385,9.848,33.641,12.137,33.137,14.524z" />
               <button class="border-top" mat-menu-item>
                 <span>Settings</span>
               </button>
-              <button mat-menu-item  (click)="signOut()">
+              <button mat-menu-item (click)="signOut()">
                 <span>Logout</span>
               </button>
             </ng-container>

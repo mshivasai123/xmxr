@@ -1,24 +1,41 @@
-<div class="container-fluid">
-  <div class="d-flex mb-4 justify-content-between align-items-center">
+<div>
+  <div class="d-flex model-header justify-content-between align-items-center">
     <h5 class="mb-0">{{data?.title ? data.title : 'Category'}}</h5>
-    <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
+    <!-- <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
       close
-    </span>
+    </span> -->
   </div>
-    <form>
-        <mat-form-field class="example-full-width w-100" appearance="fill">
-            <mat-label>Name</mat-label>
-            <input matInput name="categoryName" autocomplete="off" [(ngModel)]="categoryName" placeholder="Name">
+    <form class="model-body">
+        <mat-form-field class="example-full-width w-100">
+            <mat-label>Category Name</mat-label>
+            <input matInput name="categoryName" autocomplete="off" [(ngModel)]="categoryName" placeholder="Category Name">
           </mat-form-field>
-            <input type="file" class="d-none" (change)="profileUpload($event)" id="uploadFile">
-          <p>
-            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
-          </p>
-          <div class="text-center">
 
+          <div>
+            <label class="mb-2 image-label roboto-font f-8">Category Image</label>
+            <label for="uploadFile" class="image-placeholder cursor-pointer border rounded">
+              <img [src]="imageUrl" alt="image" /> 
+            </label>
+          </div>
+
+
+
+          <!-- <mat-form-field floatLabel="never" class="example-full-width w-100">
+            <mat-label>Category Image</mat-label>
+            <input type="text" class="d-none" matInput (change)="profileUpload($event)" id="uploadFile">
+          </mat-form-field> -->
+
+            <input type="file" class="d-none" (change)="profileUpload($event)" id="uploadFile">
+          <!-- <p>
+            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
+          </p> -->
+          <div class="text-end mt-md-4 mt-2">
+            <button class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1" type="button" (click)="dialogRef.close()">
+              Cancel
+            </button>
               <!-- <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" >Create</button> -->
-              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button" (click)="save()">
-                {{data?.isEdit ? 'Save' : 'Create'}}
+              <button class="roboto-font border-0 xmxr-primary-btn" type="button" (click)="save()">
+                {{data?.isEdit ? 'Save' : 'Save'}}
               </button>
           </div>
     </form>

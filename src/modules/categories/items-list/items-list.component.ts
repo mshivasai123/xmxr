@@ -145,7 +145,7 @@ export class ItemsListComponent implements OnInit {
 
   addItem(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      width: '500px',
+      width: '350px',
       data: {
         title: 'Add Item', isEdit: false,
         parentId:  this.parentCategoryData.id
@@ -163,7 +163,7 @@ export class ItemsListComponent implements OnInit {
   editItem(item: any): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
       data: { title: 'Edit Item', item: item,parentId:  this.parentCategoryData.id, isEdit: true },
-       width: '500px',
+       width: '350px',
     });
     dialogRef.afterClosed().subscribe((load) => {
       if(load){
@@ -175,7 +175,7 @@ export class ItemsListComponent implements OnInit {
 
   deleteItem(item:any,index:number) {
     const dialogRef =this.dialog.open(DeleteConfirmationDialog, {
-      width: '500px',
+      width: '350px',
     })
 
     dialogRef.afterClosed().subscribe((load) => {
@@ -200,7 +200,7 @@ export class ItemsListComponent implements OnInit {
 
   shareCategory(item:any) {
     this.dialog.open(ShareDialog, {
-      width: '500px',
+      width: '350px',
       data: {
         id:  item.id + 'it@m' + item.mediaId
       }

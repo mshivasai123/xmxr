@@ -27,6 +27,11 @@ export class SharedService {
     return userName;
   }
 
+  getUserEmail() {
+    let userName = this.userData?.Email ? this.userData?.Email : '';
+    return userName;
+  }
+
   checkAccessTokenUser() {
     let permission = sessionStorage.getItem("isAccessToken");
     return !permission;

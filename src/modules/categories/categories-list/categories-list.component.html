@@ -24,10 +24,11 @@
             <div class="row">
                 <ng-container *ngFor="let categories of categoriesList;let i=index">
                     <div class="col-md-4">
-                        <div class="list-item position-relative rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
+                        <div class="list-item position-relative darker-bg rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
                             [ngStyle]="{ 'background-image': 'url(' + categories.profilePhoto + ')'}"
                             (click)="listItems(categories)">
-
+                            <mat-progress-spinner class="spinner small-spinner" *ngIf="!categories.profilePhoto" mode="indeterminate" value="50">
+                            </mat-progress-spinner>
                             <div class="list-item-info w-100 align-items-center px-3 py-2 d-flex justify-content-between"
                                 (click)="$event.stopPropagation()">
                                 <!-- <img [src]="categories.profilePhoto" class="" alt="category" /> -->
@@ -47,7 +48,8 @@
                             <span
                                 class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories?.items
                                 ?? 0}}</span>
-                            <div class="action-buttons text-center app-bg-color pb-3 pb-md-0">
+                            <div class="action-buttons text-center app-bg-color pb-3 pb-md-0"
+                            (click)="$event.stopPropagation()">
                                 <ul class="list-unstyled m-0 list-inline d-flex">
                                     <li class="list-inline-item">
                                         <a href="javascript:void(0);" class="text-decoration-none"

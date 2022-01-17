@@ -189,7 +189,8 @@ export class CategoriesListComponent implements OnInit {
 
   addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
-      width: '500px',
+      width: '350px',
+      panelClass : 'xmxr-model',
       data: {
         title: 'Add Category', isEdit: false,
         parentId: this.userFolderData.id
@@ -204,7 +205,7 @@ export class CategoriesListComponent implements OnInit {
 
   editCategory(category: any): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
-      width: '500px',
+      width: '350px',
       data: { title: 'Edit Category', category: category, isEdit: true }
     });
     dialogRef.afterClosed().subscribe((load) => {
@@ -216,7 +217,7 @@ export class CategoriesListComponent implements OnInit {
 
   deleteCategory(category: any,index:number) {
     const dialogRef = this.dialog.open(DeleteConfirmationDialog, {
-      width: '500px'
+      width: '350px'
 
     })
     dialogRef.afterClosed().subscribe((load) => {
@@ -235,7 +236,7 @@ export class CategoriesListComponent implements OnInit {
 
   shareCategory(categorie:any) {
     this.dialog.open(ShareDialog, {
-      width: '500px',
+      width: '350px',
       data: {
         id:  categorie.id + 'c@TG' + categorie.name
       }

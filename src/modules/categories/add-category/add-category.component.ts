@@ -12,6 +12,7 @@ export class AddCategoryComponent implements OnInit {
   public categoryName:string = ''
   newCategory:any
   file:any
+  imageUrl = 'assets/images/placeholder.png';
   fileName= ""
   intialCategoryName = ""
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,

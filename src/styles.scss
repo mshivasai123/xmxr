@@ -8,6 +8,8 @@ $appColor : #ffb118;
 $lighterColor : #ffffff;
 $darkerColor : #000000;
 $navbarColor : rgb(36,36,36);
+$model-header-bg : #ddd;
+
 @font-face {
     font-family: 'able-regular';
     src: url(./assets/fonts/abel/Abel-Regular.ttf);
@@ -45,6 +47,10 @@ nav {
     color: $appColor;
 }
 
+.darker-bg {
+    background-color: $darkerColor;
+}
+
 .mat-card {
     color: $darkerColor;
     font-family: 'able-regular',Roboto, "Helvetica Neue", sans-serif !important; 
@@ -63,6 +69,47 @@ nav {
     .mat-form-field-underline {
         // background-color: rgba(255,255,255,0.5);
         display: none;
+    }
+}
+
+.lh-auto {
+    line-height: unset !important;
+}
+
+.small-spinner {
+    svg {
+        width: 50px !important;
+        height: 50px !important;
+    }
+}
+
+.xmxr-primary-btn {
+    background-color: $appColor;
+    color: $lighterColor;
+    border-radius: 8px;
+    padding: 5px 14px;
+    box-shadow: -2px 0px 8px -2px rgb(0 0 0 / 50%);
+}
+.xmxr-secondary-btn {
+    color: #ff0000;
+}
+
+.xmxr-model {
+    mat-dialog-container {
+        padding: 0;
+        .model-header {
+            padding: 13px;
+            background-color: $model-header-bg ;
+        }
+        .model-body {
+            padding: 30px 30px 50px 50px;
+            .mat-form-field-label {
+                color: rgba(0,0,0,.54) !important;
+            }
+            .mat-form-field-ripple {
+                display: none;
+            }
+        }
     }
 }
 

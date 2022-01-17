@@ -25,17 +25,17 @@ C33.385,9.848,33.641,12.137,33.137,14.524z" />
 
     <div class="user-profile">
       <ul class="list-unstyled list-inline mb-0">
-    
+
         <li class="list-inline-item me-0" *ngIf="!sharedService.isUserLoggedIn()">
-          <button mat-button [matMenuTriggerFor]="menu">
+          <button mat-button>
             <span class="d-none text-white-color d-md-inline-block">
               {{sharedService.getUserName()}}
             </span>
             <img [attr.src]=sharedService.getUserImage() width="40" height="40" class="rounded-circle ms-2">
           </button>
-          <mat-menu #menu="matMenu">
+          <!-- <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="signOut()">Logout</button>
-          </mat-menu>
+          </mat-menu> -->
         </li>
         <li class="list-inline-item">
           <!-- <a routerLink="/" class="text-decoration-none text-dark">Login</a> -->
@@ -43,6 +43,10 @@ C33.385,9.848,33.641,12.137,33.137,14.524z" />
             <mat-icon class="f-20">more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
+            <div mat-menu-item class="lh-auto h-auto pb-2 pt-1 border-bottom" *ngIf="!sharedService.isUserLoggedIn()">
+              <h6 class="mb-1">{{sharedService.getUserName()}}</h6>
+              <p class="m-0">{{sharedService.getUserEmail()}}</p>
+            </div>
             <button mat-menu-item>
               <span>About</span>
             </button>
@@ -53,10 +57,14 @@ C33.385,9.848,33.641,12.137,33.137,14.524z" />
               <span>Privacy Policy</span>
             </button>
             <button mat-menu-item>
+              <span>Contact</span>
+            </button>
+
+            <button class="border-top" mat-menu-item>
               <span>Settings</span>
             </button>
-            <button mat-menu-item>
-              <span>Contact</span>
+            <button mat-menu-item  (click)="signOut()">
+              <span>Logout</span>
             </button>
           </mat-menu>
         </li>

@@ -23,7 +23,7 @@
         <ng-container *ngIf="categoriesList.length">
             <div class="row">
                 <ng-container *ngFor="let categories of categoriesList;let i=index">
-                    <div class="col-md-4">
+                    <div class="col-md-6 col-lg-4">
                         <div class="list-item position-relative darker-bg rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
                             [ngStyle]="{ 'background-image': 'url(' + categories.profilePhoto + ')'}"
                             (click)="listItems(categories)">
@@ -48,23 +48,31 @@
                             <span
                                 class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories?.items
                                 ?? 0}}</span>
-                            <div class="action-buttons text-center app-bg-color pb-3 pb-md-0"
+                                
+                            <div class="action-buttons text-center rounded app-bg-color"
                             (click)="$event.stopPropagation()">
                                 <ul class="list-unstyled m-0 list-inline d-flex">
                                     <li class="list-inline-item">
-                                        <a href="javascript:void(0);" class="text-decoration-none"
-                                            (click)='editCategory(categories)'>Edit</a>
+                                        <button class="bg-transparent p-2 p-md-3 border-start-0 border-top-0 border-bottom-0 app-color d-flex align-items-center"
+                                            (click)='editCategory(categories)'>
+                                            <img src="../../../assets/images/edit.svg" class="me-2" alt="edit" />
+                                            Edit</button>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="javascript:void(0);" class="text-decoration-none mx-5"
-                                            (click)="shareCategory(categories)">Share</a>
+                                        <button class="bg-transparent p-2 p-md-3 border-start-0 border-top-0 border-bottom-0 app-color d-flex align-items-center"
+                                            (click)="shareCategory(categories)">
+                                            <img src="../../../assets/images/share.svg" class="me-2" alt="share" />
+                                            Share</button>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="javascript:void(0);" class="text-decoration-none"
-                                            (click)="deleteCategory(categories,i)">Delete</a>
+                                        <button class="bg-transparent p-2 p-md-3 border-0 app-color d-flex align-items-center"
+                                            (click)="deleteCategory(categories,i)">
+                                            <img src="../../../assets/images/delete.svg" class="me-2" alt="delete" />
+                                            Delete</button>
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                     </div>
                 </ng-container>

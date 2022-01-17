@@ -56,9 +56,9 @@ nav {
     font-family: 'able-regular',Roboto, "Helvetica Neue", sans-serif !important; 
 }
 
-.roboto-font {
-    font-family: Roboto, "Helvetica Neue", sans-serif !important; 
-}
+// .roboto-font {
+//     font-family: Roboto, "Helvetica Neue", sans-serif !important; 
+// }
 
 .search-form-field {
     color: rgba(255,255,255,0.5);
@@ -141,10 +141,10 @@ nav {
 }
 
 
-// $my-custom-level: mat-typography-config(
-//   $font-family: 'able-regular'
-// );
-// @include angular-material-typography($my-custom-level);
+$my-custom-level: mat-typography-config(
+  $font-family: 'able-regular'
+);
+@include angular-material-typography($my-custom-level);
 
 html, body { height: 100%;  }
 body { 

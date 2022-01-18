@@ -13,7 +13,8 @@ export class AddItemComponent implements OnInit {
   intialName = ''
   newItem:any
   file:any
-  fileName= ""
+  fileName= "";
+  showLoader = false;
   imageUrl = 'assets/images/placeholder.png';
   objectURL:any= ""
   modelImage = 'assets/images/file-icon.png';
@@ -75,9 +76,11 @@ export class AddItemComponent implements OnInit {
   }
 
   editCategory(){
+    this.showLoader = true;
     if((this.intialName != this.itemName) || this.file){
       this.appDriveService.upDateItem(this.itemName,this.data.item,this.file).subscribe((item:any)=>{
         // this.dialogRef.close(true);
+        this.showLoader = false;
         this.updateMediaData(item)
       })
     }else if(this.mediaFile) {

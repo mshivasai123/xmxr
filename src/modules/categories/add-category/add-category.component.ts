@@ -2,6 +2,25 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { SharedService } from 'src/services/shared.service';
+
+@Component({
+  template: `
+    <div class="success-message d-flex align-items-center justify-content-center">
+      <mat-icon class="message-text f-15 me-2">check</mat-icon>
+      <span class="fw-bold message-text me-2">
+        Category Name
+      </span>
+      <span class="message-text">
+        Added Successfully
+      </span>
+    </div>
+  `,
+})
+export class SnackbarMessageComponent {
+  constructor() { }
+}
+
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -15,14 +34,17 @@ export class AddCategoryComponent implements OnInit {
   imageUrl = 'assets/images/placeholder.png';
   fileName= ""
   objectURL:any= ""
-  intialCategoryName = ""
+  intialCategoryName = "";
+  showLoader = false;
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,private sanitizer:DomSanitizer,
+    private sharedService: SharedService,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
       // this.dialogRef.close(true);
      }
 
   ngOnInit(): void {
-    console.log(this.data,"data to modal")
+    console.log(this.data,"data to modal");
+    this.sharedService.openSnackBar(SnackbarMessageComponent,'success-message')
     if(this.data?.isEdit){
       this.categoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
       this.intialCategoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
@@ -62,10 +84,12 @@ export class AddCategoryComponent implements OnInit {
   }
 
   editCategory(){
+    this.showLoader = true;
     if(this.categoryName && (this.categoryName != this.intialCategoryName)){
       this.appDriveService.updateCategory(this.categoryName,this.data.category).subscribe((res:any)=>{
         console.log(res,"added catregory")
         this.newCategory = res;
+        this.showLoader = false;
         if(this.file){
             this.updateProfile(this.categoryName,this.file)
         }else{

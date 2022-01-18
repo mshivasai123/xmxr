@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CategoriesListComponent } from './categories-list/categories-list.component';
-import { AddCategoryComponent } from './add-category/add-category.component';
+import { AddCategoryComponent, SnackbarMessageComponent } from './add-category/add-category.component';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { AddItemComponent } from './add-item/add-item.component';
 import { MaterialModule } from '../shared/material.module';
@@ -11,6 +11,7 @@ import { ViewItemMediaComponent } from './view-item-media/view-item-media.compon
 import { NgxDocViewerModule } from 'ngx-doc-viewer';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { SharedModule } from '../shared/shared.module';
+
 const routes: Routes = [
     {
         path :'',
@@ -40,7 +41,8 @@ const routes: Routes = [
       ItemsListComponent,
       AddCategoryComponent,
       CategoriesListComponent,
-      ViewItemMediaComponent
+      ViewItemMediaComponent,
+      SnackbarMessageComponent
   ],
   imports: [
     CommonModule,

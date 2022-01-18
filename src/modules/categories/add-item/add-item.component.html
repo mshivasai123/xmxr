@@ -40,8 +40,8 @@
               <div>
                 <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadModel">
                 <label class="mb-2 image-label roboto-font f-9">Upload Model</label>
-                <label for="uploadModel" class="image-placeholder cursor-pointer border rounded">
-                  <span *ngIf="mediaFileName">{{mediaFileName}}</span>
+                <label for="uploadModel" class="image-placeholder d-flex align-items-center justify-content-center flex-column cursor-pointer border rounded">
+                  <p *ngIf="mediaFileName" class="m-0">{{mediaFileName}}</p>
                   <span *ngIf="fileSize">{{(fileSize / (1024*1024)).toFixed(2)}}MB</span>
                   <img *ngIf="!mediaFileName" [src]="modelImage" class="img-fluid" alt="modelModel" /> 
                 </label>
@@ -49,14 +49,20 @@
             </div>
           </div>
 
-          <div class="text-end mt-md-4 mt-2">
+          <div class="text-end d-flex justify-content-end mt-md-4 mt-2">
             <button class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1"
                 (click)="dialogRef.close()" type="button">
                 Cancel
             </button>
             <!-- <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" >Create</button> -->
             <button class="roboto-font border-0 xmxr-primary-btn" mat-button type="button" (click)="save()">
-                Upload
+                <span *ngIf='!showLoader'>
+                  Upload
+                </span>
+                <span *ngIf='showLoader'>
+                  <mat-progress-spinner class="spinner button-spinner" color="primary" mode="indeterminate" value="50">
+                  </mat-progress-spinner>
+                </span>
             </button>
         </div>
 

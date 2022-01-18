@@ -88,6 +88,7 @@ nav {
         left: 20px;
         width: 50px !important;
         height: 50px !important;
+
     }
 }
 
@@ -170,6 +171,7 @@ body {
     font-family: 'able-regular',Roboto, "Helvetica Neue", sans-serif !important; 
     color: $darkerColor;
     background-color: $appBackground;
+    // overflow: hidden;
 }
 .cursor-pointer {
     cursor: pointer;
@@ -177,6 +179,12 @@ body {
 @media (max-width: 767.99px) {
  .container {
      padding: 10px;
+ }
+ .spinner svg{
+     width: 60px !important;
+     height: 60px !important;
+     top: 21px !important;
+    left: 16px !important;
  }
 }
 

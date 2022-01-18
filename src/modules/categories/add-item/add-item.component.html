@@ -29,16 +29,16 @@
           <div class="row">
             <div class="col-lg-6">
               <div>
-                <input type="file" class="d-none" id="uploadFile">
+                <input type="file" (change)="profileUpload($event)" #profileImage class="d-none" id="uploadFile">
                 <label class="mb-2 image-label roboto-font f-9">Upload Picture</label>
                 <label for="uploadFile" class="image-placeholder cursor-pointer border rounded">
-                  <img [src]="imageUrl" class="img-fluid" alt="image" /> 
+                  <img [src]="objectURL?objectURL:imageUrl" class="img-fluid" alt="image" /> 
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
               <div>
-                <input type="file" class="d-none" id="uploadModel">
+                <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadModel">
                 <label class="mb-2 image-label roboto-font f-9">Upload Model</label>
                 <label for="uploadModel" class="image-placeholder cursor-pointer border rounded">
                   <img [src]="modelImage" class="img-fluid" alt="modelModel" /> 

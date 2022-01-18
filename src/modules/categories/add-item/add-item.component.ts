@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AppDriveService } from 'src/services/app-drive.service';
 
 @Component({
@@ -14,11 +15,12 @@ export class AddItemComponent implements OnInit {
   file:any
   fileName= ""
   imageUrl = 'assets/images/placeholder.png';
+  objectURL:any= ""
   modelImage = 'assets/images/file-icon.png';
   mediaFile:any
   mediaFileName = ""
 
-  constructor(
+  constructor(private sanitizer:DomSanitizer,
     public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
     public appDriveService: AppDriveService
@@ -37,6 +39,13 @@ export class AddItemComponent implements OnInit {
     console.log(event.target.files[0])
     this.file = event.target.files[0]
     this.fileName =  this.itemName + "." +this.file.name.split('.')[1]
+    if (this.objectURL) {
+      // revoke the old object url to avoid using more memory than needed
+      URL.revokeObjectURL(this.objectURL);  
+    }
+  
+    const fileD = this.file;
+    this.objectURL = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(fileD));
   }
 
   save(){

@@ -41,7 +41,9 @@
                 <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadModel">
                 <label class="mb-2 image-label roboto-font f-9">Upload Model</label>
                 <label for="uploadModel" class="image-placeholder cursor-pointer border rounded">
-                  <img [src]="modelImage" class="img-fluid" alt="modelModel" /> 
+                  <span *ngIf="mediaFileName">{{mediaFileName}}</span>
+                  <span *ngIf="fileSize">{{(fileSize / (1024*1024)).toFixed(2)}}MB</span>
+                  <img *ngIf="!mediaFileName" [src]="modelImage" class="img-fluid" alt="modelModel" /> 
                 </label>
               </div>
             </div>

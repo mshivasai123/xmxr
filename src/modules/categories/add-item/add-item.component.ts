@@ -19,7 +19,7 @@ export class AddItemComponent implements OnInit {
   modelImage = 'assets/images/file-icon.png';
   mediaFile:any
   mediaFileName = ""
-
+  fileSize:any = ""
   constructor(private sanitizer:DomSanitizer,
     public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
@@ -32,6 +32,8 @@ export class AddItemComponent implements OnInit {
       this.itemName = JSON.parse(JSON.stringify(this.data.item.name?.split('_')[1].split('.')[0]))
       this.fileName = this.itemName + "." +this.data.item.originalFilename.split('.')[1]
       this.mediaFileName = this.itemName + "." +this.data.item.mediaFileName.split('.')[1]
+      this.objectURL = this.data.item?.webContentLink
+      this.fileSize = this.data.item?.size
     }
   }
 
@@ -102,6 +104,7 @@ export class AddItemComponent implements OnInit {
     console.log(event.target.files[0])
     this.mediaFile = event.target.files[0]
     this.mediaFileName = this.itemName + "." + this.mediaFile.name.split('.')[1]
+    this.fileSize = this.mediaFile.size
   }
 
 }

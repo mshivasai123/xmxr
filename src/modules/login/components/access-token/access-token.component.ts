@@ -28,8 +28,10 @@ export class AccessTokenComponent implements OnInit {
     this.appDriveService.getAuthResponse()
     if(this.accessToken){
       if(this.accessToken.includes('it@m')){
+        this.dialogRef.close()
         this.router.navigateByUrl('/categories/mediaview', { state: {id: this.accessToken} })
       }else if(this.accessToken.includes('c@TG')){
+        this.dialogRef.close()
         const access = this.accessToken.split('c@TG')
         this.router.navigateByUrl('/categories/items', { state: {id:access[0],name: access[1]}})
       }

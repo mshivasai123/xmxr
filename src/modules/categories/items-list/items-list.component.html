@@ -40,7 +40,7 @@
                                     </h5>
 
                                 </div>
-                                <button class="app-color bg-transparent p-0 rounded dropdown-icon border-0"
+                                <button class="app-color bg-transparent p-0 rounded dropdown-icon border-0" *ngIf="sharedService.checkAccessTokenUser()"
                                     (click)='showOptions($event)'>
                                     <mat-icon class="align-middle">more_vert</mat-icon>
                                 </button>

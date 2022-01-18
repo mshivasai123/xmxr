@@ -10,12 +10,12 @@ import { forkJoin } from 'rxjs';
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
-  <div class="d-flex mb-4 justify-content-between align-items-center">
+  <div class="mb-4 text-center">
     <h5 class="mb-0 me-4">Are you sure you want to delete?</h5>
   </div>
-  <div class="text-end mt-4">
+  <div class="text-center mt-4">
     <button class="bg-transparent border-0 me-md-3 me-1 roboto-font xmxr-secondary-btn" (click)="closeModel(false)">Cancel</button>
-    <button class="roboto-font border-0 xmxr-primary-btn" (click)="closeModel(true)">Delete</button>
+    <button class="roboto-font border-0 xmxr-primary-btn" mat-button (click)="closeModel(true)">Delete</button>
   </div>
   `,
 })
@@ -25,7 +25,7 @@ export class DeleteConfirmationDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
-  closeModel(del:boolean) {
+  closeModel(del: boolean) {
     this.dialogRef.close(del);
   }
 }
@@ -34,14 +34,14 @@ export class DeleteConfirmationDialog {
 @Component({
   selector: 'share-dialog',
   template: `
-  <div class="d-flex mb-4 justify-content-between align-items-center">
+  <div class="d-flex model-header mb-2 justify-content-between align-items-center">
     <h5 class="mb-0">Share</h5>
     <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
       close
     </span>
   </div>
 
-  <div class="input-group mb-3">
+  <div class="input-group model-body mb-3">
     <input type="text" class="form-control" disabled [value]="data?.id" #userInput aria-describedby="basic-addon2">
     <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
       <span class="material-icons" (click)="copyInputMessage(userInput)">
@@ -62,7 +62,7 @@ export class ShareDialog {
   }
 
   /* To copy Text from Textbox */
-  copyInputMessage(inputElement: any){
+  copyInputMessage(inputElement: any) {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
@@ -78,8 +78,8 @@ export class ShareDialog {
 })
 export class CategoriesListComponent implements OnInit {
   userFolderData: any;
-  categoriesList:any = [];
-  
+  categoriesList: any = [];
+
   constructor(
     public dialog: MatDialog,
     public appDriveService: AppDriveService,
@@ -89,45 +89,45 @@ export class CategoriesListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   let getBasicProfile: any = JSON.parse(localStorage.getItem('getBasicProfile') as any)
-   if(ClientMail == getBasicProfile?.Email){
-    this.appDriveService.fetchAllUserFolder().subscribe((response: any) => {
-      console.log(response,"eachusers for admin")
-      if(response.files.length){
-        let listOfCatgoriesAllUsers:any = []
-        const requestArray = response.files.map((val:any)=> this.appDriveService.getListOfCategoriesByParentId(val.id))
-        forkJoin(requestArray).subscribe((results:any) => {
-          console.log(results,"forkJoin");
-          results.forEach((categories:any) => {
-            listOfCatgoriesAllUsers.push(...categories.files)
+    let getBasicProfile: any = JSON.parse(localStorage.getItem('getBasicProfile') as any)
+    if (ClientMail == getBasicProfile?.Email) {
+      this.appDriveService.fetchAllUserFolder().subscribe((response: any) => {
+        console.log(response, "eachusers for admin")
+        if (response.files.length) {
+          let listOfCatgoriesAllUsers: any = []
+          const requestArray = response.files.map((val: any) => this.appDriveService.getListOfCategoriesByParentId(val.id))
+          forkJoin(requestArray).subscribe((results: any) => {
+            console.log(results, "forkJoin");
+            results.forEach((categories: any) => {
+              listOfCatgoriesAllUsers.push(...categories.files)
+            });
+            console.log(listOfCatgoriesAllUsers, "listOfCatgoriesAllUsers")
+            this.categoriesList = listOfCatgoriesAllUsers
+            this.finalDataRendering()
           });
-          console.log(listOfCatgoriesAllUsers,"listOfCatgoriesAllUsers")
-          this.categoriesList = listOfCatgoriesAllUsers
-          this.finalDataRendering()
-        });
-      }
-    })
-   }else{
-    this.appDriveService.fetchUserFolder().subscribe((response: any) => {
-      console.log(response, "data from user folder")
-      if (!response.files.length) {
-        this.createUserFolder();
-      } else {
-        if (response.files[0].parents.includes(D2f_User_Data) && !response.files[0].trashed) {
-          this.userFolderData = response.files[0]
-          this.getCategoriesList()
-        } else {
-          this.createUserFolder();
         }
-      }
-    })
-    this.changeDetector.detectChanges()
-   }
-  
+      })
+    } else {
+      this.appDriveService.fetchUserFolder().subscribe((response: any) => {
+        console.log(response, "data from user folder")
+        if (!response.files.length) {
+          this.createUserFolder();
+        } else {
+          if (response.files[0].parents.includes(D2f_User_Data) && !response.files[0].trashed) {
+            this.userFolderData = response.files[0]
+            this.getCategoriesList()
+          } else {
+            this.createUserFolder();
+          }
+        }
+      })
+      this.changeDetector.detectChanges()
+    }
+
   }
 
   createUserFolder() {
-    if(!sessionStorage.getItem("isAccessToken")){
+    if (!sessionStorage.getItem("isAccessToken")) {
       this.appDriveService.createUserFolderInSharedFolder().subscribe((response: any) => {
         console.log(response, "res")
         this.userFolderData = response
@@ -146,55 +146,60 @@ export class CategoriesListComponent implements OnInit {
     }
   }
 
-  getCategoriesList(){
-    this.appDriveService.getListOfCategoriesByParentId(this.userFolderData.id).subscribe((categories:any)=>{
-       console.log(categories,"categories")
-       this.categoriesList = categories.files
-       this.finalDataRendering()
+  getCategoriesList() {
+    this.appDriveService.getListOfCategoriesByParentId(this.userFolderData.id).subscribe((categories: any) => {
+      console.log(categories, "categories")
+      this.categoriesList = categories.files
+      this.finalDataRendering()
     })
   }
 
   showOptions(event: any) {
-    console.log(event);
-    let parentElement = event.target.offsetParent;
-    if(parentElement) {
-      parentElement.classList.toggle('show-options');
+    let parentElement = event?.target?.offsetParent;
+    if (parentElement.classList.contains('show-options')) {
+      parentElement.classList.remove('show-options');
+    } else {
+      let elements = document.getElementsByClassName('parent-element');
+      for (let i = 0; i < elements?.length; i++) {
+        elements[i].classList.remove('show-options');
+      }
+      parentElement.classList.add('show-options');
     }
   }
 
-  finalDataRendering(){
+  finalDataRendering() {
     this.categoriesList.forEach((category: any) => {
-      this.appDriveService.getCategoryProfile(category.name,category.id).subscribe((profile:any)=>{
-       console.log(profile,"profile")
-       category['profilePhoto'] = profile?.files[0]?.webContentLink;
-       category['photoName'] = profile?.files[0]?.name;
-       category['photoId'] = profile?.files[0]?.id;
-       category['photoOrginalName']=profile?.files[0]?.originalFilename
-       this.changeDetector.detectChanges();
+      this.appDriveService.getCategoryProfile(category.name, category.id).subscribe((profile: any) => {
+        console.log(profile, "profile")
+        category['profilePhoto'] = profile?.files[0]?.webContentLink;
+        category['photoName'] = profile?.files[0]?.name;
+        category['photoId'] = profile?.files[0]?.id;
+        category['photoOrginalName'] = profile?.files[0]?.originalFilename
+        this.changeDetector.detectChanges();
       })
-      this.appDriveService.getListOfItemsByCatgryId(category).subscribe((itemsList:any)=>{
-        console.log(itemsList,"itemsList")
-        if(itemsList.files.length){
-          const index = itemsList.files.findIndex((item:any)=> item.name.split('_')[0] == category.name.split('_')[0] )
-          itemsList.files.splice(index,1)
+      this.appDriveService.getListOfItemsByCatgryId(category).subscribe((itemsList: any) => {
+        console.log(itemsList, "itemsList")
+        if (itemsList.files.length) {
+          const index = itemsList.files.findIndex((item: any) => item.name.split('_')[0] == category.name.split('_')[0])
+          itemsList.files.splice(index, 1)
           let dummy = JSON.parse(JSON.stringify(itemsList.files))
-          category["items"] = dummy.filter((item:any)=> !item?.name?.includes('model')).length
+          category["items"] = dummy.filter((item: any) => !item?.name?.includes('model')).length
         }
-     })
-     });
+      })
+    });
   }
 
   addCategory(): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
       width: '350px',
-      panelClass : 'xmxr-model',
+      panelClass: 'xmxr-model',
       data: {
         title: 'Add Category', isEdit: false,
         parentId: this.userFolderData.id
       },
     });
     dialogRef.afterClosed().subscribe((newCategory) => {
-       if(newCategory){
+      if (newCategory) {
         this.categoriesList.push(newCategory)
       }
     });
@@ -203,43 +208,44 @@ export class CategoriesListComponent implements OnInit {
   editCategory(category: any): void {
     const dialogRef = this.dialog.open(AddCategoryComponent, {
       width: '350px',
-      panelClass : 'xmxr-model',
+      panelClass: 'xmxr-model',
       data: { title: 'Edit Category', category: category, isEdit: true }
     });
     dialogRef.afterClosed().subscribe((load) => {
-      if(load){
+      if (load) {
         this.getCategoriesList()
-     }
-   });
+      }
+    });
   }
 
-  deleteCategory(category: any,index:number) {
+  deleteCategory(category: any, index: number) {
     const dialogRef = this.dialog.open(DeleteConfirmationDialog, {
       width: '350px'
 
     })
     dialogRef.afterClosed().subscribe((load) => {
-      if(load){
-        this.appDriveService.deleteCategory(category.id).subscribe((categoryDel:any)=>{
-          this.categoriesList.splice(index,1)
-         })
-     }
-   });
-    
+      if (load) {
+        this.appDriveService.deleteCategory(category.id).subscribe((categoryDel: any) => {
+          this.categoriesList.splice(index, 1)
+        })
+      }
+    });
+
   }
 
-  listItems(category: any){
+  listItems(category: any) {
     this.router.navigateByUrl('/categories/items', { state: category })
   }
 
-  shareCategory(categorie:any) {
+  shareCategory(categorie: any) {
     this.dialog.open(ShareDialog, {
       width: '350px',
+      panelClass: 'xmxr-model',
       data: {
-        id:  categorie.id + 'c@TG' + categorie.name
+        id: categorie.id + 'c@TG' + categorie.name
       }
     })
   }
 
-  
+
 }

@@ -64,11 +64,17 @@ nav {
     color: rgba(255,255,255,0.5);
     .mat-form-field-label,
     .mat-form-field-prefix {
-        color: rgba(255,255,255,0.5);
+        color: rgba(255,255,255,0.5) !important;
+    }
+    .mat-input-element {
+        caret-color: $appColor;
     }
     .mat-form-field-underline {
-        // background-color: rgba(255,255,255,0.5);
-        display: none;
+        background-color: rgba(255,255,255,0.5);
+        // display: none;
+        .mat-form-field-ripple {
+            background-color: $appColor;
+        }
     }
 }
 
@@ -76,8 +82,10 @@ nav {
     line-height: unset !important;
 }
 
-.small-spinner {
+.mat-progress-spinner.small-spinner {
     svg {
+        top: 22px;
+        left: 20px;
         width: 50px !important;
         height: 50px !important;
     }
@@ -86,7 +94,8 @@ nav {
 .xmxr-primary-btn {
     background-color: $appColor;
     color: $lighterColor;
-    border-radius: 8px;
+    border-radius: 4px;
+    font-size: 14px;
     padding: 5px 14px;
     box-shadow: -2px 0px 8px -2px rgb(0 0 0 / 50%);
 }
@@ -102,9 +111,9 @@ nav {
             background-color: $model-header-bg ;
         }
         .model-body {
-            padding: 30px 30px 35px 50px;
+            padding: 30px;
             @media (max-width: 767.99px) {
-                padding: 20px 10px 25px 10px;
+                padding: 20px;
             }
             .mat-form-field-label {
                 color: rgba(0,0,0,.54) !important;
@@ -113,6 +122,12 @@ nav {
                 display: none;
             }
         }
+    }
+}
+
+.header-dialogue {
+    mat-dialog-container {
+        border-radius: 0px;
     }
 }
 
@@ -164,3 +179,9 @@ body {
      padding: 10px;
  }
 }
+
+@media (min-width: 575.99px) {
+    .w-sm-auto {
+        width: auto !important;
+    }
+   }

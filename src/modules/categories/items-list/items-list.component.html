@@ -1,11 +1,13 @@
 <div class="container">
     <div class="category-header d-flex align-items-center justify-content-between">
-        <h4 class="app-color m-0">
-            <span class="material-icons cursor-pointer f-30 align-middle" *ngIf="sharedService.checkAccessTokenUser()"
+        <h4 class="m-0">
+            <span class="material-icons cursor-pointer app-color f-30 align-middle" *ngIf="sharedService.checkAccessTokenUser()"
                 (click)="bactToCategories()">
                 navigate_before
             </span>
-            {{parentCategoryData?.name.split('_')[1]}}
+            <span class="text-white-color">
+                {{parentCategoryData?.name.split('_')[1]}}
+            </span>
         </h4>
         <!-- <button class="btn btn-primary rounded-0"  *ngIf="sharedService.checkAccessTokenUser()">Add Item</button> -->
         <button class="bg-transparent rounded-0 border-0 app-color" mat-button (click)="addItem()"
@@ -21,7 +23,7 @@
                     <div class="col-md-6 col-lg-4">
                         <div [ngStyle]="{ 'background-image': 'url(' + items.webContentLink + ')'}"
                             (click)="openViewMedia(items)"
-                            class="list-item position-relative mb-4 rounded d-flex align-items-end flex-column-reverse">
+                            class="list-item parent-element position-relative mb-4 rounded d-flex align-items-end flex-column-reverse">
                             <mat-progress-spinner class="spinner small-spinner" *ngIf="!items.webContentLink"
                                 mode="indeterminate" value="50">
                             </mat-progress-spinner>
@@ -38,7 +40,7 @@
                                     </h5>
 
                                 </div>
-                                <button class="app-color bg-transparent rounded dropdown-icon border-0"
+                                <button class="app-color bg-transparent p-0 rounded dropdown-icon border-0"
                                     (click)='showOptions($event)'>
                                     <mat-icon class="align-middle">more_vert</mat-icon>
                                 </button>

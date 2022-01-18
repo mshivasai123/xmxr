@@ -1,13 +1,14 @@
 <div class="container">
     <div class="category-header d-flex flex-wrap justify-content-between align-items-center">
         <h4 class="app-color">All Categories</h4>
-        <div class="d-flex">
+        <div class="d-flex justify-content-between w-100 w-sm-auto">
             <mat-form-field class="example-full-width search-form-field">
                 <mat-label class="ms-2">Search...</mat-label>
                 <span class="material-icons align-middle f-11" matPrefix>search</span>
-                <input type="text" class="ms-2" matInput>
+                <input type="text" class="ms-2" autocomplete="off" matInput>
             </mat-form-field>
-            <button class="bg-transparent rounded-0 border-0 app-color roboto-font" mat-button
+            <button class="bg-transparent text-end flex-grow-1 pe-0 rounded-0 border-0 app-color roboto-font" mat-button
+            [disableRipple]="true"
                 [matMenuTriggerFor]="menu" *ngIf="sharedService.checkAccessTokenUser()">
                 <span class="material-icons align-middle f-11">add</span>Add
             </button>
@@ -24,7 +25,7 @@
             <div class="row">
                 <ng-container *ngFor="let categories of categoriesList;let i=index">
                     <div class="col-md-6 col-lg-4">
-                        <div class="list-item position-relative darker-bg rounded cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
+                        <div class="list-item position-relative darker-bg rounded parent-element cursor-pointer mb-4 d-flex align-items-end flex-column-reverse"
                             [ngStyle]="{ 'background-image': 'url(' + categories.profilePhoto + ')'}"
                             (click)="listItems(categories)">
                             <mat-progress-spinner class="spinner small-spinner" *ngIf="!categories.profilePhoto" mode="indeterminate" value="50">
@@ -38,16 +39,14 @@
                                     </h5>
 
                                 </div>
-                                <button class="app-color bg-transparent rounded dropdown-icon border-0"
+                                <button class="app-color bg-transparent p-0 rounded dropdown-icon border-0"
                                     (click)='showOptions($event)'>
                                     <mat-icon class="align-middle">more_vert</mat-icon>
                                 </button>
 
                                 <!-- </div> -->
                             </div>
-                            <span
-                                class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories?.items
-                                ?? 0}}</span>
+                            <span class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories?.items ?? 0}}</span>
                                 
                             <div class="action-buttons text-center rounded app-bg-color"
                             (click)="$event.stopPropagation()">

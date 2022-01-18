@@ -6,15 +6,17 @@ import { Location } from '@angular/common';
 import { AppDriveService } from 'src/services/app-drive.service';
 import { forkJoin } from 'rxjs';
 import { SharedService } from 'src/services/shared.service';
+
+
 @Component({
   selector: 'delete-confirmation-dialog',
   template: `
-  <div class="d-flex mb-4 justify-content-between align-items-center">
+  <div class="mb-2 text-center">
     <h5 class="mb-0 me-4">Are you sure you want to delete?</h5>
   </div>
-  <div class="text-end mt-4">
+  <div class="text-center mt-4">
     <button class="bg-transparent border-0 me-md-3 me-1 roboto-font xmxr-secondary-btn" (click)="closeModel(false)">Cancel</button>
-    <button class="roboto-font border-0 xmxr-primary-btn" (click)="closeModel(true)">Delete</button>
+    <button class="roboto-font border-0 xmxr-primary-btn" (click)="closeModel(true)" mat-button>Delete</button>
   </div>
   `,
 })
@@ -24,7 +26,7 @@ export class DeleteConfirmationDialog {
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
-  closeModel(del:boolean) {
+  closeModel(del: boolean) {
     this.dialogRef.close(del);
   }
 
@@ -32,14 +34,14 @@ export class DeleteConfirmationDialog {
 @Component({
   selector: 'share-dialog',
   template: `
-  <div class="d-flex mb-4 justify-content-between align-items-center">
+  <div class="d-flex model-header mb-2 justify-content-between align-items-center">
     <h5 class="mb-0">Share</h5>
     <span class="material-icons cursor-pointer" (click)="dialogRef.close()">
       close
     </span>
   </div>
 
-  <div class="input-group mb-3">
+  <div class="input-group model-body mb-3">
     <input type="text" class="form-control" [value]="data?.id" #userInput disabled  aria-describedby="basic-addon2">
     <span class="input-group-text cursor-pointer" title="copy" id="basic-addon2">
       <span class="material-icons"  (click)="copyInputMessage(userInput)">
@@ -49,25 +51,25 @@ export class DeleteConfirmationDialog {
   </div>
   `,
 })
-export class ShareDialog implements OnInit{
+export class ShareDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<DeleteConfirmationDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) { }
 
   ngOnInit(): void {
-      console.log(this.data.id)
+    console.log(this.data.id)
   }
   closeModel() {
     this.dialogRef.close();
   }
   /* To copy Text from Textbox */
-  copyInputMessage(inputElement: any){
+  copyInputMessage(inputElement: any) {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
   }
-  
+
 
 }
 
@@ -77,137 +79,144 @@ export class ShareDialog implements OnInit{
   styleUrls: ['./items-list.component.scss']
 })
 export class ItemsListComponent implements OnInit {
-  parentCategoryData:any 
-  itemsList:any =[]
-  totalListItems:any 
+  parentCategoryData: any
+  itemsList: any = []
+  totalListItems: any
   constructor(
     public dialog: MatDialog,
     public router: Router,
-    private location:Location,
+    private location: Location,
     public appDriveService: AppDriveService,
-    public sharedService:SharedService
+    public sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
     console.log(this.location.getState())
     let state: any = this.location.getState()
     this.parentCategoryData = state
-    if(state?.id){
-      if(sessionStorage.getItem("isAccessToken") == "true"){
-        this.appDriveService.getItemsListByToken(state.id).subscribe((res:any)=>{
-          console.log(res,"res")
-          if(res.items.length){
-            const requestArray = res.items.map((val:any)=> this.appDriveService.getItemByItemId(val.id))
+    if (state?.id) {
+      if (sessionStorage.getItem("isAccessToken") == "true") {
+        this.appDriveService.getItemsListByToken(state.id).subscribe((res: any) => {
+          console.log(res, "res")
+          if (res.items.length) {
+            const requestArray = res.items.map((val: any) => this.appDriveService.getItemByItemId(val.id))
             forkJoin(requestArray).subscribe(results => {
-              console.log(results,"forkJoin");
+              console.log(results, "forkJoin");
               this.itemsList = results
               this.totalListItems = JSON.parse(JSON.stringify(this.itemsList))
               this.renderListItems(state)
             });
           }
-          
+
         })
       }
       this.getItemsList(state)
-    }else{
+    } else {
       this.router.navigate(['/categories'])
     }
   }
 
-  getItemsList(state:any){
-    this.appDriveService.getListOfItemsByCatgryId(state).subscribe((itemsList:any)=>{
-      console.log(itemsList,"itemsList")
+  getItemsList(state: any) {
+    this.appDriveService.getListOfItemsByCatgryId(state).subscribe((itemsList: any) => {
+      console.log(itemsList, "itemsList")
       this.itemsList = itemsList.files
       this.totalListItems = JSON.parse(JSON.stringify(this.itemsList))
       this.renderListItems(state)
-   })
+    })
   }
 
-  renderListItems(state:any){
-    if(this.itemsList.length){
-      const index = this.itemsList.findIndex((item:any)=> item.name.split('_')[0] == state.name.split('_')[0] )
-      this.itemsList.splice(index,1)
+  renderListItems(state: any) {
+    if (this.itemsList.length) {
+      const index = this.itemsList.findIndex((item: any) => item.name.split('_')[0] == state.name.split('_')[0])
+      this.itemsList.splice(index, 1)
       let dummy = JSON.parse(JSON.stringify(this.itemsList))
-      let looper = dummy.filter((item:any)=> !item?.name?.includes('model'))
-       looper.forEach((val:any) => {
-       let mediaItem =  this.totalListItems.find((media:any)=> media.name.includes(val.name.split('.')[0]+'model'))
-           val["mediaFileName"] = mediaItem?.originalFilename ?? ''
-           val["mediaId"] = mediaItem?.id ?? ''
+      let looper = dummy.filter((item: any) => !item?.name?.includes('model'))
+      looper.forEach((val: any) => {
+        let mediaItem = this.totalListItems.find((media: any) => media.name.includes(val.name.split('.')[0] + 'model'))
+        val["mediaFileName"] = mediaItem?.originalFilename ?? ''
+        val["mediaId"] = mediaItem?.id ?? ''
       });
       this.itemsList = JSON.parse(JSON.stringify(looper))
-      console.log(this.itemsList,"this.itemsList")
+      console.log(this.itemsList, "this.itemsList")
     }
   }
 
   addItem(): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
       width: '350px',
-      panelClass : 'xmxr-model',
+      panelClass: 'xmxr-model',
       data: {
         title: 'Add Item', isEdit: false,
-        parentId:  this.parentCategoryData.id
+        parentId: this.parentCategoryData.id
       },
     });
     dialogRef.afterClosed().subscribe((newItem) => {
-      if(newItem){
+      if (newItem) {
         // this.itemsList.push(newItem)
-       let state: any = this.location.getState()
+        let state: any = this.location.getState()
         this.getItemsList(state)
       }
     });
   }
 
   showOptions(event: any) {
-    let parentElement = event.target.offsetParent;
-    if(parentElement) {
-      parentElement.classList.toggle('show-options');
+    let parentElement = event?.target?.offsetParent;
+    if (parentElement.classList.contains('show-options')) {
+      parentElement.classList.remove('show-options');
+    } else {
+      let elements = document.getElementsByClassName('parent-element');
+      for (let i = 0; i < elements?.length; i++) {
+        elements[i].classList.remove('show-options');
+      }
+      parentElement.classList.add('show-options');
     }
   }
 
   editItem(item: any): void {
     const dialogRef = this.dialog.open(AddItemComponent, {
-      data: { title: 'Edit Item', item: item,parentId:  this.parentCategoryData.id, isEdit: true },
-       width: '350px',
-       panelClass : 'xmxr-model'
+      data: { title: 'Edit Item', item: item, parentId: this.parentCategoryData.id, isEdit: true },
+      width: '350px',
+      panelClass: 'xmxr-model'
     });
     dialogRef.afterClosed().subscribe((load) => {
-      if(load){
-       let state: any = this.location.getState()
+      if (load) {
+        let state: any = this.location.getState()
         this.getItemsList(state)
-     }
-   });
+      }
+    });
   }
 
-  deleteItem(item:any,index:number) {
-    const dialogRef =this.dialog.open(DeleteConfirmationDialog, {
+  deleteItem(item: any, index: number) {
+    const dialogRef = this.dialog.open(DeleteConfirmationDialog, {
       width: '350px',
     })
 
     dialogRef.afterClosed().subscribe((load) => {
-      if(load){
-        this.appDriveService.deleteItem(item.id).subscribe((categoryDel:any)=>{
-          this.itemsList.splice(index,1)
-         })
-     }
-   });
+      if (load) {
+        this.appDriveService.deleteItem(item.id).subscribe((categoryDel: any) => {
+          this.itemsList.splice(index, 1)
+        })
+      }
+    });
 
-   
+
 
   }
 
-  bactToCategories(){
+  bactToCategories() {
     this.router.navigate(['/categories'])
   }
 
-  openViewMedia(item:any){
-    this.router.navigateByUrl('/categories/mediaview', { state: {id: item.id + 'it@m' + item.mediaId} })
+  openViewMedia(item: any) {
+    this.router.navigateByUrl('/categories/mediaview', { state: { id: item.id + 'it@m' + item.mediaId } })
   }
 
-  shareCategory(item:any) {
+  shareCategory(item: any) {
     this.dialog.open(ShareDialog, {
       width: '350px',
+      panelClass: 'xmxr-model',
       data: {
-        id:  item.id + 'it@m' + item.mediaId
+        id: item.id + 'it@m' + item.mediaId
       }
     })
   }

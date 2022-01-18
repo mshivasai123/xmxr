@@ -6,12 +6,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonDialogueComponent } from './components/common-dialogue/common-dialogue.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SidebarComponent,
-    LoaderComponent
+    LoaderComponent,
+    CommonDialogueComponent
   ],
   imports: [
     CommonModule,

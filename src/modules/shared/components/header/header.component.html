@@ -44,16 +44,16 @@ C33.385,9.848,33.641,12.137,33.137,14.524z" />
           </button>
           <mat-menu #menu="matMenu">
             <div mat-menu-item class="lh-auto h-auto pb-2 pt-1 border-bottom" *ngIf="!sharedService.isUserLoggedIn()">
-              <h6 class="mb-1">{{sharedService.getUserName()}}</h6>
+              <h6 class="mb-1 fw-bold">{{sharedService.getUserName()}}</h6>
               <p class="m-0">{{sharedService.getUserEmail()}}</p>
             </div>
-            <button mat-menu-item>
+            <button mat-menu-item (click)='openDialog("About")'>
               <span>About</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)='openDialog("Terms and Conditions")'>
               <span>Terms and Conditions</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)='openDialog("Privacy Policy")'>
               <span>Privacy Policy</span>
             </button>
             <button mat-menu-item>

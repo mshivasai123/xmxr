@@ -9,6 +9,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatIconModule} from '@angular/material/icon';
+import { MatRippleModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -20,12 +21,14 @@ import {MatIconModule} from '@angular/material/icon';
     MatMenuModule,
     MatRadioModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatRippleModule
   ],
   exports :[
       MatCardModule,
       MatRadioModule,
       MatIconModule,
+      MatRippleModule,
       MatButtonModule,
       MatProgressSpinnerModule,
       MatMenuModule,

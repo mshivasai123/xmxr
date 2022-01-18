@@ -11,33 +11,41 @@
             <mat-label>Name</mat-label>
             <input matInput [(ngModel)]="itemName" name="itemName">
           </mat-form-field>
-            <!-- <input type="file" (change)="profileUpload($event)" class="d-none" id="uploadFile">
-          <p>
-            <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
-          </p> -->
 
-          <input type="file" (change)="profileUpload($event)" #profileImage class="d-none" id="uploadFile">
+          <!-- <input type="file" (change)="profileUpload($event)" #profileImage class="d-none" id="uploadFile">
           <mat-form-field class="example-full-width w-100">
               <mat-label>Upload Picture</mat-label>
               <input matInput name="profileImage" type="text" (click)='profileImage.click()'>
           </mat-form-field>
 
-          <!-- <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadmedia">
-          <p>
-            <label for="uploadmedia" class="upload-picture-label w-100 cursor-pointer">{{mediaFileName ? mediaFileName : 'Upload / Enter Model URL'}}</label>
-          </p> -->
+
 
           <input type="file" (change)="uploadmediaData($event)" #modelUrl class="d-none" id="uploadmedia">
           <mat-form-field class="example-full-width w-100">
               <mat-label>Upload / Enter Model URL</mat-label>
               <input matInput name="modelUrl" type="text" (click)='modelUrl.click()'>
-          </mat-form-field>
+          </mat-form-field> -->
 
-          <!-- <div class="text-center">
-              <button class="btn rounded-0 px-4 btn-dark p-3 mt-4" type="button" (click)="save()">
-                {{data?.isEdit ? 'Save' : 'Upload'}}
-              </button>
-          </div> -->
+          <div class="row">
+            <div class="col-lg-6">
+              <div>
+                <input type="file" class="d-none" id="uploadFile">
+                <label class="mb-2 image-label roboto-font f-9">Upload Picture</label>
+                <label for="uploadFile" class="image-placeholder cursor-pointer border rounded">
+                  <img [src]="imageUrl" class="img-fluid" alt="image" /> 
+                </label>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div>
+                <input type="file" class="d-none" id="uploadModel">
+                <label class="mb-2 image-label roboto-font f-9">Upload Model</label>
+                <label for="uploadModel" class="image-placeholder cursor-pointer border rounded">
+                  <img [src]="modelImage" class="img-fluid" alt="modelModel" /> 
+                </label>
+              </div>
+            </div>
+          </div>
 
           <div class="text-end mt-md-4 mt-2">
             <button class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1"

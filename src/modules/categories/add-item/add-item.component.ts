@@ -13,6 +13,8 @@ export class AddItemComponent implements OnInit {
   newItem:any
   file:any
   fileName= ""
+  imageUrl = 'assets/images/placeholder.png';
+  modelImage = 'assets/images/file-icon.png';
   mediaFile:any
   mediaFileName = ""
 

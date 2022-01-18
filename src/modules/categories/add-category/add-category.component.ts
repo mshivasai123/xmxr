@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
-
+import {DomSanitizer} from '@angular/platform-browser';
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -14,9 +14,9 @@ export class AddCategoryComponent implements OnInit {
   file:any
   imageUrl = 'assets/images/placeholder.png';
   fileName= ""
-  objectURL= ""
+  objectURL:any= ""
   intialCategoryName = ""
-  constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,
+  constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,private sanitizer:DomSanitizer,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
       // this.dialogRef.close(true);
      }
@@ -97,7 +97,7 @@ export class AddCategoryComponent implements OnInit {
     }
   
     const fileD = this.file;
-    this.objectURL = URL.createObjectURL(fileD);
+    this.objectURL = this.sanitizer.bypassSecurityTrustUrl(URL.createObjectURL(fileD));
     console.log(this.objectURL,"this.objectURL")
   }
 

@@ -27,6 +27,7 @@ export class AddCategoryComponent implements OnInit {
       this.categoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
       this.intialCategoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
       this.fileName = this.categoryName + '.' + this.data.category.photoOrginalName.split('.')[1]
+      this.objectURL = this.data.category.profilePhoto
     }
   }
   save(){

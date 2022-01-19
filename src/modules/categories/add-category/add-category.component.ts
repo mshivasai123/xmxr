@@ -2,10 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AddInterceptService } from 'src/services/add-intercept.service';
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
-  styleUrls: ['./add-category.component.scss']
+  styleUrls: ['./add-category.component.scss'],
+  // providers: [AddInterceptService,{ provide: HTTP_INTERCEPTORS, useClass: AddInterceptService, multi: true }]
 })
 export class AddCategoryComponent implements OnInit {
   // dialogData: DialogData;

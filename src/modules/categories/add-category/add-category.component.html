@@ -15,7 +15,7 @@
             <label class="mb-2 image-label roboto-font f-9">Category Image</label>
             <label for="uploadFile" class="image-placeholder position-relative cursor-pointer border rounded">
               <img [src]="objectURL?objectURL:imageUrl" class="img-fluid" alt="image" /> 
-              <button class="change-img-btn app-color darker-bg border-0 f-10" (click)="uploadFile.click()">Change Image</button>
+              <button class="change-img-btn app-color darker-bg border-0 f-10" *ngIf="fileName" (click)="uploadFile.click()">Change Image</button>
             </label>
           </div>
 

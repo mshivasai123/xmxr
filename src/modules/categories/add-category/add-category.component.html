@@ -13,8 +13,9 @@
 
           <div>
             <label class="mb-2 image-label roboto-font f-9">Category Image</label>
-            <label for="uploadFile" class="image-placeholder cursor-pointer border rounded">
+            <label for="uploadFile" class="image-placeholder position-relative cursor-pointer border rounded">
               <img [src]="objectURL?objectURL:imageUrl" class="img-fluid" alt="image" /> 
+              <button class="change-img-btn app-color darker-bg border-0 f-10" (click)="uploadFile.click()">Change Image</button>
             </label>
           </div>
 
@@ -25,7 +26,7 @@
             <input type="text" class="d-none" matInput (change)="profileUpload($event)" id="uploadFile">
           </mat-form-field> -->
 
-            <input type="file" class="d-none" (change)="profileUpload($event)" id="uploadFile">
+            <input type="file" class="d-none" (change)="profileUpload($event)" #uploadFile id="uploadFile">
           <!-- <p>
             <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
           </p> -->

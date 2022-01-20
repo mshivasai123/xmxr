@@ -2,10 +2,10 @@
     <div class="category-header d-flex flex-wrap justify-content-between align-items-center">
         <h4 class="app-color">All Categories</h4>
         <div class="d-flex justify-content-between w-100 w-sm-auto">
-            <mat-form-field class="example-full-width search-form-field">
-                <mat-label class="ms-2">Search...</mat-label>
-                <span class="material-icons align-middle f-11" matPrefix>search</span>
-                <input type="text" class="ms-2" autocomplete="off" matInput>
+            <mat-form-field class="example-full-width search-form-field" floatLabel="never">
+                <!-- <mat-label class="ms-2 app-color">Search...</mat-label> -->
+                <span class="material-icons align-middle f-11 app-color" matPrefix>search</span>
+                <input type="text" class="ms-2 app-color" placeholder="Search..." autocomplete="off" matInput>
             </mat-form-field>
             <button class="bg-transparent text-end flex-grow-1 pe-0 rounded-0 border-0 app-color roboto-font" mat-button
             [disableRipple]="true"
@@ -30,7 +30,7 @@
                             (click)="listItems(categories)">
                             <mat-progress-spinner class="spinner small-spinner" *ngIf="!categories.profilePhoto" mode="indeterminate" value="50">
                             </mat-progress-spinner>
-                            <div class="list-item-info w-100 align-items-center px-3 py-2 d-flex justify-content-between"
+                            <div class="list-item-info w-100 align-items-center px-2 py-2 d-flex justify-content-between"
                                 (click)="$event.stopPropagation()">
                                 <!-- <img [src]="categories.profilePhoto" class="" alt="category" /> -->
                                 <!-- <div class="d-flex"> -->
@@ -46,7 +46,7 @@
 
                                 <!-- </div> -->
                             </div>
-                            <span *ngIf="categories?.items" class="f-10 app-bg-color text-white-color rounded mb-3 px-2 py-1 me-2">{{categories.items}}</span>
+                            <span *ngIf="categories?.items" class="f-10 items-count text-center app-bg-color text-white-color mb-3 px-2 py-1 me-2">{{categories.items}}</span>
                                 
                             <div class="action-buttons text-center rounded app-bg-color"
                             (click)="$event.stopPropagation()">

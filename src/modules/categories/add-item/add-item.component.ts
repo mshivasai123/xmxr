@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppDriveService } from 'src/services/app-drive.service';
+import { LoaderService } from 'src/services/loader-service';
 import { SharedService } from 'src/services/shared.service';
 @Component({
   template: `
@@ -37,7 +38,7 @@ export class AddItemComponent implements OnInit {
   mediaFile:any
   mediaFileName = ""
   fileSize:any = ""
-  constructor(private sanitizer:DomSanitizer,private sharedService: SharedService,
+  constructor(public loaderService: LoaderService,private sanitizer:DomSanitizer,private sharedService: SharedService,
     public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
     public appDriveService: AppDriveService
@@ -96,6 +97,7 @@ export class AddItemComponent implements OnInit {
         },(err)=>{
           this.showLoader = false;
         })
+        this.loaderService.hide()
      }
   }
 
@@ -109,6 +111,7 @@ export class AddItemComponent implements OnInit {
       },(err)=>{
         this.showLoader = false;
       })
+      this.loaderService.hide()
     }else if(this.mediaFile) {
     this.showLoader = true;
       this.updateMediaData(this.data.item)
@@ -123,6 +126,7 @@ export class AddItemComponent implements OnInit {
       },(err)=>{
         this.showLoader = false;
       })
+      this.loaderService.hide()
     }else if(this.mediaFile){
       this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,newItem.name).subscribe((media: any)=>{
         console.log(media,"mediaData")
@@ -131,6 +135,7 @@ export class AddItemComponent implements OnInit {
        },(err)=>{
         this.showLoader = false;
       })
+      this.loaderService.hide()
     }else {
       this.showLoader = false;
       this.dialogRef.close(true);

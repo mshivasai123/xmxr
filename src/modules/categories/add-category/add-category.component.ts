@@ -2,9 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
 import {DomSanitizer} from '@angular/platform-browser';
-// import { HTTP_INTERCEPTORS } from '@angular/common/http';
-// import { AddInterceptService } from 'src/services/add-intercept.service';
 import { SharedService } from 'src/services/shared.service';
+import { LoaderService } from 'src/services/loader-service';
 
 @Component({
   template: `
@@ -27,7 +26,6 @@ export class SnackbarMessageComponent {
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
   styleUrls: ['./add-category.component.scss'],
-  // providers: [AddInterceptService,{ provide: HTTP_INTERCEPTORS, useClass: AddInterceptService, multi: true }]
 })
 export class AddCategoryComponent implements OnInit {
   // dialogData: DialogData;
@@ -39,7 +37,7 @@ export class AddCategoryComponent implements OnInit {
   objectURL:any= ""
   intialCategoryName = "";
   showLoader = false;
-  constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,private sanitizer:DomSanitizer,
+  constructor( public loaderService: LoaderService, public dialogRef: MatDialogRef<AddCategoryComponent>,private sanitizer:DomSanitizer,
     private sharedService: SharedService,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
       // this.dialogRef.close(true);
@@ -94,6 +92,7 @@ export class AddCategoryComponent implements OnInit {
     },(err)=>{
       this.showLoader = false;
     })
+    this.loaderService.hide()
    }
   }
 
@@ -112,6 +111,7 @@ export class AddCategoryComponent implements OnInit {
       },(err)=>{
         this.showLoader = false;
       })
+      this.loaderService.hide()
      }else if(this.file){
       this.showLoader = true;
       this.updateProfile(this.categoryName,this.file)
@@ -129,6 +129,7 @@ export class AddCategoryComponent implements OnInit {
         },(err)=>{
           this.showLoader = false;
         })
+        this.loaderService.hide()
   }
   
 

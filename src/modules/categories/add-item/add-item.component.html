@@ -45,7 +45,7 @@
                   <p *ngIf="mediaFileName" class="m-0">{{mediaFileName}}</p>
                   <span *ngIf="fileSize">{{(fileSize / (1024*1024)).toFixed(2)}}MB</span>
                   <img *ngIf="!mediaFileName" [src]="modelImage" class="img-fluid" alt="modelModel" /> 
-                  <button class="change-img-btn app-color darker-bg border-0 f-9" *ngIf="mediaFileName" (click)="mediaInput.click()">Change Image</button>
+                  <button class="change-img-btn app-color darker-bg border-0 f-9" *ngIf="mediaFileName" (click)="mediaInput.click()">Change Model</button>
                 </label>
               </div>
             </div>

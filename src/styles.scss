@@ -44,7 +44,7 @@ nav {
 }
 
 .app-color {
-    color: $appColor;
+    color: $appColor !important;
 }
 
 .darker-bg {
@@ -68,15 +68,28 @@ nav {
     }
     .mat-input-element {
         caret-color: $appColor;
+        // &::placeholder {
+        //     padding-left: 10px;
+        // }
     }
+    .mat-form-field-label {
+        padding-left: 7px;
+    }
+    
     .mat-form-field-underline {
-        background-color: rgba(255,255,255,0.5);
+        background-color: transparent;
         // display: none;
         .mat-form-field-ripple {
             background-color: $appColor;
         }
     }
 }
+
+// .mat-form-field {
+//     .mat-form-field-ripple {
+//         background-color: $appColor;
+//     }
+// }
 
 .lh-auto {
     line-height: unset !important;
@@ -95,8 +108,8 @@ nav {
          width: auto !important;
          height: 35px !important;
         svg {
-            top: 7px;
-            left: 0px;
+            top: 8px;
+            left: 4px;
             width: 20px !important;
             height: 20px !important;
             circle {
@@ -144,8 +157,10 @@ nav {
                 color: rgba(0,0,0,.54) !important;
             }
             .mat-form-field-ripple {
-                display: none;
+                // display: none;
+                background-color: $appColor;
             }
+            
         }
     }
 }

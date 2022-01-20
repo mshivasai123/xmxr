@@ -31,19 +31,21 @@
               <div>
                 <input type="file" (change)="profileUpload($event)" #profileImage class="d-none" id="uploadFile">
                 <label class="mb-2 image-label roboto-font f-9">Upload Picture</label>
-                <label for="uploadFile" class="image-placeholder cursor-pointer border rounded">
+                <label for="uploadFile" class="image-placeholder position-relative cursor-pointer border rounded">
                   <img [src]="objectURL?objectURL:imageUrl" class="img-fluid" alt="image" /> 
+                  <button class="change-img-btn app-color darker-bg border-0 f-9" (click)="profileImage.click()">Change Image</button>
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
               <div>
-                <input type="file" (change)="uploadmediaData($event)" class="d-none" id="uploadModel">
+                <input type="file" (change)="uploadmediaData($event)" #mediaInput class="d-none" id="uploadModel">
                 <label class="mb-2 image-label roboto-font f-9">Upload Model</label>
-                <label for="uploadModel" class="image-placeholder d-flex align-items-center justify-content-center flex-column cursor-pointer border rounded">
+                <label for="uploadModel" class="image-placeholder position-relative d-flex align-items-center justify-content-center flex-column cursor-pointer border rounded">
                   <p *ngIf="mediaFileName" class="m-0">{{mediaFileName}}</p>
                   <span *ngIf="fileSize">{{(fileSize / (1024*1024)).toFixed(2)}}MB</span>
                   <img *ngIf="!mediaFileName" [src]="modelImage" class="img-fluid" alt="modelModel" /> 
+                  <button class="change-img-btn app-color darker-bg border-0 f-9" (click)="mediaInput.click()">Change Image</button>
                 </label>
               </div>
             </div>

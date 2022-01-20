@@ -29,13 +29,19 @@
           <!-- <p>
             <label for="uploadFile" class="upload-picture-label w-100 cursor-pointer">{{fileName ? fileName : 'Upload Picture'}}</label>
           </p> -->
-          <div class="text-end mt-md-4 mt-2">
-            <button class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1" type="button" (click)="dialogRef.close()">
+          <div class="text-end mt-md-4 mt-2 d-flex justify-content-end">
+            <button *ngIf='!showLoader' class="roboto-font xmxr-secondary-btn bg-transparent border-0 me-md-3 me-1" type="button" (click)="dialogRef.close()">
               Cancel
             </button>
               <!-- <button class="btn d-block rounded-0 px-4 btn-dark p-3 mt-4" >Create</button> -->
               <button class="roboto-font border-0 xmxr-primary-btn" mat-button type="button" (click)="save()">
-                {{data?.isEdit ? 'Save' : 'Save'}}
+                <span *ngIf='!showLoader'>
+                  {{data?.isEdit ? 'Save' : 'Save'}}
+                </span>
+                <span *ngIf='showLoader'>
+                  <mat-progress-spinner class="spinner button-spinner" color="primary" mode="indeterminate" value="50">
+                  </mat-progress-spinner>
+                </span>
               </button>
           </div>
     </form>

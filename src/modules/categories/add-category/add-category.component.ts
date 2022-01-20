@@ -2,8 +2,27 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AppDriveService } from 'src/services/app-drive.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AddInterceptService } from 'src/services/add-intercept.service';
+// import { HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { AddInterceptService } from 'src/services/add-intercept.service';
+import { SharedService } from 'src/services/shared.service';
+
+@Component({
+  template: `
+    <div class="success-message d-flex align-items-center justify-content-center">
+      <mat-icon class="message-text f-15 me-2">check</mat-icon>
+      <span class="fw-bold message-text me-2">
+        Category Name
+      </span>
+      <span class="message-text">
+        Added Successfully
+      </span>
+    </div>
+  `,
+})
+export class SnackbarMessageComponent {
+  constructor() { }
+}
+
 @Component({
   selector: 'app-add-category',
   templateUrl: './add-category.component.html',
@@ -18,14 +37,16 @@ export class AddCategoryComponent implements OnInit {
   imageUrl = 'assets/images/placeholder.png';
   fileName= ""
   objectURL:any= ""
-  intialCategoryName = ""
+  intialCategoryName = "";
+  showLoader = false;
   constructor(  public dialogRef: MatDialogRef<AddCategoryComponent>,private sanitizer:DomSanitizer,
+    private sharedService: SharedService,
     @Inject(MAT_DIALOG_DATA) public data:any, public appDriveService: AppDriveService) {
       // this.dialogRef.close(true);
      }
 
   ngOnInit(): void {
-    console.log(this.data,"data to modal")
+    console.log(this.data,"data to modal");
     if(this.data?.isEdit){
       this.categoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
       this.intialCategoryName = JSON.parse(JSON.stringify(this.data.category.name.split('_')[1]))
@@ -44,38 +65,55 @@ export class AddCategoryComponent implements OnInit {
   }
   createCategory(){
    if(this.data.parentId){
+    this.showLoader = true;
     this.appDriveService.createCategory(this.data.parentId,this.categoryName).subscribe((res:any)=>{
       console.log(res,"added catregory")
+      this.showLoader = false;
+      if(!this.file){
+        this.sharedService.openSnackBar(SnackbarMessageComponent,'success-message')
+      }
       this.appDriveService.createPermission(res.id).subscribe((permision)=>{
         console.log(permision,"permision");
       })
       this.newCategory = res;
       if(this.file){
+    this.showLoader = true;
         this.appDriveService.uploadCategoryProfile(this.file,res.id,res.name).subscribe((profile:any)=>{
           console.log(profile,"profiledata")
           this.newCategory['profilePhoto'] = profile.webContentLink
           this.newCategory['photoName'] = profile.name;
           this.newCategory['photoId'] = profile.id;
           this.newCategory['photoOrginalName']=profile.originalFilename
+          this.showLoader = false;
+          this.sharedService.openSnackBar(SnackbarMessageComponent,'success-message')
           this.dialogRef.close(this.newCategory);
+        },(err)=>{
+          this.showLoader = false;
         })
       }
+    },(err)=>{
+      this.showLoader = false;
     })
    }
   }
 
   editCategory(){
     if(this.categoryName && (this.categoryName != this.intialCategoryName)){
+    this.showLoader = true;
       this.appDriveService.updateCategory(this.categoryName,this.data.category).subscribe((res:any)=>{
         console.log(res,"added catregory")
         this.newCategory = res;
+        this.showLoader = false;
         if(this.file){
             this.updateProfile(this.categoryName,this.file)
         }else{
           this.updateProfile(this.categoryName)
         }
+      },(err)=>{
+        this.showLoader = false;
       })
      }else if(this.file){
+      this.showLoader = true;
       this.updateProfile(this.categoryName,this.file)
      }
   }
@@ -84,9 +122,12 @@ export class AddCategoryComponent implements OnInit {
   updateProfile(name:any,file?:any){
      this.appDriveService.updateCategoryProfile(name,this.data.category,file).subscribe((profile:any)=>{
           console.log(profile,"profiledata")
+          this.showLoader = false;
           this.dialogRef.close(true);
           // this.newCategory['profilePhoto'] = profile.thumbnailLink
           // this.dialogRef.close(this.newCategory);
+        },(err)=>{
+          this.showLoader = false;
         })
   }
   

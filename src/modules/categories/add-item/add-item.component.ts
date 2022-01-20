@@ -2,7 +2,23 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AppDriveService } from 'src/services/app-drive.service';
-
+import { SharedService } from 'src/services/shared.service';
+@Component({
+  template: `
+    <div class="success-message d-flex align-items-center justify-content-center">
+      <mat-icon class="message-text f-15 me-2">check</mat-icon>
+      <span class="fw-bold message-text me-2">
+        Item Name
+      </span>
+      <span class="message-text">
+        Added Successfully
+      </span>
+    </div>
+  `,
+})
+export class SnackbarItemMessageComponent {
+  constructor() { }
+}
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
@@ -13,14 +29,15 @@ export class AddItemComponent implements OnInit {
   intialName = ''
   newItem:any
   file:any
-  fileName= ""
+  fileName= "";
+  showLoader = false;
   imageUrl = 'assets/images/placeholder.png';
   objectURL:any= ""
   modelImage = 'assets/images/file-icon.png';
   mediaFile:any
   mediaFileName = ""
   fileSize:any = ""
-  constructor(private sanitizer:DomSanitizer,
+  constructor(private sanitizer:DomSanitizer,private sharedService: SharedService,
     public dialogRef: MatDialogRef<AddItemComponent>,
     @Inject(MAT_DIALOG_DATA) public data:any,
     public appDriveService: AppDriveService
@@ -59,28 +76,41 @@ export class AddItemComponent implements OnInit {
   }
   createItem(){
     if(this.data.parentId){
+    this.showLoader = true;
         this.appDriveService.createitem(this.file,this.data.parentId,this.itemName).subscribe((item:any)=>{
           console.log(item,"item")
           this.newItem = item
+          
           if(this.mediaFile){
             this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,item.name).subscribe((media: any)=>{
              console.log(media,"mediaData")
              this.newItem["mediaFileName"] = media.originalFilename
              this.newItem["mediaId"] = media.id
+            },(err)=>{
+              this.showLoader = false;
             })
           }
+          this.showLoader = false;
+          this.sharedService.openSnackBar(SnackbarItemMessageComponent,'success-message')
           this.dialogRef.close(this.newItem);
+        },(err)=>{
+          this.showLoader = false;
         })
      }
   }
 
   editCategory(){
     if((this.intialName != this.itemName) || this.file){
+    this.showLoader = true;
       this.appDriveService.upDateItem(this.itemName,this.data.item,this.file).subscribe((item:any)=>{
         // this.dialogRef.close(true);
+        this.showLoader = false;
         this.updateMediaData(item)
+      },(err)=>{
+        this.showLoader = false;
       })
     }else if(this.mediaFile) {
+    this.showLoader = true;
       this.updateMediaData(this.data.item)
     }
    
@@ -88,14 +118,21 @@ export class AddItemComponent implements OnInit {
   updateMediaData(newItem:any){
     if(this.data.item.mediaId){
       this.appDriveService.updateMedia(this.data.item,this.mediaFile,newItem).subscribe((item:any)=>{
+        this.showLoader = false;
         this.dialogRef.close(true);
+      },(err)=>{
+        this.showLoader = false;
       })
     }else if(this.mediaFile){
       this.appDriveService.createMediaFile(this.mediaFile,this.data.parentId,newItem.name).subscribe((media: any)=>{
         console.log(media,"mediaData")
+        this.showLoader = false;
         this.dialogRef.close(true);
-       })
+       },(err)=>{
+        this.showLoader = false;
+      })
     }else {
+      this.showLoader = false;
       this.dialogRef.close(true);
     }
   }
